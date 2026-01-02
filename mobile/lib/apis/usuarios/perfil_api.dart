@@ -1,13 +1,11 @@
-// lib/apis/resources/users/profile_api.dart
+// lib/apis/usuarios/perfil_api.dart
 
 import 'package:mobile/services/core/api/http_client.dart';
-import '../../client/base_api.dart';
-import '../../../models/dto/user/responses/profile_response.dart';
-import '../../../models/dto/user/requests/update_profile_request.dart';
-import '../../../config/network/api_config.dart';
+import 'package:mobile/apis/core/base_api.dart';
+import '../../models/dto/user/responses/profile_response.dart';
+import '../../models/dto/user/requests/update_profile_request.dart';
+import '../../config/network/api_config.dart';
 
-/// API para gestionar el perfil de usuario.
-///
 /// Responsabilidades:
 /// - Solo comunicación HTTP
 /// - Serialización/deserialización de DTOs
@@ -50,7 +48,9 @@ class ProfileApi extends BaseApi {
 
       // El backend retorna {perfil: {...}} en lugar de {...} directamente
       if (response.containsKey('perfil')) {
-        return ProfileResponse.fromJson(response['perfil'] as Map<String, dynamic>);
+        return ProfileResponse.fromJson(
+          response['perfil'] as Map<String, dynamic>,
+        );
       }
 
       // Fallback por si cambia la estructura
@@ -77,13 +77,22 @@ class ProfileApi extends BaseApi {
 
     try {
       final payload = request.toJson();
-      log('Payload enviado: $payload'); // DIAGNÓSTICO: Ver qué se envía al backend
-      final response = await client.patch(ApiConfig.usuariosActualizarPerfil, payload);
-      log('Respuesta updateProfile: $response'); // DIAGNÓSTICO: Ver respuesta del backend
+      log(
+        'Payload enviado: $payload',
+      ); // DIAGNÓSTICO: Ver qué se envía al backend
+      final response = await client.patch(
+        ApiConfig.usuariosActualizarPerfil,
+        payload,
+      );
+      log(
+        'Respuesta updateProfile: $response',
+      ); // DIAGNÓSTICO: Ver respuesta del backend
 
       // El backend retorna {perfil: {...}}
       if (response.containsKey('perfil')) {
-        return ProfileResponse.fromJson(response['perfil'] as Map<String, dynamic>);
+        return ProfileResponse.fromJson(
+          response['perfil'] as Map<String, dynamic>,
+        );
       }
 
       return ProfileResponse.fromJson(response);

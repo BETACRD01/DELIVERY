@@ -1,7 +1,7 @@
 // lib/services/features/user/profile_service.dart
 
 import 'dart:developer' as developer;
-import '../../../apis/resources/users/profile_api.dart';
+import '../../../apis/usuarios/perfil_api.dart';
 import '../../../apis/mappers/user_mapper.dart';
 import '../../../models/users/profile.dart';
 import '../../core/cache/cache_manager.dart';
@@ -31,21 +31,16 @@ class ProfileService {
 
   static ProfileService? _instance;
 
-  factory ProfileService({
-    ProfileApi? api,
-    CacheManager? cache,
-  }) {
+  factory ProfileService({ProfileApi? api, CacheManager? cache}) {
     return _instance ??= ProfileService._(
       api: api ?? ProfileApi(),
       cache: cache ?? CacheManager.instance,
     );
   }
 
-  ProfileService._({
-    required ProfileApi api,
-    required CacheManager cache,
-  })  : _api = api,
-        _cache = cache;
+  ProfileService._({required ProfileApi api, required CacheManager cache})
+    : _api = api,
+      _cache = cache;
 
   /// Reset para testing
   static void resetInstance() => _instance = null;
@@ -200,7 +195,11 @@ class ProfileService {
       _log('Perfil actualizado parcialmente');
       return updated;
     } catch (e, stackTrace) {
-      _log('Error actualizando perfil parcialmente', error: e, stackTrace: stackTrace);
+      _log(
+        'Error actualizando perfil parcialmente',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -232,8 +231,7 @@ class ProfileService {
       throw ValidationException('El nombre no puede estar vacío');
     }
 
-    if (profile.lastName != null &&
-        !Validators.noEstaVacio(profile.lastName)) {
+    if (profile.lastName != null && !Validators.noEstaVacio(profile.lastName)) {
       throw ValidationException('El apellido no puede estar vacío');
     }
   }

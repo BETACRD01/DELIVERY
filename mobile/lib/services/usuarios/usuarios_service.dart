@@ -2,9 +2,9 @@
 
 import 'dart:io';
 import 'dart:developer' as developer;
-import '../../apis/user/usuarios_api.dart';
-import '../../apis/user/rifas_api.dart';
-import '../../apis/user/rifas_usuarios_api.dart';
+import '../../apis/usuarios/usuarios_api.dart';
+import '../../apis/usuarios/rifas_api.dart';
+import '../../apis/usuarios/rifas_usuarios_api.dart';
 import '../../models/auth/usuario.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
 
@@ -311,7 +311,11 @@ class UsuarioService {
     } on ApiException {
       rethrow;
     } catch (e, stackTrace) {
-      _log('Error obteniendo detalle de rifa', error: e, stackTrace: stackTrace);
+      _log(
+        'Error obteniendo detalle de rifa',
+        error: e,
+        stackTrace: stackTrace,
+      );
       throw ApiException(
         statusCode: 0,
         message: 'Error al obtener detalle de rifa',

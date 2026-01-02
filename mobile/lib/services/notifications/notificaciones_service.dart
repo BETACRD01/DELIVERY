@@ -1,15 +1,14 @@
 import '../../apis/notificaciones/notificaciones_api.dart';
-import '../../domain/repositories/notificacion_repository.dart';
 import '../../models/core/notificacion_model.dart';
 import '../../models/core/paginated_response.dart';
 
-class NotificacionRepositoryImpl implements NotificacionRepository {
+/// Servicio unificado de notificaciones (reemplaza domain/infrastructure)
+class NotificacionesService {
   final NotificacionesApi _api;
 
-  NotificacionRepositoryImpl({NotificacionesApi? api})
+  NotificacionesService({NotificacionesApi? api})
     : _api = api ?? NotificacionesApi();
 
-  @override
   Future<PaginatedResponse<NotificacionModel>> getNotificaciones({
     int page = 1,
     int limit = 20,
@@ -38,12 +37,10 @@ class NotificacionRepositoryImpl implements NotificacionRepository {
     return PaginatedResponse(data: [], total: 0);
   }
 
-  @override
   Future<void> marcarLeida(String id) async {
     await _api.marcarLeida(id);
   }
 
-  @override
   Future<void> marcarTodasLeidas() async {
     await _api.marcarTodasLeidas();
   }

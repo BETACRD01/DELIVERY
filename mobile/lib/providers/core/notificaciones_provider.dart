@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import '../../domain/repositories/notificacion_repository.dart';
-import '../../infrastructure/repositories/notificacion_repository_impl.dart';
+import '../../services/notifications/notificaciones_service.dart';
 import '../../models/core/notificacion_model.dart';
 
 /// Store unificado de notificaciones (API + Infinite Scroll)
 class NotificacionesProvider extends ChangeNotifier {
-  final NotificacionRepository _repository;
+  final NotificacionesService _service;
 
-  NotificacionesProvider({NotificacionRepository? repository})
-    : _repository = repository ?? NotificacionRepositoryImpl();
+  NotificacionesProvider({NotificacionesService? service})
+    : _service = service ?? NotificacionesService();
 
   // State
   List<NotificacionModel> _notificaciones = [];
@@ -51,7 +50,7 @@ class NotificacionesProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _repository.getNotificaciones(
+      final response = await _service.getNotificaciones(
         page: _currentPage,
         limit: _limit,
       );
@@ -112,7 +111,7 @@ class NotificacionesProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _repository.marcarLeida(id);
+      await _service.marcarLeida(id);
     } catch (e) {
       // Revertir si falla? Por ahora no para mejor UX
       debugPrint('Error marcando leida: $e');
@@ -133,7 +132,7 @@ class NotificacionesProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _repository.marcarTodasLeidas();
+      await _service.marcarTodasLeidas();
     } catch (e) {
       debugPrint('Error marcando todas leidas: $e');
     }

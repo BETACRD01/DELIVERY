@@ -1,6 +1,6 @@
 // lib/services/features/user/payment_method_service.dart
 
-import '../../../apis/resources/users/payment_methods_api.dart';
+import '../../../apis/usuarios/metodos_pago_api.dart';
 import '../../../apis/mappers/user_mapper.dart';
 import '../../../models/users/payment_method.dart';
 import '../../core/cache/cache_manager.dart';
@@ -24,10 +24,7 @@ class PaymentMethodService {
 
   static PaymentMethodService? _instance;
 
-  factory PaymentMethodService({
-    PaymentMethodsApi? api,
-    CacheManager? cache,
-  }) {
+  factory PaymentMethodService({PaymentMethodsApi? api, CacheManager? cache}) {
     return _instance ??= PaymentMethodService._(
       api: api ?? PaymentMethodsApi(),
       cache: cache ?? CacheManager.instance,
@@ -37,8 +34,8 @@ class PaymentMethodService {
   PaymentMethodService._({
     required PaymentMethodsApi api,
     required CacheManager cache,
-  })  : _api = api,
-        _cache = cache;
+  }) : _api = api,
+       _cache = cache;
 
   static void resetInstance() => _instance = null;
 
@@ -51,7 +48,12 @@ class PaymentMethodService {
   static const _paymentMethodCacheTTL = Duration(minutes: 5);
 
   void _log(String msg, {Object? error, StackTrace? stackTrace}) {
-    developer.log(msg, name: 'PaymentMethodService', error: error, stackTrace: stackTrace);
+    developer.log(
+      msg,
+      name: 'PaymentMethodService',
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 
   // ========================================================================
@@ -64,7 +66,9 @@ class PaymentMethodService {
   ///
   /// Parámetros:
   /// - [forceRefresh]: Si true, ignora cache y consulta API.
-  Future<List<PaymentMethod>> listPaymentMethods({bool forceRefresh = false}) async {
+  Future<List<PaymentMethod>> listPaymentMethods({
+    bool forceRefresh = false,
+  }) async {
     try {
       // 1. Check cache
       if (!forceRefresh) {
@@ -85,7 +89,11 @@ class PaymentMethodService {
           .toList();
 
       // 4. Update cache
-      _cache.set(_paymentMethodsListKey, paymentMethods, ttl: _paymentMethodCacheTTL);
+      _cache.set(
+        _paymentMethodsListKey,
+        paymentMethods,
+        ttl: _paymentMethodCacheTTL,
+      );
 
       _log('Obtenidos ${paymentMethods.length} métodos de pago');
       return paymentMethods;
@@ -121,7 +129,11 @@ class PaymentMethodService {
 
       return paymentMethod;
     } catch (e, stackTrace) {
-      _log('Error obteniendo método de pago $id', error: e, stackTrace: stackTrace);
+      _log(
+        'Error obteniendo método de pago $id',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -175,7 +187,10 @@ class PaymentMethodService {
       // 2. Verificar duplicados (solo si cambió el alias)
       final original = await getPaymentMethod(paymentMethod.id);
       if (original.alias != paymentMethod.alias) {
-        await _checkDuplicateAlias(paymentMethod.alias, excludeId: paymentMethod.id);
+        await _checkDuplicateAlias(
+          paymentMethod.alias,
+          excludeId: paymentMethod.id,
+        );
       }
 
       // 3. Transform Model → DTO
@@ -183,7 +198,10 @@ class PaymentMethodService {
 
       // 4. Call API
       _log('Actualizando método de pago: ${paymentMethod.id}');
-      final response = await _api.updatePaymentMethod(paymentMethod.id, request);
+      final response = await _api.updatePaymentMethod(
+        paymentMethod.id,
+        request,
+      );
 
       // 5. Transform DTO → Model
       final updated = UserMapper.paymentMethodToModel(response);
@@ -194,7 +212,11 @@ class PaymentMethodService {
       _log('Método de pago actualizado exitosamente');
       return updated;
     } catch (e, stackTrace) {
-      _log('Error actualizando método de pago', error: e, stackTrace: stackTrace);
+      _log(
+        'Error actualizando método de pago',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -240,7 +262,9 @@ class PaymentMethodService {
   /// Obtiene el método de pago predeterminado del usuario.
   ///
   /// Retorna null si no hay método predeterminado configurado.
-  Future<PaymentMethod?> getDefaultPaymentMethod({bool forceRefresh = false}) async {
+  Future<PaymentMethod?> getDefaultPaymentMethod({
+    bool forceRefresh = false,
+  }) async {
     try {
       // 1. Check cache
       if (!forceRefresh) {
@@ -264,11 +288,19 @@ class PaymentMethodService {
       final defaultMethod = UserMapper.paymentMethodToModel(response);
 
       // 4. Update cache
-      _cache.set(_defaultPaymentMethodKey, defaultMethod, ttl: _paymentMethodCacheTTL);
+      _cache.set(
+        _defaultPaymentMethodKey,
+        defaultMethod,
+        ttl: _paymentMethodCacheTTL,
+      );
 
       return defaultMethod;
     } catch (e, stackTrace) {
-      _log('Error obteniendo método de pago predeterminado', error: e, stackTrace: stackTrace);
+      _log(
+        'Error obteniendo método de pago predeterminado',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -290,7 +322,11 @@ class PaymentMethodService {
       final updated = paymentMethod.copyWith(isDefault: true);
       return await updatePaymentMethod(updated);
     } catch (e, stackTrace) {
-      _log('Error estableciendo método de pago predeterminado', error: e, stackTrace: stackTrace);
+      _log(
+        'Error estableciendo método de pago predeterminado',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -306,7 +342,11 @@ class PaymentMethodService {
           .where((method) => method.type.toLowerCase() == type.toLowerCase())
           .toList();
     } catch (e, stackTrace) {
-      _log('Error filtrando métodos de pago por tipo', error: e, stackTrace: stackTrace);
+      _log(
+        'Error filtrando métodos de pago por tipo',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -321,7 +361,11 @@ class PaymentMethodService {
           .where((method) => method.isPendingVerification)
           .toList();
     } catch (e, stackTrace) {
-      _log('Error obteniendo métodos pendientes de verificación', error: e, stackTrace: stackTrace);
+      _log(
+        'Error obteniendo métodos pendientes de verificación',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -353,7 +397,9 @@ class PaymentMethodService {
 
     // Validar que si requiere verificación, debe tener comprobante
     if (paymentMethod.requiresVerification && !paymentMethod.hasProof) {
-      _log('Advertencia: Método de pago requiere verificación pero no tiene comprobante');
+      _log(
+        'Advertencia: Método de pago requiere verificación pero no tiene comprobante',
+      );
       // No lanzamos excepción porque el backend puede manejar esto
     }
   }
@@ -365,9 +411,11 @@ class PaymentMethodService {
     try {
       final paymentMethods = await listPaymentMethods();
 
-      final duplicate = paymentMethods.any((method) =>
-          method.alias.toLowerCase() == alias.toLowerCase() &&
-          method.id != excludeId);
+      final duplicate = paymentMethods.any(
+        (method) =>
+            method.alias.toLowerCase() == alias.toLowerCase() &&
+            method.id != excludeId,
+      );
 
       if (duplicate) {
         throw DuplicatePaymentMethodException(

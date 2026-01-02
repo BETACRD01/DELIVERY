@@ -1,13 +1,12 @@
-// lib/apis/resources/users/payment_methods_api.dart
+// lib/apis/usuarios/metodos_pago_api.dart
 
 import 'package:mobile/services/core/api/http_client.dart';
-import '../../client/base_api.dart';
-import '../../../models/dto/user/responses/payment_method_response.dart';
-import '../../../models/dto/user/requests/create_payment_method_request.dart';
-import '../../../models/dto/user/requests/update_payment_method_request.dart';
-import '../../../config/network/api_config.dart';
+import 'package:mobile/apis/core/base_api.dart';
+import '../../models/dto/user/responses/payment_method_response.dart';
+import '../../models/dto/user/requests/create_payment_method_request.dart';
+import '../../models/dto/user/requests/update_payment_method_request.dart';
+import '../../config/network/api_config.dart';
 
-/// API para gestionar métodos de pago de usuario.
 ///
 /// Responsabilidades:
 /// - Solo comunicación HTTP
@@ -50,7 +49,10 @@ class PaymentMethodsApi extends BaseApi {
           [];
 
       return data
-          .map((json) => PaymentMethodResponse.fromJson(json as Map<String, dynamic>))
+          .map(
+            (json) =>
+                PaymentMethodResponse.fromJson(json as Map<String, dynamic>),
+          )
           .toList();
     } catch (e, stackTrace) {
       log('Error listando métodos de pago', error: e, stackTrace: stackTrace);
@@ -71,7 +73,8 @@ class PaymentMethodsApi extends BaseApi {
       // El backend puede retornar {metodo_pago: {...}} o {...} directamente
       if (response.containsKey('metodo_pago')) {
         return PaymentMethodResponse.fromJson(
-            response['metodo_pago'] as Map<String, dynamic>);
+          response['metodo_pago'] as Map<String, dynamic>,
+        );
       }
 
       return PaymentMethodResponse.fromJson(response);
@@ -85,7 +88,8 @@ class PaymentMethodsApi extends BaseApi {
   ///
   /// Endpoint: POST /usuarios/metodos-pago/
   Future<PaymentMethodResponse> createPaymentMethod(
-      CreatePaymentMethodRequest request) async {
+    CreatePaymentMethodRequest request,
+  ) async {
     log('POST: Crear método de pago');
 
     try {
@@ -97,7 +101,8 @@ class PaymentMethodsApi extends BaseApi {
       // El backend retorna {metodo_pago: {...}}
       if (response.containsKey('metodo_pago')) {
         return PaymentMethodResponse.fromJson(
-            response['metodo_pago'] as Map<String, dynamic>);
+          response['metodo_pago'] as Map<String, dynamic>,
+        );
       }
 
       return PaymentMethodResponse.fromJson(response);
@@ -122,12 +127,17 @@ class PaymentMethodsApi extends BaseApi {
 
       if (response.containsKey('metodo_pago')) {
         return PaymentMethodResponse.fromJson(
-            response['metodo_pago'] as Map<String, dynamic>);
+          response['metodo_pago'] as Map<String, dynamic>,
+        );
       }
 
       return PaymentMethodResponse.fromJson(response);
     } catch (e, stackTrace) {
-      log('Error actualizando método de pago', error: e, stackTrace: stackTrace);
+      log(
+        'Error actualizando método de pago',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -154,7 +164,9 @@ class PaymentMethodsApi extends BaseApi {
     log('GET: Obtener método de pago predeterminado');
 
     try {
-      final response = await client.get(ApiConfig.usuariosMetodoPagoPredeterminado);
+      final response = await client.get(
+        ApiConfig.usuariosMetodoPagoPredeterminado,
+      );
 
       if (response.isEmpty || response['metodo_pago'] == null) {
         return null;
@@ -162,13 +174,17 @@ class PaymentMethodsApi extends BaseApi {
 
       if (response.containsKey('metodo_pago')) {
         return PaymentMethodResponse.fromJson(
-            response['metodo_pago'] as Map<String, dynamic>);
+          response['metodo_pago'] as Map<String, dynamic>,
+        );
       }
 
       return PaymentMethodResponse.fromJson(response);
     } catch (e, stackTrace) {
-      log('Error obteniendo método de pago predeterminado',
-          error: e, stackTrace: stackTrace);
+      log(
+        'Error obteniendo método de pago predeterminado',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }

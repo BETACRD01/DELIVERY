@@ -1,4 +1,4 @@
-// lib/role_switch/services/role_router.dart
+// lib/switch/services/role_router.dart
 
 import 'package:flutter/material.dart';
 import '../../config/routing/rutas.dart';

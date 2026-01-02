@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/dto/user/requests/update_profile_request.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
-import '../../apis/resources/users/profile_api.dart';
+import '../../apis/usuarios/perfil_api.dart';
 import '../../models/products/producto_model.dart';
 import '../../models/products/promocion_model.dart';
 import '../../models/entities/proveedor.dart';

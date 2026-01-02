@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../domain/repositories/producto_repository.dart';
-import '../../infrastructure/repositories/producto_repository_impl.dart';
+import '../../services/productos/productos_service_v2.dart';
 import '../../models/products/producto_model.dart';
 
 class ProductosProvider extends ChangeNotifier {
-  final ProductoRepository _repository;
+  final ProductosServiceV2 _service;
 
-  ProductosProvider({ProductoRepository? repository})
-    : _repository = repository ?? ProductoRepositoryImpl();
+  ProductosProvider({ProductosServiceV2? service})
+    : _service = service ?? ProductosServiceV2();
 
   // State
   List<ProductoModel> _productos = [];
@@ -47,7 +46,7 @@ class ProductosProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _repository.getProductos(
+      final response = await _service.getProductos(
         page: _currentPage,
         limit: _limit,
         busqueda: _currentSearch,

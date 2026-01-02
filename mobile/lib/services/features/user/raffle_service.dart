@@ -1,14 +1,12 @@
 // lib/services/features/user/raffle_service.dart
 
 import 'dart:developer' as developer;
-import '../../../apis/user/rifas_api.dart';
-import '../../../apis/user/rifas_usuarios_api.dart';
+import '../../../apis/usuarios/rifas_api.dart';
+import '../../../apis/usuarios/rifas_usuarios_api.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
 
 /// Servicio dedicado para gestión de rifas/sorteos del usuario
 class RaffleService {
-  // ---------------------------------------------------------------------------
-  // SINGLETON
   // ---------------------------------------------------------------------------
 
   static final RaffleService _instance = RaffleService._internal();
@@ -137,7 +135,11 @@ class RaffleService {
     } on ApiException {
       rethrow;
     } catch (e, stackTrace) {
-      _log('Error al obtener detalle de rifa', error: e, stackTrace: stackTrace);
+      _log(
+        'Error al obtener detalle de rifa',
+        error: e,
+        stackTrace: stackTrace,
+      );
       throw ApiException(
         statusCode: 0,
         message: 'Error al obtener detalle de la rifa',

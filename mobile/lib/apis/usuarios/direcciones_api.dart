@@ -1,13 +1,12 @@
-// lib/apis/resources/users/addresses_api.dart
+// lib/apis/usuarios/direcciones_api.dart
 
 import 'package:mobile/services/core/api/http_client.dart';
-import '../../client/base_api.dart';
-import '../../../models/dto/user/responses/address_response.dart';
-import '../../../models/dto/user/requests/create_address_request.dart';
-import '../../../models/dto/user/requests/update_address_request.dart';
-import '../../../config/network/api_config.dart';
+import 'package:mobile/apis/core/base_api.dart';
+import '../../models/dto/user/responses/address_response.dart';
+import '../../models/dto/user/requests/create_address_request.dart';
+import '../../models/dto/user/requests/update_address_request.dart';
+import '../../config/network/api_config.dart';
 
-/// API para gestionar direcciones de usuario.
 ///
 /// Responsabilidades:
 /// - Solo comunicación HTTP
@@ -70,7 +69,9 @@ class AddressesApi extends BaseApi {
 
       // El backend puede retornar {direccion: {...}} o {...} directamente
       if (response.containsKey('direccion')) {
-        return AddressResponse.fromJson(response['direccion'] as Map<String, dynamic>);
+        return AddressResponse.fromJson(
+          response['direccion'] as Map<String, dynamic>,
+        );
       }
 
       return AddressResponse.fromJson(response);
@@ -94,7 +95,9 @@ class AddressesApi extends BaseApi {
 
       // El backend retorna {direccion: {...}}
       if (response.containsKey('direccion')) {
-        return AddressResponse.fromJson(response['direccion'] as Map<String, dynamic>);
+        return AddressResponse.fromJson(
+          response['direccion'] as Map<String, dynamic>,
+        );
       }
 
       return AddressResponse.fromJson(response);
@@ -118,7 +121,9 @@ class AddressesApi extends BaseApi {
       final response = await client.patch(endpoint, request.toJson());
 
       if (response.containsKey('direccion')) {
-        return AddressResponse.fromJson(response['direccion'] as Map<String, dynamic>);
+        return AddressResponse.fromJson(
+          response['direccion'] as Map<String, dynamic>,
+        );
       }
 
       return AddressResponse.fromJson(response);
@@ -150,19 +155,27 @@ class AddressesApi extends BaseApi {
     log('GET: Obtener dirección predeterminada');
 
     try {
-      final response = await client.get(ApiConfig.usuariosDireccionPredeterminada);
+      final response = await client.get(
+        ApiConfig.usuariosDireccionPredeterminada,
+      );
 
       if (response.isEmpty || response['direccion'] == null) {
         return null;
       }
 
       if (response.containsKey('direccion')) {
-        return AddressResponse.fromJson(response['direccion'] as Map<String, dynamic>);
+        return AddressResponse.fromJson(
+          response['direccion'] as Map<String, dynamic>,
+        );
       }
 
       return AddressResponse.fromJson(response);
     } catch (e, stackTrace) {
-      log('Error obteniendo dirección predeterminada', error: e, stackTrace: stackTrace);
+      log(
+        'Error obteniendo dirección predeterminada',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }

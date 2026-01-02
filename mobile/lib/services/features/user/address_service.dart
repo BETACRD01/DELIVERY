@@ -1,7 +1,7 @@
 // lib/services/features/user/address_service.dart
 
 import 'dart:developer' as developer;
-import '../../../apis/resources/users/addresses_api.dart';
+import '../../../apis/usuarios/direcciones_api.dart';
 import '../../../apis/mappers/user_mapper.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
 import '../../../models/users/address.dart';
@@ -26,21 +26,16 @@ class AddressService {
 
   static AddressService? _instance;
 
-  factory AddressService({
-    AddressesApi? api,
-    CacheManager? cache,
-  }) {
+  factory AddressService({AddressesApi? api, CacheManager? cache}) {
     return _instance ??= AddressService._(
       api: api ?? AddressesApi(),
       cache: cache ?? CacheManager.instance,
     );
   }
 
-  AddressService._({
-    required AddressesApi api,
-    required CacheManager cache,
-  })  : _api = api,
-        _cache = cache;
+  AddressService._({required AddressesApi api, required CacheManager cache})
+    : _api = api,
+      _cache = cache;
 
   static void resetInstance() => _instance = null;
 
@@ -143,7 +138,9 @@ class AddressService {
       if (e.statusCode == 400 &&
           e.message.toLowerCase().contains('ya tienes una dirección')) {
         _log('Direccion duplicada detectada en backend');
-        throw DuplicateAddressException('Ya existe una dirección con esa etiqueta');
+        throw DuplicateAddressException(
+          'Ya existe una dirección con esa etiqueta',
+        );
       }
       rethrow;
     } catch (e, stackTrace) {
@@ -224,7 +221,11 @@ class AddressService {
 
       return address;
     } catch (e, stackTrace) {
-      _log('Error obteniendo dirección predeterminada', error: e, stackTrace: stackTrace);
+      _log(
+        'Error obteniendo dirección predeterminada',
+        error: e,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }
@@ -254,9 +255,7 @@ class AddressService {
     // Validar teléfono si está presente
     if (address.hasContactPhone &&
         !Validators.esCelularValido(address.contactPhone!)) {
-      throw AddressValidationException(
-        'El teléfono de contacto es inválido',
-      );
+      throw AddressValidationException('El teléfono de contacto es inválido');
     }
   }
 
@@ -264,8 +263,9 @@ class AddressService {
   Future<void> _checkDuplicateLabel(String label) async {
     final addresses = await listAddresses();
 
-    final duplicate = addresses.any((a) =>
-        a.label.toLowerCase() == label.toLowerCase());
+    final duplicate = addresses.any(
+      (a) => a.label.toLowerCase() == label.toLowerCase(),
+    );
 
     if (duplicate) {
       throw DuplicateAddressException(

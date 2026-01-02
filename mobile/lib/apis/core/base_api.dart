@@ -1,4 +1,4 @@
-// lib/apis/client/base_api.dart
+// lib/apis/core/base_api.dart
 
 import 'dart:developer' as developer;
 import 'package:mobile/services/core/api/http_client.dart';

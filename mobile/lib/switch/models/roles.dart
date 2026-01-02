@@ -1,4 +1,4 @@
-// lib/role_switch/models/roles.dart
+// lib/switch/models/roles.dart
 
 enum AppRole { user, provider, courier }
 
