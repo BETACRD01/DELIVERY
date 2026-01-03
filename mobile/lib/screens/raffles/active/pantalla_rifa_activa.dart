@@ -5,6 +5,7 @@ import '../../../services/usuarios/usuarios_service.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
 import '../../../config/network/api_config.dart';
 import '../../../theme/primary_colors.dart';
+import '../../../theme/jp_theme.dart';
 import '../details/pantalla_rifa_detalle_usuario.dart';
 
 class PantallaRifaActiva extends StatefulWidget {
@@ -89,7 +90,7 @@ class _PantallaRifaActivaState extends State<PantallaRifaActiva>
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: JPCupertinoColors.transparent,
         foregroundColor: CupertinoColors.label.resolveFrom(context),
         elevation: 0,
         flexibleSpace: ClipRect(
@@ -511,8 +512,8 @@ class _IOSButton extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           child: DefaultTextStyle(
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: JPCupertinoColors.white,
               fontSize: 16,
               fontWeight: FontWeight.w600,
               letterSpacing: -0.3,

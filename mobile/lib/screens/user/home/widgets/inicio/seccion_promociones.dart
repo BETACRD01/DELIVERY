@@ -38,17 +38,17 @@ class _SeccionPromocionesState extends State<SeccionPromociones> {
   @override
   Widget build(BuildContext context) {
     if (!widget.loading && widget.promociones.isEmpty) {
-      return const SizedBox.shrink();
+      return SizedBox.shrink();
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          padding: EdgeInsets.fromLTRB(16, 8, 16, 12),
           child: Row(
             children: [
-              const Text(
+              Text(
                 'Promociones Especiales',
                 style: TextStyle(
                   fontSize: 20, // Slightly larger
@@ -57,9 +57,8 @@ class _SeccionPromocionesState extends State<SeccionPromociones> {
                   letterSpacing: -0.5,
                 ),
               ),
-              const Spacer(),
-              if (widget.loading)
-                const CupertinoActivityIndicator(radius: 10),
+              Spacer(),
+              if (widget.loading) const CupertinoActivityIndicator(radius: 10),
             ],
           ),
         ),
@@ -77,7 +76,7 @@ class _SeccionPromocionesState extends State<SeccionPromociones> {
                   },
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.only(right: 12),
+                      padding: EdgeInsets.only(right: 12),
                       child: _PromocionCardImpacto(
                         promocion: widget.promociones[index],
                         onTap: () => widget.onPromocionPressed?.call(
@@ -92,14 +91,14 @@ class _SeccionPromocionesState extends State<SeccionPromociones> {
         // Indicadores de página (dots)
         if (!widget.loading && widget.promociones.length > 1)
           Padding(
-            padding: const EdgeInsets.only(top: 12),
+            padding: EdgeInsets.only(top: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
                 widget.promociones.length,
                 (index) => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  margin: EdgeInsets.symmetric(horizontal: 4),
                   width: _currentPage == index ? 24 : 8,
                   height: 8,
                   decoration: BoxDecoration(
@@ -113,7 +112,7 @@ class _SeccionPromocionesState extends State<SeccionPromociones> {
             ),
           ),
 
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
       ],
     );
   }
@@ -121,13 +120,13 @@ class _SeccionPromocionesState extends State<SeccionPromociones> {
   Widget _buildLoadingList() {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       itemCount: 3,
-      separatorBuilder: (_, _) => const SizedBox(width: 14),
+      separatorBuilder: (_, _) => SizedBox(width: 14),
       itemBuilder: (_, _) => Container(
         width: 300,
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: JPCupertinoColors.systemGrey5(context),
           borderRadius: BorderRadius.circular(AppConstants.radiusLarge),
         ),
       ),
@@ -158,7 +157,7 @@ class _PromocionCardImpacto extends StatelessWidget {
           ), // Bordes suaves
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: JPCupertinoColors.black.withValues(alpha: 0.1),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -180,8 +179,8 @@ class _PromocionCardImpacto extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.black.withValues(alpha: 0.05),
-                      Colors.black.withValues(
+                      JPCupertinoColors.black.withValues(alpha: 0.05),
+                      JPCupertinoColors.black.withValues(
                         alpha: 0.65,
                       ), // Negro sólido abajo
                     ],
@@ -191,7 +190,7 @@ class _PromocionCardImpacto extends StatelessWidget {
               ),
 
               Padding(
-                padding: const EdgeInsets.all(18),
+                padding: EdgeInsets.all(18),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -200,22 +199,26 @@ class _PromocionCardImpacto extends StatelessWidget {
                       text: promocion.descuento.isNotEmpty
                           ? promocion.descuento.toUpperCase()
                           : 'PROMO',
-                      color: Colors.white,
-                      background: Colors.white.withValues(alpha: 0.2),
+                      color: JPCupertinoColors.white,
+                      background: JPCupertinoColors.white.withValues(
+                        alpha: 0.2,
+                      ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
 
                     Text(
                       promocion.titulo,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: JPCupertinoColors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
                         height: 1.1,
                         letterSpacing: -0.5,
                         shadows: [
                           Shadow(
-                            color: Colors.black87,
+                            color: JPCupertinoColors.black.withValues(
+                              alpha: 0.87,
+                            ),
                             blurRadius: 10,
                             offset: Offset(0, 2),
                           ),
@@ -225,17 +228,19 @@ class _PromocionCardImpacto extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
 
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
 
                     Text(
                       promocion.descripcion,
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.95),
+                        color: JPCupertinoColors.white.withValues(alpha: 0.95),
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        shadows: const [
+                        shadows: [
                           Shadow(
-                            color: Colors.black54,
+                            color: JPCupertinoColors.black.withValues(
+                              alpha: 0.54,
+                            ),
                             blurRadius: 4,
                             offset: Offset(0, 1),
                           ),
@@ -244,13 +249,15 @@ class _PromocionCardImpacto extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     if (vence.isNotEmpty)
                       _Badge(
                         icon: CupertinoIcons.time,
                         text: vence,
-                        color: Colors.white,
-                        background: Colors.black.withValues(alpha: 0.3),
+                        color: JPCupertinoColors.white,
+                        background: JPCupertinoColors.black.withValues(
+                          alpha: 0.3,
+                        ),
                         compact: true,
                       ),
                   ],
@@ -269,9 +276,8 @@ class _PromocionCardImpacto extends StatelessWidget {
       return CachedNetworkImage(
         imageUrl: promocion.imagenUrl!,
         fit: BoxFit.cover,
-        placeholder: (context, url) => Center(
-          child: CupertinoActivityIndicator(radius: 14),
-        ),
+        placeholder: (context, url) =>
+            Center(child: CupertinoActivityIndicator(radius: 14)),
         errorWidget: (context, url, error) => _buildFallbackDecoration(),
       );
     } else {
@@ -289,7 +295,7 @@ class _PromocionCardImpacto extends StatelessWidget {
           child: Icon(
             Icons.fastfood_rounded,
             size: 180,
-            color: Colors.white.withValues(alpha: 0.12),
+            color: JPCupertinoColors.white.withValues(alpha: 0.12),
           ),
         ),
       ],
@@ -327,7 +333,7 @@ class _Badge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: color, size: compact ? 14 : 16),
-          const SizedBox(width: 6),
+          SizedBox(width: 6),
           Text(
             text,
             style: TextStyle(

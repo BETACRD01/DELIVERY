@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../../providers/core/theme_provider.dart';
 import '../../../../providers/core/preferencias_provider.dart';
-import '../../../../theme/primary_colors.dart';
+import '../../../../theme/jp_theme.dart';
 import '../../../config/routing/rutas.dart';
 
 class PantallaAjustesAdmin extends StatefulWidget {
@@ -16,9 +16,10 @@ class PantallaAjustesAdmin extends StatefulWidget {
 
 class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
   @override
+  @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -29,11 +30,11 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
-        iconTheme: IconThemeData(color: AppColorsPrimary.main),
+        iconTheme: IconThemeData(color: primaryColor),
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(),
@@ -41,7 +42,6 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
           const SizedBox(height: 32),
           _buildSectionHeader('GENERAL'),
           _buildSettingsGroup(
-            isDark: isDark,
             children: [
               Consumer<PreferenciasProvider>(
                 builder: (context, prefs, _) {
@@ -64,7 +64,7 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
                         ).toggleTheme(v),
                         isFirst: true,
                       ),
-                      _buildDivider(isDark),
+                      _buildDivider(),
                       _buildSwitchTile(
                         icon: Icons.notifications,
                         iconColor: Colors.redAccent,
@@ -72,7 +72,7 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
                         value: prefs.notificacionesPush,
                         onChanged: (v) => prefs.updatePush(v),
                       ),
-                      _buildDivider(isDark),
+                      _buildDivider(),
                       _buildSwitchTile(
                         icon: Icons.email,
                         iconColor: Colors.blue,
@@ -80,7 +80,7 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
                         value: prefs.notificacionesEmail,
                         onChanged: (v) => prefs.updateEmail(v),
                       ),
-                      _buildDivider(isDark),
+                      _buildDivider(),
                       _buildSwitchTile(
                         icon: Icons.do_not_disturb_on,
                         iconColor: Colors.purple,
@@ -98,7 +98,6 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
           const SizedBox(height: 24),
           _buildSectionHeader('ADMINISTRACIÓN'),
           _buildSettingsGroup(
-            isDark: isDark,
             children: [
               _buildActionTile(
                 icon: Icons.category,
@@ -107,14 +106,14 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
                 onTap: () => Rutas.irA(context, Rutas.adminGestionCategorias),
                 isFirst: true,
               ),
-              _buildDivider(isDark),
+              _buildDivider(),
               _buildActionTile(
                 icon: Icons.local_shipping,
                 iconColor: Colors.teal,
                 title: 'Configuración Envíos',
                 onTap: () => Rutas.irA(context, Rutas.adminEnviosConfig),
               ),
-              _buildDivider(isDark),
+              _buildDivider(),
               _buildActionTile(
                 icon: Icons.devices,
                 iconColor: Colors.blueGrey,
@@ -127,7 +126,6 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
           const SizedBox(height: 24),
           _buildSectionHeader('SEGURIDAD'),
           _buildSettingsGroup(
-            isDark: isDark,
             children: [
               _buildActionTile(
                 icon: Icons.lock,
@@ -136,7 +134,7 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
                 onTap: () => Rutas.irA(context, Rutas.adminCambiarPassword),
                 isFirst: true,
               ),
-              _buildDivider(isDark),
+              _buildDivider(),
               _buildActionTile(
                 icon: Icons.lock_reset,
                 iconColor: Colors.grey,
@@ -152,7 +150,7 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
             child: Text(
               'Versión 1.0.0',
               style: TextStyle(
-                color: isDark ? Colors.grey[600] : Colors.grey[400],
+                color: JPCupertinoColors.secondaryLabel(context),
                 fontSize: 13,
               ),
             ),
@@ -171,32 +169,29 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: Colors.grey[500],
+          color: JPCupertinoColors.secondaryLabel(context),
         ),
       ),
     );
   }
 
-  Widget _buildSettingsGroup({
-    required bool isDark,
-    required List<Widget> children,
-  }) {
+  Widget _buildSettingsGroup({required List<Widget> children}) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(children: children),
     );
   }
 
-  Widget _buildDivider(bool isDark) {
+  Widget _buildDivider() {
     return Divider(
       height: 1,
       thickness: 1,
       indent: 56,
-      color: isDark ? Colors.grey[800] : Colors.grey[200],
+      color: JPCupertinoColors.separator(context),
     );
   }
 
@@ -227,15 +222,16 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
               ),
               CupertinoSwitch(
                 value: value,
-                activeTrackColor: AppColorsPrimary.main,
+                activeTrackColor: JPCupertinoColors.primary(context),
                 onChanged: onChanged,
               ),
             ],
@@ -273,16 +269,17 @@ class _PantallaAjustesAdminState extends State<PantallaAjustesAdmin> {
                 Expanded(
                   child: Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
+                      color: JPCupertinoColors.label(context),
                     ),
                   ),
                 ),
                 Icon(
                   CupertinoIcons.chevron_forward,
                   size: 20,
-                  color: Colors.grey[400],
+                  color: JPCupertinoColors.tertiaryLabel(context),
                 ),
               ],
             ),

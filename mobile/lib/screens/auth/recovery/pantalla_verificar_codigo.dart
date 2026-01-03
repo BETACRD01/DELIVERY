@@ -40,7 +40,6 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
   int? _intentosRestantes;
   bool _bloqueado = false;
 
-
   // ============================================
   // CICLO DE VIDA
   // ============================================
@@ -230,7 +229,9 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: JPCupertinoColors.systemYellow(context).withValues(alpha: 0.15),
+                color: JPCupertinoColors.systemYellow(
+                  context,
+                ).withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -313,7 +314,9 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
     return CupertinoPageScaffold(
       backgroundColor: JPCupertinoColors.background(context),
       navigationBar: CupertinoNavigationBar(
-        backgroundColor: JPCupertinoColors.surface(context).withValues(alpha: 0.95),
+        backgroundColor: JPCupertinoColors.surface(
+          context,
+        ).withValues(alpha: 0.95),
         border: Border(
           bottom: BorderSide(
             color: JPCupertinoColors.separator(context),
@@ -326,18 +329,11 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                CupertinoIcons.back,
-                color: AppColorsPrimary.main,
-                size: 28,
-              ),
+              Icon(CupertinoIcons.back, color: AppColorsPrimary.main, size: 28),
               const SizedBox(width: 4),
               Text(
                 'Atrás',
-                style: TextStyle(
-                  color: AppColorsPrimary.main,
-                  fontSize: 17,
-                ),
+                style: TextStyle(color: AppColorsPrimary.main, fontSize: 17),
               ),
             ],
           ),
@@ -453,10 +449,14 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: JPCupertinoColors.systemRed(context).withValues(alpha: 0.1),
+                        color: JPCupertinoColors.systemRed(
+                          context,
+                        ).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: JPCupertinoColors.systemRed(context).withValues(alpha: 0.3),
+                          color: JPCupertinoColors.systemRed(
+                            context,
+                          ).withValues(alpha: 0.3),
                           width: 1,
                         ),
                       ),
@@ -484,7 +484,8 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
                   ],
 
                   // Intentos restantes
-                  if (_intentosRestantes != null && _intentosRestantes! > 0) ...[
+                  if (_intentosRestantes != null &&
+                      _intentosRestantes! > 0) ...[
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Row(
@@ -513,7 +514,9 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
                   Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: JPCupertinoColors.systemBlue(context).withValues(alpha: 0.1),
+                      color: JPCupertinoColors.systemBlue(
+                        context,
+                      ).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -558,7 +561,9 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
                         boxShadow: _codigoCompleto() && !_bloqueado
                             ? [
                                 BoxShadow(
-                                  color: AppColorsPrimary.main.withValues(alpha: 0.3),
+                                  color: AppColorsPrimary.main.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   blurRadius: 12,
                                   offset: const Offset(0, 6),
                                 ),
@@ -566,9 +571,11 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
                             : null,
                       ),
                       child: CupertinoButton(
-                        onPressed: _codigoCompleto() && !_bloqueado ? _verificarCodigo : null,
+                        onPressed: _codigoCompleto() && !_bloqueado
+                            ? _verificarCodigo
+                            : null,
                         color: _codigoCompleto() && !_bloqueado
-                            ? CupertinoColors.transparent
+                            ? JPCupertinoColors.transparent
                             : JPCupertinoColors.quaternaryLabel(context),
                         borderRadius: BorderRadius.circular(14),
                         padding: EdgeInsets.zero,
@@ -578,7 +585,7 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                             color: _codigoCompleto() && !_bloqueado
-                                ? CupertinoColors.white
+                                ? JPCupertinoColors.white
                                 : JPCupertinoColors.tertiaryLabel(context),
                             letterSpacing: 0.2,
                           ),
@@ -605,7 +612,9 @@ class _PantallaVerificarCodigoState extends State<PantallaVerificarCodigo> {
                   CupertinoButton(
                     padding: EdgeInsets.zero,
                     minimumSize: Size.zero,
-                    onPressed: (_loading || _bloqueado) ? null : _solicitarNuevoCodigo,
+                    onPressed: (_loading || _bloqueado)
+                        ? null
+                        : _solicitarNuevoCodigo,
                     child: Text(
                       '¿No recibiste el código? Solicitar uno nuevo',
                       style: TextStyle(

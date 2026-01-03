@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import '../../theme/jp_theme.dart';
 
 class PedidoUtils {
   static Color getColorEstado(String estado) {
     switch (estado.toLowerCase()) {
       case 'confirmado':
-        return Colors.orange.shade700;
+        return JPColors.warning;
       case 'en_preparacion':
-        return Colors.blue.shade600;
+        return JPColors.dashboardBlue;
       case 'en_ruta':
-        return Colors.cyan.shade600;
+        return JPColors.primary;
       case 'entregado':
-        return Colors.green.shade600;
+        return JPColors.success;
       case 'cancelado':
-        return Colors.red.shade600;
+        return JPColors.error;
       default:
-        return Colors.grey.shade600;
+        return Colors.grey;
     }
   }
 
@@ -28,7 +29,9 @@ class PedidoUtils {
       decoration: BoxDecoration(
         color: getColorFondoEstado(estado),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: getColorEstado(estado).withValues(alpha: 0.3)),
+        border: Border.all(
+          color: getColorEstado(estado).withValues(alpha: 0.3),
+        ),
       ),
       child: Text(
         estadoDisplay,

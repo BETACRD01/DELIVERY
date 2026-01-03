@@ -1,9 +1,8 @@
 import 'dart:async';
-
+import 'package:mobile/theme/jp_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-
 import '../../../controllers/supplier/supplier_controller.dart';
 import '../../../models/products/producto_model.dart';
 import '../../../services/productos/productos_service.dart';
@@ -42,7 +41,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     final resultado = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: JPCupertinoColors.transparent,
       builder: (_) => ProductEditSheet(producto: producto),
     );
 
@@ -66,12 +65,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancelar'),
+            child: Text('Cancelar'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            style: FilledButton.styleFrom(backgroundColor: Colors.red.shade400),
-            child: const Text('Eliminar'),
+            style: FilledButton.styleFrom(
+              backgroundColor: JPCupertinoColors.systemRed(context),
+            ),
+            child: Text('Eliminar'),
           ),
         ],
       ),
@@ -113,7 +114,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Producto "${producto.nombre}" eliminado'),
-            backgroundColor: Colors.green,
+            backgroundColor: JPCupertinoColors.systemGreen(context),
           ),
         );
       } catch (e) {
@@ -123,7 +124,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error al eliminar: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: JPCupertinoColors.systemRed(context),
           ),
         );
       }
@@ -135,7 +136,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     showDialog(
       context: context,
-      barrierColor: Colors.black87,
+      barrierColor: JPCupertinoColors.black.withValues(alpha: 0.87),
       builder: (ctx) => GestureDetector(
         onTap: () => Navigator.pop(ctx),
         child: Stack(
@@ -147,10 +148,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: Image.network(
                   imagenUrl,
                   fit: BoxFit.contain,
-                  errorBuilder: (_, _, _) => const Icon(
+                  errorBuilder: (_, _, _) => Icon(
                     Icons.image_not_supported,
                     size: 80,
-                    color: Colors.white54,
+                    color: JPCupertinoColors.white.withValues(alpha: 0.54),
                   ),
                 ),
               ),
@@ -161,11 +162,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: IconButton(
                 icon: Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: Colors.white24,
+                  decoration: BoxDecoration(
+                    color: JPCupertinoColors.white.withValues(alpha: 0.24),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.close, color: Colors.white),
+                  child: Icon(Icons.close, color: Colors.white),
                 ),
                 onPressed: () => Navigator.pop(ctx),
               ),
@@ -178,9 +179,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground.resolveFrom(
-        context,
-      ),
+      backgroundColor: JPCupertinoColors.background(context),
       body: FutureBuilder<ProductoModel>(
         future: _futureProducto,
         builder: (context, snapshot) {
@@ -225,13 +224,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.error_outline, size: 48, color: Colors.grey.shade400),
+          Icon(
+            Icons.error_outline,
+            size: 48,
+            color: JPCupertinoColors.systemGrey3(context),
+          ),
           const SizedBox(height: 16),
           Text('Error al cargar: $error', textAlign: TextAlign.center),
           const SizedBox(height: 16),
           FilledButton.tonal(
             onPressed: _cargarProducto,
-            child: const Text('Reintentar'),
+            child: Text('Reintentar'),
           ),
         ],
       ),
@@ -243,10 +246,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       expandedHeight: 280,
       pinned: true,
       stretch: true,
-      backgroundColor: CupertinoColors.systemGroupedBackground.resolveFrom(
-        context,
-      ),
-      foregroundColor: CupertinoColors.label.resolveFrom(context),
+      backgroundColor: JPCupertinoColors.background(context),
+      foregroundColor: JPCupertinoColors.label(context),
       actions: [
         IconButton(
           onPressed: () => _abrirEdicion(producto),
@@ -263,7 +264,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ],
             ),
-            child: const Icon(Icons.edit, color: Colors.white, size: 20),
+            child: Icon(Icons.edit, color: JPCupertinoColors.white, size: 20),
           ),
         ),
         IconButton(
@@ -271,7 +272,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           icon: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.red.shade400,
+              color: JPCupertinoColors.systemRed(context),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
@@ -281,9 +282,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ],
             ),
-            child: const Icon(
+            child: Icon(
               Icons.delete_outline,
-              color: Colors.white,
+              color: JPCupertinoColors.white,
               size: 20,
             ),
           ),
@@ -298,11 +299,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               tag: 'producto-${producto.id}',
               child: Container(
                 decoration: BoxDecoration(
-                  color: CupertinoColors.systemBackground.resolveFrom(context),
+                  color: JPCupertinoColors.surface(context),
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
+                      color: JPCupertinoColors.black.withValues(alpha: 0.1),
                       blurRadius: 15,
                       offset: const Offset(0, 5),
                     ),
@@ -330,9 +331,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget _buildPlaceholder() {
     return Container(
-      color: Colors.grey.shade300,
-      child: const Center(
-        child: Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
+      color: JPCupertinoColors.systemGrey4(context),
+      child: Center(
+        child: Icon(
+          Icons.image_not_supported,
+          size: 50,
+          color: JPCupertinoColors.systemGrey(context),
+        ),
       ),
     );
   }
@@ -347,13 +352,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             children: [
               _StatusChip(
                 label: producto.disponible ? 'Activo' : 'Pausado',
-                color: producto.disponible ? Colors.green : Colors.orange,
+                color: producto.disponible
+                    ? JPCupertinoColors.systemGreen(context)
+                    : JPCupertinoColors.systemOrange(context),
               ),
               if (producto.stock != null)
                 Text(
                   'Stock: ${producto.stock}',
                   style: TextStyle(
-                    color: (producto.stock ?? 0) < 5 ? Colors.red : Colors.grey,
+                    color: (producto.stock ?? 0) < 5
+                        ? Colors.red
+                        : JPCupertinoColors.systemGrey(context),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -362,15 +371,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           const SizedBox(height: 12),
           Text(
             producto.nombre,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(
             producto.precioFormateado,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: Colors.blueAccent,
+              color: JPCupertinoColors.systemBlue(context),
             ),
           ),
           const SizedBox(height: 12),
@@ -378,7 +387,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             producto.descripcion,
             style: TextStyle(
               fontSize: 15,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
             ),
           ),
         ],
@@ -398,7 +407,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Reseñas recientes',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
@@ -414,7 +423,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   );
                 },
-                child: const Text('Ver todas'),
+                child: Text('Ver todas'),
               ),
             ],
           ),
@@ -435,7 +444,7 @@ class _CardBase extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: JPCupertinoColors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -486,9 +495,9 @@ class _ReviewItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: JPCupertinoColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: JPCupertinoColors.systemGrey5(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -497,25 +506,25 @@ class _ReviewItem extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 12,
-                backgroundColor: Colors.grey.shade200,
+                backgroundColor: JPCupertinoColors.systemGrey5(context),
                 child: Text(
                   resena.usuario[0].toUpperCase(),
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: JPCupertinoColors.systemGrey(context),
+                  ),
                 ),
               ),
               const SizedBox(width: 8),
               Text(
                 resena.usuario,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
               ),
               const Spacer(),
               Text(
                 '${resena.estrellas} ★',
-                style: const TextStyle(
-                  color: Colors.amber,
+                style: TextStyle(
+                  color: JPCupertinoColors.systemYellow(context),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -525,13 +534,19 @@ class _ReviewItem extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               resena.comentario!,
-              style: TextStyle(fontSize: 13, color: Colors.grey.shade800),
+              style: TextStyle(
+                fontSize: 13,
+                color: JPCupertinoColors.label(context),
+              ),
             ),
           ],
           const SizedBox(height: 4),
           Text(
             _formatFecha(resena.fecha),
-            style: TextStyle(fontSize: 11, color: Colors.grey.shade400),
+            style: TextStyle(
+              fontSize: 11,
+              color: JPCupertinoColors.systemGrey3(context),
+            ),
           ),
         ],
       ),

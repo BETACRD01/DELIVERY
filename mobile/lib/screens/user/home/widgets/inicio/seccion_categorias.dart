@@ -1,4 +1,5 @@
 // lib/screens/user/inicio/widgets/seccion_categorias.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +28,7 @@ class SeccionCategorias extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildHeader(context),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         if (loading)
           _buildLoadingState()
         else if (categorias.isEmpty)
@@ -40,7 +41,7 @@ class SeccionCategorias extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -49,14 +50,14 @@ class SeccionCategorias extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
               letterSpacing: -0.5,
             ),
           ),
           if (onVerTodo != null)
             GestureDetector(
               onTap: onVerTodo,
-              child: const Text(
+              child: Text(
                 'Ver todo',
                 style: TextStyle(
                   color: AppColorsPrimary.main,
@@ -79,7 +80,7 @@ class SeccionCategorias extends StatelessWidget {
     return SizedBox(
       height: 110, // Increased slightly for spacing
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         itemCount: visibles.length,
@@ -97,29 +98,29 @@ class SeccionCategorias extends StatelessWidget {
     return SizedBox(
       height: 100,
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: 5,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(right: 16),
+            padding: EdgeInsets.only(right: 16),
             child: Column(
               children: [
                 Container(
                   height: 60,
                   width: 60,
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey6.resolveFrom(context),
+                    color: JPCupertinoColors.systemGrey6(context),
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Container(
                   height: 12,
                   width: 50,
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey6.resolveFrom(context),
+                    color: JPCupertinoColors.systemGrey6(context),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -138,7 +139,7 @@ class SeccionCategorias extends StatelessWidget {
         child: Text(
           'No hay categorías disponibles',
           style: TextStyle(
-            color: CupertinoColors.secondaryLabel.resolveFrom(context),
+            color: JPCupertinoColors.secondaryLabel(context),
           ),
         ),
       ),
@@ -156,7 +157,7 @@ class _CategoriaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 16),
+      padding: EdgeInsets.only(right: 16),
       child: GestureDetector(
         onTap: onTap,
         child: Column(
@@ -173,10 +174,10 @@ class _CategoriaItem extends StatelessWidget {
                         alpha: 0.1,
                       ),
                 borderRadius: BorderRadius.circular(20), // iOS squaricle-ish
-                border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+                border: Border.all(color: JPCupertinoColors.systemGrey(context).withValues(alpha: 0.1)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: JPCupertinoColors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -187,7 +188,7 @@ class _CategoriaItem extends StatelessWidget {
                 child: _buildContenidoVisual(),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             SizedBox(
               width: 70,
               child: Text(
@@ -195,7 +196,7 @@ class _CategoriaItem extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
-                  color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  color: JPCupertinoColors.secondaryLabel(context),
                   letterSpacing: -0.2,
                 ),
                 textAlign: TextAlign.center,

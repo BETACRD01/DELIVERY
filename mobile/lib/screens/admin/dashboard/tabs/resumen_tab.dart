@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../controllers/admin/dashboard_controller.dart';
-import '../../../../providers/core/theme_provider.dart';
-import '../../../../theme/primary_colors.dart';
+import '../../../../theme/jp_theme.dart';
 import '../widgets/estadisticas_grid.dart';
 import '../widgets/solicitudes_section.dart';
 
@@ -12,14 +11,12 @@ class ResumenTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-
     return Consumer<DashboardController>(
       builder: (context, controller, child) {
         return RefreshIndicator(
           onRefresh: controller.cargarDatos,
-          color: AppColorsPrimary.main,
-          backgroundColor: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+          color: JPCupertinoColors.primary(context),
+          backgroundColor: JPCupertinoColors.surface(context),
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics(),
@@ -29,12 +26,12 @@ class ResumenTab extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
-                    _buildSeccionTitulo('Estadísticas Generales', isDark),
+                    _buildSeccionTitulo('Estadísticas Generales', context),
                     const SizedBox(height: 12),
                     EstadisticasGrid(controller: controller),
                     const SizedBox(height: 32),
                     if (controller.solicitudesPendientesCount > 0) ...[
-                      _buildSeccionTitulo('Solicitudes Pendientes', isDark),
+                      _buildSeccionTitulo('Solicitudes Pendientes', context),
                       const SizedBox(height: 12),
                       SolicitudesSection(controller: controller),
                       const SizedBox(height: 24),
@@ -49,7 +46,7 @@ class ResumenTab extends StatelessWidget {
     );
   }
 
-  Widget _buildSeccionTitulo(String titulo, bool isDark) {
+  Widget _buildSeccionTitulo(String titulo, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 4),
       child: Text(
@@ -57,7 +54,7 @@ class ResumenTab extends StatelessWidget {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: isDark ? Colors.grey[400] : Colors.grey[600],
+          color: JPCupertinoColors.secondaryLabel(context),
           letterSpacing: 0.5,
         ),
       ),

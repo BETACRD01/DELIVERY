@@ -1,9 +1,9 @@
 // lib/screens/supplier/screens/pantalla_ayuda_proveedor.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../../theme/primary_colors.dart';
 
 /// Pantalla de ayuda y soporte del proveedor - Estilo iOS nativo
@@ -13,20 +13,20 @@ class PantallaAyudaProveedor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground,
+      backgroundColor: JPCupertinoColors.background(context),
       navigationBar: CupertinoNavigationBar(
         middle: const Text('Ayuda y Soporte'),
-        backgroundColor: CupertinoColors.systemBackground
-            .resolveFrom(context)
-            .withValues(alpha: 0.9),
+        backgroundColor: JPCupertinoColors.surface(
+          context,
+        ).withValues(alpha: 0.9),
         border: null,
       ),
       child: SafeArea(
         child: DefaultTextStyle(
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: '.SF Pro Text',
             fontSize: 17,
-            color: CupertinoColors.label,
+            color: JPCupertinoColors.label(context),
             decoration: TextDecoration.none,
           ),
           child: ListView(
@@ -77,20 +77,20 @@ class PantallaAyudaProveedor extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: JPCupertinoColors.white.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               CupertinoIcons.chat_bubble_2_fill,
-              color: Colors.white,
+              color: JPCupertinoColors.white,
               size: 36,
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             '¿En qué podemos ayudarte?',
             style: TextStyle(
-              color: Colors.white,
+              color: JPCupertinoColors.white,
               fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
@@ -99,7 +99,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
           Text(
             'Estamos aquí para resolver tus dudas',
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.9),
+              color: JPCupertinoColors.white.withValues(alpha: 0.9),
               fontSize: 14,
             ),
           ),
@@ -116,7 +116,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w500,
-          color: CupertinoColors.systemGrey.resolveFrom(context),
+          color: JPCupertinoColors.systemGrey(context),
           letterSpacing: -0.08,
         ),
       ),
@@ -126,7 +126,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
   Widget _buildSettingsCard(BuildContext context, List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(children: children),
@@ -138,7 +138,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
       padding: const EdgeInsets.only(left: 60),
       child: Container(
         height: 0.5,
-        color: CupertinoColors.separator.resolveFrom(context),
+        color: JPCupertinoColors.separator(context),
       ),
     );
   }
@@ -148,7 +148,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
       _buildContactTile(
         context,
         icon: CupertinoIcons.chat_bubble_text_fill,
-        iconBgColor: CupertinoColors.activeGreen,
+        iconBgColor: JPCupertinoColors.success(context),
         title: 'Chat en vivo',
         subtitle: 'Respuesta inmediata',
         onTap: () => _abrirChat(context),
@@ -205,7 +205,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
                 color: iconBgColor,
                 borderRadius: BorderRadius.circular(7),
               ),
-              child: Icon(icon, color: Colors.white, size: 18),
+              child: Icon(icon, color: JPCupertinoColors.white, size: 18),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -214,9 +214,9 @@ class PantallaAyudaProveedor extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
-                      color: CupertinoColors.label,
+                      color: JPCupertinoColors.label(context),
                       fontWeight: FontWeight.w400,
                     ),
                     maxLines: 1,
@@ -226,9 +226,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
                     subtitle,
                     style: TextStyle(
                       fontSize: 12,
-                      color: CupertinoColors.secondaryLabel.resolveFrom(
-                        context,
-                      ),
+                      color: JPCupertinoColors.secondaryLabel(context),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -239,7 +237,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
             Icon(
               CupertinoIcons.chevron_forward,
               size: 14,
-              color: CupertinoColors.systemGrey3.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey3(context),
             ),
           ],
         ),
@@ -347,7 +345,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
                 color: AppColorsPrimary.main,
                 borderRadius: BorderRadius.circular(7),
               ),
-              child: Icon(guia.icono, color: Colors.white, size: 18),
+              child: Icon(guia.icono, color: JPCupertinoColors.white, size: 18),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -356,9 +354,9 @@ class PantallaAyudaProveedor extends StatelessWidget {
                 children: [
                   Text(
                     guia.titulo,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
-                      color: CupertinoColors.label,
+                      color: JPCupertinoColors.label(context),
                       fontWeight: FontWeight.w400,
                     ),
                     maxLines: 1,
@@ -368,9 +366,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
                     guia.subtitulo,
                     style: TextStyle(
                       fontSize: 12,
-                      color: CupertinoColors.secondaryLabel.resolveFrom(
-                        context,
-                      ),
+                      color: JPCupertinoColors.secondaryLabel(context),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -381,7 +377,7 @@ class PantallaAyudaProveedor extends StatelessWidget {
             Icon(
               CupertinoIcons.chevron_forward,
               size: 14,
-              color: CupertinoColors.systemGrey3.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey3(context),
             ),
           ],
         ),
@@ -455,9 +451,9 @@ class _FAQItemState extends State<_FAQItem> {
                 Expanded(
                   child: Text(
                     widget.faq.pregunta,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
-                      color: CupertinoColors.label,
+                      color: JPCupertinoColors.label(context),
                       fontWeight: FontWeight.w400,
                     ),
                     maxLines: 3,
@@ -468,7 +464,7 @@ class _FAQItemState extends State<_FAQItem> {
                   _expandido
                       ? CupertinoIcons.chevron_up
                       : CupertinoIcons.chevron_down,
-                  color: CupertinoColors.systemGrey3.resolveFrom(context),
+                  color: JPCupertinoColors.systemGrey3(context),
                   size: 16,
                 ),
               ],
@@ -479,7 +475,7 @@ class _FAQItemState extends State<_FAQItem> {
                 widget.faq.respuesta,
                 style: TextStyle(
                   fontSize: 14,
-                  color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  color: JPCupertinoColors.secondaryLabel(context),
                   height: 1.4,
                 ),
                 maxLines: 10,

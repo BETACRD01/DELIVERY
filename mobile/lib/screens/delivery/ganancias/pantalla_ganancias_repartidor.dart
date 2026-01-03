@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile/models/orders/entrega_historial.dart';
 import 'package:mobile/services/repartidor/repartidor_service.dart';
 import 'package:mobile/screens/delivery/historial/pantalla_detalle_entrega.dart';
+import '../../../theme/jp_theme.dart';
 
 /// Pantalla de ganancias vinculada al backend y alineada al diseño tipo iOS.
 class PantallaGananciasRepartidor extends StatefulWidget {
@@ -18,18 +19,14 @@ class PantallaGananciasRepartidor extends StatefulWidget {
 
 class _PantallaGananciasRepartidorState
     extends State<PantallaGananciasRepartidor> {
-  static const Color _accent = Color(0xFF0CB7F2); // Celeste corporativo
-  static const Color _success = Color(0xFF34C759);
-
   // Dynamic Colors
-  Color get _surface =>
-      CupertinoColors.systemGroupedBackground.resolveFrom(context);
-  Color get _cardBg =>
-      CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context);
-  Color get _cardBorder => CupertinoColors.separator.resolveFrom(context);
-  Color get _textPrimary => CupertinoColors.label.resolveFrom(context);
-  Color get _textSecondary =>
-      CupertinoColors.secondaryLabel.resolveFrom(context);
+  Color get _surface => JPCupertinoColors.background(context);
+  Color get _cardBg => JPCupertinoColors.secondarySurface(context);
+  Color get _cardBorder => JPCupertinoColors.separator(context);
+  Color get _textPrimary => JPCupertinoColors.label(context);
+  Color get _textSecondary => JPCupertinoColors.secondaryLabel(context);
+  Color get _accent => JPCupertinoColors.systemBlue(context);
+  Color get _success => JPCupertinoColors.success(context);
 
   final RepartidorService _service = RepartidorService();
   final DateFormat _fechaFormat = DateFormat('dd/MM/yyyy HH:mm');
@@ -148,9 +145,7 @@ class _PantallaGananciasRepartidorState
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.secondaryLabel.resolveFrom(
-                          context,
-                        ),
+                        color: JPCupertinoColors.secondaryLabel(context),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -365,11 +360,7 @@ class _PantallaGananciasRepartidorState
       ),
       child: Column(
         children: [
-          const Icon(
-            CupertinoIcons.exclamationmark_circle,
-            color: _accent,
-            size: 48,
-          ),
+          Icon(CupertinoIcons.exclamationmark_circle, color: _accent, size: 48),
           const SizedBox(height: 16),
           const Text(
             'Error al cargar ganancias',
@@ -405,7 +396,7 @@ class _PantallaGananciasRepartidorState
           Icon(
             CupertinoIcons.money_dollar_circle,
             size: 48,
-            color: CupertinoColors.systemGrey3.resolveFrom(context),
+            color: JPCupertinoColors.systemGrey3(context),
           ),
           const SizedBox(height: 16),
           Text(

@@ -1,13 +1,12 @@
 // lib/screens/supplier/perfil/perfil_proveedor_panel.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
-
 import '../../../config/network/api_config.dart';
 import '../../../config/routing/rutas.dart';
 import '../../../controllers/supplier/supplier_controller.dart';
@@ -107,9 +106,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground.resolveFrom(
-        context,
-      ),
+      backgroundColor: JPCupertinoColors.background(context),
       body: Consumer<SupplierController>(
         builder: (context, controller, child) {
           if (controller.loading) {
@@ -204,7 +201,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                       _buildDivider(),
                       _buildSettingsTile(
                         icon: CupertinoIcons.square_arrow_left,
-                        iconBgColor: CupertinoColors.systemRed,
+                        iconBgColor: JPCupertinoColors.error(context),
                         title: 'Cerrar Sesión',
                         onTap: _cerrarSesion,
                       ),
@@ -221,9 +218,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
 
   Widget _buildHeader(SupplierController controller) {
     return Container(
-      decoration: BoxDecoration(
-        color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
-      ),
+      decoration: BoxDecoration(color: JPCupertinoColors.background(context)),
       child: SafeArea(
         bottom: false,
         child: Column(
@@ -238,7 +233,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                   Text(
                     'Mi Perfil',
                     style: TextStyle(
-                      color: CupertinoColors.label.resolveFrom(context),
+                      color: JPCupertinoColors.label(context),
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
                     ),
@@ -246,7 +241,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                   if (!_editando)
                     CupertinoButton(
                       padding: EdgeInsets.zero,
-                      child: const Text(
+                      child: Text(
                         'Editar',
                         style: TextStyle(
                           color: AppColorsPrimary.main,
@@ -267,11 +262,11 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
               margin: const EdgeInsets.symmetric(horizontal: 16),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               decoration: BoxDecoration(
-                color: CupertinoColors.systemBackground.resolveFrom(context),
+                color: JPCupertinoColors.surface(context),
                 borderRadius: BorderRadius.circular(14),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.04),
+                    color: JPCupertinoColors.black.withValues(alpha: 0.04),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -298,8 +293,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                           child: Container(
                             padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color: CupertinoColors.systemBackground
-                                  .resolveFrom(context),
+                              color: JPCupertinoColors.surface(context),
                               shape: BoxShape.circle,
                             ),
                             child: _buildLogoImage(controller),
@@ -315,15 +309,14 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                                 color: AppColorsPrimary.main,
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: CupertinoColors.systemBackground
-                                      .resolveFrom(context),
+                                  color: JPCupertinoColors.surface(context),
                                   width: 2,
                                 ),
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 CupertinoIcons.camera_fill,
                                 size: 10,
-                                color: CupertinoColors.white,
+                                color: JPCupertinoColors.white,
                               ),
                             ),
                           ),
@@ -343,7 +336,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                               ? controller.nombreNegocio
                               : 'Mi Negocio',
                           style: TextStyle(
-                            color: CupertinoColors.label.resolveFrom(context),
+                            color: JPCupertinoColors.label(context),
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                             letterSpacing: -0.3,
@@ -357,9 +350,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                               ? controller.email
                               : 'Sin email',
                           style: TextStyle(
-                            color: CupertinoColors.secondaryLabel.resolveFrom(
-                              context,
-                            ),
+                            color: JPCupertinoColors.secondaryLabel(context),
                             fontSize: 13,
                           ),
                           maxLines: 1,
@@ -373,22 +364,22 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
-                              color: CupertinoColors.activeGreen,
+                              color: JPCupertinoColors.success(context),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
                                   CupertinoIcons.checkmark_seal_fill,
                                   size: 10,
-                                  color: Colors.white,
+                                  color: JPCupertinoColors.white,
                                 ),
                                 SizedBox(width: 4),
                                 Text(
                                   'Verificado',
                                   style: TextStyle(
-                                    color: CupertinoColors.white,
+                                    color: JPCupertinoColors.white,
                                     fontSize: 10,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -454,13 +445,13 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
       width: 64,
       height: 64,
       decoration: BoxDecoration(
-        color: CupertinoColors.systemGrey5.resolveFrom(context),
+        color: JPCupertinoColors.systemGrey5(context),
         shape: BoxShape.circle,
       ),
       child: Icon(
         CupertinoIcons.building_2_fill,
         size: 28,
-        color: CupertinoColors.systemGrey.resolveFrom(context),
+        color: JPCupertinoColors.systemGrey(context),
       ),
     );
   }
@@ -491,7 +482,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: CupertinoColors.systemGrey.resolveFrom(context),
+            color: JPCupertinoColors.systemGrey(context),
             letterSpacing: -0.08,
           ),
         ),
@@ -502,7 +493,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
   Widget _buildSettingsCard(List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(children: children),
@@ -530,7 +521,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                 color: iconBgColor,
                 borderRadius: BorderRadius.circular(7),
               ),
-              child: Icon(icon, color: CupertinoColors.white, size: 18),
+              child: Icon(icon, color: JPCupertinoColors.white, size: 18),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -541,7 +532,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                     title,
                     style: TextStyle(
                       fontSize: 16,
-                      color: CupertinoColors.label.resolveFrom(context),
+                      color: JPCupertinoColors.label(context),
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -550,9 +541,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                       subtitle,
                       style: TextStyle(
                         fontSize: 12,
-                        color: CupertinoColors.secondaryLabel.resolveFrom(
-                          context,
-                        ),
+                        color: JPCupertinoColors.secondaryLabel(context),
                       ),
                     ),
                 ],
@@ -561,7 +550,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
             Icon(
               CupertinoIcons.chevron_forward,
               size: 14,
-              color: CupertinoColors.systemGrey3.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey3(context),
             ),
           ],
         ),
@@ -574,7 +563,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
       padding: const EdgeInsets.only(left: 60),
       child: Container(
         height: 0.5,
-        color: CupertinoColors.separator.resolveFrom(context),
+        color: JPCupertinoColors.separator(context),
       ),
     );
   }
@@ -714,7 +703,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                 color: iconBgColor,
                 borderRadius: BorderRadius.circular(7),
               ),
-              child: Icon(icon, color: CupertinoColors.white, size: 18),
+              child: Icon(icon, color: JPCupertinoColors.white, size: 18),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -725,9 +714,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                     label,
                     style: TextStyle(
                       fontSize: 12,
-                      color: CupertinoColors.secondaryLabel.resolveFrom(
-                        context,
-                      ),
+                      color: JPCupertinoColors.secondaryLabel(context),
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -735,7 +722,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                     value.isNotEmpty ? value : '---',
                     style: TextStyle(
                       fontSize: 16,
-                      color: CupertinoColors.label.resolveFrom(context),
+                      color: JPCupertinoColors.label(context),
                       fontWeight: FontWeight.w400,
                     ),
                     maxLines: maxLines,
@@ -773,7 +760,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
               color: iconBgColor,
               borderRadius: BorderRadius.circular(7),
             ),
-            child: Icon(icon, color: CupertinoColors.white, size: 18),
+            child: Icon(icon, color: JPCupertinoColors.white, size: 18),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -783,7 +770,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
               maxLines: maxLines,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: BoxDecoration(
-                color: CupertinoColors.systemGrey6.resolveFrom(context),
+                color: JPCupertinoColors.systemGrey6(context),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -805,13 +792,13 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
               color: iconBgColor,
               borderRadius: BorderRadius.circular(7),
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: JPCupertinoColors.white, size: 18),
           ),
           const SizedBox(width: 14),
           Expanded(
             child: CupertinoButton(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              color: CupertinoColors.systemGrey6.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey6(context),
               borderRadius: BorderRadius.circular(8),
               onPressed: () => _mostrarPickerTipo(),
               child: Row(
@@ -820,14 +807,14 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                   Text(
                     _getNombreTipo(_tipoProveedorSeleccionado),
                     style: TextStyle(
-                      color: CupertinoColors.label.resolveFrom(context),
+                      color: JPCupertinoColors.label(context),
                       fontSize: 16,
                     ),
                   ),
                   Icon(
                     CupertinoIcons.chevron_down,
                     size: 16,
-                    color: CupertinoColors.systemGrey.resolveFrom(context),
+                    color: JPCupertinoColors.systemGrey(context),
                   ),
                 ],
               ),
@@ -850,7 +837,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
               color: iconBgColor,
               borderRadius: BorderRadius.circular(7),
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: JPCupertinoColors.white, size: 18),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -897,13 +884,13 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
               color: iconBgColor,
               borderRadius: BorderRadius.circular(7),
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: JPCupertinoColors.white, size: 18),
           ),
           const SizedBox(width: 14),
           Expanded(
             child: CupertinoButton(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              color: CupertinoColors.systemGrey6.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey6(context),
               borderRadius: BorderRadius.circular(8),
               onPressed: () => _seleccionarHora(controller),
               child: Row(
@@ -915,17 +902,15 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
                         : label,
                     style: TextStyle(
                       color: controller.text.isNotEmpty
-                          ? CupertinoColors.label.resolveFrom(context)
-                          : CupertinoColors.placeholderText.resolveFrom(
-                              context,
-                            ),
+                          ? JPCupertinoColors.label(context)
+                          : JPCupertinoColors.placeholderText(context),
                       fontSize: 16,
                     ),
                   ),
                   Icon(
                     CupertinoIcons.clock,
                     size: 16,
-                    color: CupertinoColors.systemGrey.resolveFrom(context),
+                    color: JPCupertinoColors.systemGrey(context),
                   ),
                 ],
               ),
@@ -941,25 +926,25 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
       margin: const EdgeInsets.only(top: 16),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemRed.withValues(alpha: 0.1),
+        color: JPCupertinoColors.error(context).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: CupertinoColors.systemRed.withValues(alpha: 0.3),
+          color: JPCupertinoColors.error(context).withValues(alpha: 0.3),
         ),
       ),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             CupertinoIcons.exclamationmark_circle_fill,
-            color: CupertinoColors.systemRed,
+            color: JPCupertinoColors.error(context),
             size: 20,
           ),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
               _error!,
-              style: const TextStyle(
-                color: CupertinoColors.systemRed,
+              style: TextStyle(
+                color: JPCupertinoColors.error(context),
                 fontSize: 13,
               ),
             ),
@@ -975,14 +960,12 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
         Expanded(
           child: CupertinoButton(
             padding: const EdgeInsets.symmetric(vertical: 14),
-            color: CupertinoColors.systemGrey5.resolveFrom(context),
+            color: JPCupertinoColors.systemGrey5(context),
             borderRadius: BorderRadius.circular(10),
             onPressed: _guardando ? null : _cancelarEdicion,
             child: Text(
               'Cancelar',
-              style: TextStyle(
-                color: CupertinoColors.label.resolveFrom(context),
-              ),
+              style: TextStyle(color: JPCupertinoColors.label(context)),
             ),
           ),
         ),
@@ -994,11 +977,11 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
             borderRadius: BorderRadius.circular(10),
             onPressed: _guardando ? null : _guardarCambios,
             child: _guardando
-                ? const CupertinoActivityIndicator(color: Colors.white)
-                : const Text(
+                ? CupertinoActivityIndicator(color: JPCupertinoColors.white)
+                : Text(
                     'Guardar',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: JPCupertinoColors.white,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -1044,7 +1027,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
       context: context,
       builder: (context) => Container(
         height: 250,
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         child: Column(
           children: [
             Container(
@@ -1053,7 +1036,7 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
               alignment: Alignment.centerRight,
               child: CupertinoButton(
                 padding: EdgeInsets.zero,
-                child: const Text('Listo'),
+                child: Text('Listo'),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -1187,8 +1170,8 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
       SnackBar(
         content: Text(mensaje),
         backgroundColor: esError
-            ? CupertinoColors.systemRed
-            : CupertinoColors.activeGreen,
+            ? JPCupertinoColors.error(context)
+            : JPCupertinoColors.success(context),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -1203,13 +1186,13 @@ class _PerfilProveedorEditableState extends State<PerfilProveedorEditable> {
         content: const Text('¿Estás seguro que deseas salir?'),
         actions: [
           CupertinoDialogAction(
-            child: const Text('Cancelar'),
+            child: Text('Cancelar'),
             onPressed: () => Navigator.pop(context, false),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Salir'),
+            child: Text('Salir'),
           ),
         ],
       ),

@@ -138,28 +138,24 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
         context,
       ),
       appBar: AppBar(
-        backgroundColor: JPColors.primary,
-        foregroundColor: CupertinoColors.white,
-        title: const Text('Menú Completo'),
+        backgroundColor: JPCupertinoColors.primary(context),
+        foregroundColor: JPCupertinoColors.white,
+        title: Text('Menú Completo'),
         elevation: 0,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: _mostrarBusqueda,
-          ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: _mostrarFiltros,
-          ),
+          IconButton(icon: Icon(Icons.search), onPressed: _mostrarBusqueda),
+          IconButton(icon: Icon(Icons.filter_list), onPressed: _mostrarFiltros),
         ],
         bottom: _loading || _categorias.isEmpty
             ? null
             : TabBar(
                 controller: _tabController,
                 isScrollable: true,
-                indicatorColor: Colors.white,
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.white70,
+                indicatorColor: JPCupertinoColors.white,
+                labelColor: JPCupertinoColors.white,
+                unselectedLabelColor: JPCupertinoColors.white.withValues(
+                  alpha: 0.7,
+                ),
                 onTap: (_) => setState(() {}),
                 tabs: _categorias.map((categoria) {
                   return Tab(
@@ -170,21 +166,23 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
                           Container(
                             width: 24,
                             height: 24,
-                            margin: const EdgeInsets.only(right: 8),
+                            margin: EdgeInsets.only(right: 8),
                             child: ClipOval(
                               child: Image.network(
                                 categoria.imagenUrl!,
                                 fit: BoxFit.cover,
-                                errorBuilder: (_, _, _) => const Icon(
+                                errorBuilder: (_, _, _) => Icon(
                                   Icons.category,
                                   size: 16,
-                                  color: Colors.white70,
+                                  color: JPCupertinoColors.white.withValues(
+                                    alpha: 0.7,
+                                  ),
                                 ),
                               ),
                             ),
                           )
                         else
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.category, size: 16),
                           ),
@@ -209,14 +207,20 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
-            Text(_error, style: const TextStyle(color: JPColors.textSecondary)),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _cargarDatos,
-              child: const Text('Reintentar'),
+            Icon(
+              Icons.error_outline,
+              size: 64,
+              color: JPCupertinoColors.systemGrey3(context),
             ),
+            SizedBox(height: 16),
+            Text(
+              _error,
+              style: TextStyle(
+                color: JPCupertinoColors.secondaryLabel(context),
+              ),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(onPressed: _cargarDatos, child: Text('Reintentar')),
           ],
         ),
       );
@@ -242,11 +246,17 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
-            const Text(
+            Icon(
+              Icons.search_off,
+              size: 64,
+              color: JPCupertinoColors.systemGrey3(context),
+            ),
+            SizedBox(height: 16),
+            Text(
               'No se encontraron productos',
-              style: TextStyle(color: JPColors.textSecondary),
+              style: TextStyle(
+                color: JPCupertinoColors.secondaryLabel(context),
+              ),
             ),
             if (_busqueda.isNotEmpty ||
                 _filtroPrecionMin != null ||
@@ -261,7 +271,7 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
                     _filtroRatingMin = null;
                   });
                 },
-                child: const Text('Limpiar filtros'),
+                child: Text('Limpiar filtros'),
               ),
           ],
         ),
@@ -271,7 +281,7 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
     return RefreshIndicator(
       onRefresh: _cargarDatos,
       child: ListView.builder(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         itemCount: productos.length,
         itemBuilder: (context, index) {
           return _ProductoListItem(producto: productos[index]);
@@ -286,7 +296,7 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
       builder: (context) {
         String busquedaTemp = _busqueda;
         return AlertDialog(
-          title: const Text('Buscar producto'),
+          title: Text('Buscar producto'),
           content: TextField(
             autofocus: true,
             decoration: const InputDecoration(
@@ -302,14 +312,14 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar'),
+              child: Text('Cancelar'),
             ),
             ElevatedButton(
               onPressed: () {
                 setState(() => _busqueda = busquedaTemp);
                 Navigator.pop(context);
               },
-              child: const Text('Buscar'),
+              child: Text('Buscar'),
             ),
           ],
         );
@@ -330,7 +340,7 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
             String ordenamientoTemp = _ordenamiento;
 
             return Container(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -338,7 +348,7 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'Filtros y Ordenamiento',
                         style: TextStyle(
                           fontSize: 20,
@@ -354,19 +364,19 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
                             ordenamientoTemp = 'nombre';
                           });
                         },
-                        child: const Text('Limpiar'),
+                        child: Text('Limpiar'),
                       ),
                     ],
                   ),
                   const Divider(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // Ordenamiento
-                  const Text(
+                  Text(
                     'Ordenar por',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
                     children: [
@@ -398,14 +408,14 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Filtro de precio
-                  const Text(
+                  Text(
                     'Rango de precio',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Row(
                     children: [
                       Expanded(
@@ -420,7 +430,7 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
                           },
                         ),
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16),
                       Expanded(
                         child: TextField(
                           decoration: const InputDecoration(
@@ -435,14 +445,14 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Filtro de rating
-                  const Text(
+                  Text(
                     'Calificación mínima',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
                     children: [
@@ -468,7 +478,7 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Botón aplicar
                   SizedBox(
@@ -484,11 +494,11 @@ class _PantallaMenuCompletoState extends State<PantallaMenuCompleto>
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: JPColors.primary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: JPCupertinoColors.primary(context),
+                        foregroundColor: JPCupertinoColors.white,
+                        padding: EdgeInsets.symmetric(vertical: 16),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Aplicar Filtros',
                         style: TextStyle(
                           fontSize: 16,
@@ -521,8 +531,8 @@ class _ProductoListItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => Rutas.irAProductoDetalle(context, producto),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(12),
+        margin: EdgeInsets.only(bottom: 16),
+        padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
             context,
@@ -530,7 +540,7 @@ class _ProductoListItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
+              color: JPCupertinoColors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -543,7 +553,7 @@ class _ProductoListItem extends StatelessWidget {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: JPCupertinoColors.systemGrey5(context),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Stack(
@@ -552,22 +562,22 @@ class _ProductoListItem extends StatelessWidget {
                     child: Icon(
                       Icons.restaurant_menu,
                       size: 50,
-                      color: Colors.grey[400],
+                      color: JPCupertinoColors.systemGrey3(context),
                     ),
                   ),
                   if (!producto.disponible)
                     Positioned.fill(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.5),
+                          color: JPCupertinoColors.black.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             'NO\nDISPONIBLE',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: JPCupertinoColors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 11,
                             ),
@@ -578,7 +588,7 @@ class _ProductoListItem extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
 
             // Información
             Expanded(
@@ -587,46 +597,46 @@ class _ProductoListItem extends StatelessWidget {
                 children: [
                   Text(
                     producto.nombre,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    producto.descripcion,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: JPCupertinoColors.systemGrey2(context),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    producto.descripcion,
-                    style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 8),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         producto.precioFormateado,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: JPColors.primary,
+                          color: JPCupertinoColors.primary(context),
                         ),
                       ),
                       if (producto.disponible)
                         GestureDetector(
                           onTap: () => _agregarAlCarrito(context),
                           child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: const BoxDecoration(
-                              color: JPColors.primary,
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: JPCupertinoColors.primary(context),
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.add_shopping_cart,
                               size: 20,
-                              color: Colors.white,
+                              color: JPCupertinoColors.white,
                             ),
                           ),
                         ),
@@ -651,7 +661,7 @@ class _ProductoListItem extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(carrito.error ?? 'Error al agregar producto'),
-          backgroundColor: JPColors.error,
+          backgroundColor: JPCupertinoColors.error(context),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -675,17 +685,19 @@ class _FiltroChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: selected
-              ? JPColors.primary
-              : CupertinoColors.systemGrey5.resolveFrom(context),
+              ? JPCupertinoColors.primary(context)
+              : JPCupertinoColors.systemGrey5(context),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: selected ? Colors.white : JPColors.textPrimary,
+            color: selected
+                ? JPCupertinoColors.white
+                : JPCupertinoColors.label(context),
             fontWeight: selected ? FontWeight.bold : FontWeight.normal,
             fontSize: 14,
           ),

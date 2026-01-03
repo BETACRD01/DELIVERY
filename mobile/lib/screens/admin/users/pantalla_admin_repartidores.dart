@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 import '../../../apis/admin/repartidores_admin_api.dart';
-import '../../../../providers/core/theme_provider.dart';
-import '../../../../theme/primary_colors.dart';
-import '../dashboard/constants/dashboard_colors.dart';
+import '../../../../theme/jp_theme.dart';
 
 class PantallaAdminRepartidores extends StatefulWidget {
   const PantallaAdminRepartidores({super.key});
@@ -83,10 +80,10 @@ class _PantallaAdminRepartidoresState extends State<PantallaAdminRepartidores> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
-    final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-    final primaryColor = AppColorsPrimary.main;
+    // final isDark = Provider.of<ThemeProvider>(context).isDarkMode; // Unused
+    final bgColor = JPCupertinoColors.background(context);
+    final cardColor = JPCupertinoColors.surface(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -97,7 +94,7 @@ class _PantallaAdminRepartidoresState extends State<PantallaAdminRepartidores> {
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
@@ -117,8 +114,8 @@ class _PantallaAdminRepartidoresState extends State<PantallaAdminRepartidores> {
               controller: _searchController,
               onSubmitted: (_) => _cargar(),
               placeholder: 'Buscar repartidor',
-              style: TextStyle(color: isDark ? Colors.white : Colors.black),
-              itemColor: isDark ? Colors.grey[400]! : Colors.grey[600]!,
+              style: TextStyle(color: JPCupertinoColors.label(context)),
+              itemColor: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
 
@@ -132,7 +129,7 @@ class _PantallaAdminRepartidoresState extends State<PantallaAdminRepartidores> {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    color: JPCupertinoColors.secondaryLabel(context),
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -170,13 +167,13 @@ class _PantallaAdminRepartidoresState extends State<PantallaAdminRepartidores> {
                         Icon(
                           Icons.error_outline,
                           size: 48,
-                          color: Colors.red[300],
+                          color: JPColors.error,
                         ),
                         const SizedBox(height: 16),
                         Text(
                           _error!,
                           style: TextStyle(
-                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                            color: JPCupertinoColors.secondaryLabel(context),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -240,9 +237,7 @@ class _PantallaAdminRepartidoresState extends State<PantallaAdminRepartidores> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16,
-                                      color: isDark
-                                          ? Colors.white
-                                          : Colors.black,
+                                      color: JPCupertinoColors.label(context),
                                     ),
                                   ),
                                   subtitle: Column(
@@ -253,9 +248,10 @@ class _PantallaAdminRepartidoresState extends State<PantallaAdminRepartidores> {
                                       Text(
                                         '$email',
                                         style: TextStyle(
-                                          color: isDark
-                                              ? Colors.grey[400]
-                                              : Colors.grey[600],
+                                          color:
+                                              JPCupertinoColors.secondaryLabel(
+                                                context,
+                                              ),
                                           fontSize: 14,
                                         ),
                                       ),
@@ -266,25 +262,22 @@ class _PantallaAdminRepartidoresState extends State<PantallaAdminRepartidores> {
                                         children: [
                                           _buildStatusBadge(
                                             estado.toString().toUpperCase(),
-                                            Colors
-                                                .blue, // Or verify actual logic for colors
-                                            isDark,
+                                            JPColors
+                                                .dashboardBlue, // Or verify actual logic for colors
                                           ),
                                           _buildStatusBadge(
                                             verificado
                                                 ? 'Verificado'
                                                 : 'Pendiente',
                                             verificado
-                                                ? DashboardColors.verde
-                                                : DashboardColors.naranja,
-                                            isDark,
+                                                ? JPColors.success
+                                                : JPColors.warning,
                                           ),
                                           _buildStatusBadge(
                                             activo ? 'Activo' : 'Inactivo',
                                             activo
-                                                ? DashboardColors.azul
-                                                : DashboardColors.rojo,
-                                            isDark,
+                                                ? JPColors.dashboardBlue
+                                                : JPColors.error,
                                           ),
                                         ],
                                       ),
@@ -301,7 +294,7 @@ class _PantallaAdminRepartidoresState extends State<PantallaAdminRepartidores> {
     );
   }
 
-  Widget _buildStatusBadge(String text, Color color, bool isDark) {
+  Widget _buildStatusBadge(String text, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(

@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../theme/jp_theme.dart';
 import 'star_rating_display.dart';
 import 'rating_breakdown.dart';
 
@@ -84,7 +85,9 @@ class RatingSummaryCard extends StatelessWidget {
                     '$totalReviews ${totalReviews == 1 ? 'reseña' : 'reseñas'}',
                     style: TextStyle(
                       fontSize: 12,
-                      color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                      color: CupertinoColors.secondaryLabel.resolveFrom(
+                        context,
+                      ),
                     ),
                   ),
                 ],
@@ -178,13 +181,14 @@ class CompactRatingSummaryCard extends StatelessWidget {
                   const Icon(
                     CupertinoIcons.star_fill,
                     size: 20,
-                    color: Color(0xFFFFB800),
+                    color: JPColors.warning,
                   ),
                 ],
               ),
               const SizedBox(height: 2),
               Text(
-                subtitle ?? '$totalReviews ${totalReviews == 1 ? 'reseña' : 'reseñas'}',
+                subtitle ??
+                    '$totalReviews ${totalReviews == 1 ? 'reseña' : 'reseñas'}',
                 style: TextStyle(
                   fontSize: 12,
                   color: CupertinoColors.secondaryLabel.resolveFrom(context),
@@ -205,10 +209,7 @@ class CompactRatingSummaryCard extends StatelessWidget {
     );
 
     if (onTap != null) {
-      return GestureDetector(
-        onTap: onTap,
-        child: content,
-      );
+      return GestureDetector(onTap: onTap, child: content);
     }
 
     return content;

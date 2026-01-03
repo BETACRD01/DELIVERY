@@ -113,7 +113,7 @@ class _PantallaMisPedidosState extends State<PantallaMisPedidos>
                 onRefresh: () async => _cargarPedidos(refresh: true),
               ),
               SliverPadding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 20,
                 ),
@@ -122,18 +122,18 @@ class _PantallaMisPedidosState extends State<PantallaMisPedidos>
                     (context, index) {
                       if (index == provider.pedidos.length) {
                         return provider.hasMore
-                            ? const Padding(
+                            ? Padding(
                                 padding: EdgeInsets.all(16),
                                 child: Center(
                                   child: CupertinoActivityIndicator(),
                                 ),
                               )
-                            : const SizedBox.shrink();
+                            : SizedBox.shrink();
                       }
 
                       final pedido = provider.pedidos[index];
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
+                        padding: EdgeInsets.only(bottom: 12),
                         child: _buildTarjetaPedido(pedido),
                       );
                     },
@@ -225,7 +225,7 @@ class _PantallaMisPedidosState extends State<PantallaMisPedidos>
   Widget _buildError(String error, BuildContext context) {
     return JPEmptyState(
       icon: CupertinoIcons.wifi_slash,
-      iconColor: JPCupertinoColors.systemRed(context),
+      iconColor: JPCupertinoColors.error(context),
       title: 'Algo salió mal',
       message: error,
       actionText: 'Intentar de nuevo',

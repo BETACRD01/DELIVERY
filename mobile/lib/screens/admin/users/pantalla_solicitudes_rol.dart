@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import '../../../apis/admin/solicitudes_api.dart';
 import '../../../models/auth/solicitud_cambio_rol.dart';
 import '../dashboard/widgets/detalle_solicitud_modal.dart';
-import '../../../../providers/core/theme_provider.dart';
-import '../../../../theme/primary_colors.dart';
-import '../dashboard/constants/dashboard_colors.dart';
+import '../../../../theme/jp_theme.dart';
 
 class PantallaSolicitudesRol extends StatefulWidget {
   const PantallaSolicitudesRol({super.key});
@@ -174,7 +171,7 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            backgroundColor: AppColorsPrimary.main,
+            backgroundColor: JPCupertinoColors.primary(context),
           ),
         );
         // ignore: unawaited_futures
@@ -199,8 +196,9 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
+    // final isDark = Provider.of<ThemeProvider>(context).isDarkMode; // Unused
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -211,21 +209,21 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: AppColorsPrimary.main),
+          icon: Icon(Icons.arrow_back_ios_new, color: primaryColor),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh, color: AppColorsPrimary.main),
+            icon: Icon(Icons.refresh, color: primaryColor),
             onPressed: _cargarSolicitudes,
           ),
         ],
-        iconTheme: IconThemeData(color: AppColorsPrimary.main),
+        iconTheme: IconThemeData(color: primaryColor),
       ),
       body: Column(
         children: [
@@ -245,45 +243,42 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                   setState(() => _currentIdx = val);
                 }
               },
-              thumbColor: isDark ? const Color(0xFF636366) : Colors.white,
-              backgroundColor: isDark
-                  ? const Color(0xFF1C1C1E)
-                  : const Color(0xFF767680).withValues(alpha: 0.12),
+              thumbColor: JPCupertinoColors.surface(context),
+              backgroundColor: JPCupertinoColors.systemGrey5(context),
             ),
           ),
           Expanded(
             child: _loading
                 ? const Center(child: CupertinoActivityIndicator())
                 : _error != null
-                ? _buildError(isDark)
-                : _buildCurrentList(isDark),
+                ? _buildError()
+                : _buildCurrentList(),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCurrentList(bool isDark) {
+  Widget _buildCurrentList() {
     if (_currentIdx == 0) {
-      return _buildListaSolicitudes(_pendientes, 'pendientes', isDark);
+      return _buildListaSolicitudes(_pendientes, 'pendientes');
     }
     if (_currentIdx == 1) {
-      return _buildListaSolicitudes(_aceptadas, 'aceptadas', isDark);
+      return _buildListaSolicitudes(_aceptadas, 'aceptadas');
     }
 
     // Combine rejected and reverted for 'Otras' tab for cleaner UI
     final otras = [..._rechazadas, ..._revertidas];
     otras.sort((a, b) => b.creadoEn.compareTo(a.creadoEn));
-    return _buildListaSolicitudes(otras, 'otras', isDark);
+    return _buildListaSolicitudes(otras, 'otras');
   }
 
   Widget _buildListaSolicitudes(
     List<SolicitudCambioRol> solicitudes,
     String tipo,
-    bool isDark,
   ) {
     if (solicitudes.isEmpty) {
-      return _buildListaVacia(tipo, isDark);
+      return _buildListaVacia(tipo);
     }
 
     return RefreshIndicator(
@@ -294,13 +289,13 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
         separatorBuilder: (_, _) => const SizedBox(height: 12),
         itemBuilder: (context, index) {
           final solicitud = solicitudes[index];
-          return _buildTarjetaSolicitudiOS(solicitud, isDark);
+          return _buildTarjetaSolicitudiOS(solicitud);
         },
       ),
     );
   }
 
-  Widget _buildListaVacia(String tipo, bool isDark) {
+  Widget _buildListaVacia(String tipo) {
     String mensaje = 'No hay solicitudes';
     if (tipo == 'pendientes') {
       mensaje = 'No hay solicitudes pendientes';
@@ -315,14 +310,14 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
           Icon(
             Icons.inbox_outlined,
             size: 64,
-            color: isDark ? Colors.grey[700] : Colors.grey[300],
+            color: JPCupertinoColors.tertiaryLabel(context),
           ),
           const SizedBox(height: 16),
           Text(
             mensaje,
             style: TextStyle(
               fontSize: 16,
-              color: isDark ? Colors.grey[500] : Colors.grey[500],
+              color: JPCupertinoColors.secondaryLabel(context),
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -331,8 +326,8 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
     );
   }
 
-  Widget _buildTarjetaSolicitudiOS(SolicitudCambioRol solicitud, bool isDark) {
-    final bgColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
+  Widget _buildTarjetaSolicitudiOS(SolicitudCambioRol solicitud) {
+    final bgColor = JPCupertinoColors.surface(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -356,8 +351,8 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                   decoration: BoxDecoration(
                     color:
                         (solicitud.esProveedor
-                                ? DashboardColors.verde
-                                : DashboardColors.azul)
+                                ? JPColors.dashboardGreen
+                                : JPColors.dashboardBlue)
                             .withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
@@ -365,8 +360,8 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                     child: Icon(
                       solicitud.iconoRol,
                       color: solicitud.esProveedor
-                          ? DashboardColors.verde
-                          : DashboardColors.azul,
+                          ? JPColors.dashboardGreen
+                          : JPColors.dashboardBlue,
                       size: 24,
                     ),
                   ),
@@ -383,7 +378,7 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: JPCupertinoColors.label(context),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -393,7 +388,7 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                         solicitud.usuarioEmail,
                         style: TextStyle(
                           fontSize: 13,
-                          color: isDark ? Colors.grey[400] : Colors.grey[600],
+                          color: JPCupertinoColors.secondaryLabel(context),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -407,9 +402,7 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: isDark
-                                  ? Colors.white.withValues(alpha: 0.1)
-                                  : Colors.grey[100],
+                              color: JPCupertinoColors.systemGrey5(context),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -419,9 +412,9 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w500,
-                                color: isDark
-                                    ? Colors.grey[300]
-                                    : Colors.grey[700],
+                                color: JPCupertinoColors.secondaryLabel(
+                                  context,
+                                ),
                               ),
                             ),
                           ),
@@ -430,9 +423,7 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                             solicitud.fechaCreacionFormateada,
                             style: TextStyle(
                               fontSize: 12,
-                              color: isDark
-                                  ? Colors.grey[600]
-                                  : Colors.grey[500],
+                              color: JPCupertinoColors.tertiaryLabel(context),
                             ),
                           ),
                         ],
@@ -447,12 +438,12 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                     width: 10,
                     height: 10,
                     decoration: BoxDecoration(
-                      color: Colors.orange,
+                      color: JPColors.warning,
                       shape: BoxShape.circle,
                       border: Border.all(color: bgColor, width: 2),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.orange.withValues(alpha: 0.4),
+                          color: JPColors.warning.withValues(alpha: 0.4),
                           blurRadius: 4,
                           spreadRadius: 1,
                         ),
@@ -462,7 +453,7 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
                 else
                   Icon(
                     CupertinoIcons.chevron_forward,
-                    color: isDark ? Colors.grey[600] : Colors.grey[400],
+                    color: JPCupertinoColors.tertiaryLabel(context),
                     size: 20,
                   ),
               ],
@@ -473,18 +464,16 @@ class _PantallaSolicitudesRolState extends State<PantallaSolicitudesRol>
     );
   }
 
-  Widget _buildError(bool isDark) {
+  Widget _buildError() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 48, color: Colors.red[300]),
+          Icon(Icons.error_outline, size: 48, color: JPColors.error),
           const SizedBox(height: 16),
           Text(
             _error ?? 'Error desconocido',
-            style: TextStyle(
-              color: isDark ? Colors.grey[400] : Colors.grey[600],
-            ),
+            style: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
           ),
           const SizedBox(height: 16),
           CupertinoButton(

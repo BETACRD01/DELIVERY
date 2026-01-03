@@ -4,6 +4,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../models/orders/pedido_repartidor.dart';
+import '../../../theme/jp_theme.dart';
 
 /// Card para encargos (courier) disponibles
 /// Diseño distintivo con icono naranja y flujo de dos destinos
@@ -19,18 +20,16 @@ class CardEncargoDisponible extends StatelessWidget {
     this.onRechazar,
   });
 
-  // Colores distintivos para encargos
-  static const Color _colorEncargo = Colors.deepOrange;
-  static const Color _success = Color(0xFF34C759);
-
   @override
   Widget build(BuildContext context) {
-    final cardBg = CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
-      context,
-    );
-    final cardBorder = CupertinoColors.separator.resolveFrom(context);
-    final textSecondary = CupertinoColors.secondaryLabel.resolveFrom(context);
+    final cardBg = JPCupertinoColors.secondarySurface(context);
+    final cardBorder = JPCupertinoColors.separator(context);
+    final textSecondary = JPCupertinoColors.secondaryLabel(context);
     final isDark = CupertinoTheme.brightnessOf(context) == Brightness.dark;
+
+    // Colores dinámicos
+    final colorEncargo = JPCupertinoColors.systemOrange(context);
+    final successColor = JPCupertinoColors.success(context);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
@@ -60,12 +59,12 @@ class CardEncargoDisponible extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: _colorEncargo.withValues(alpha: 0.15),
+                    color: colorEncargo.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     CupertinoIcons.paperplane_fill,
-                    color: _colorEncargo,
+                    color: colorEncargo,
                     size: 20,
                   ),
                 ),
@@ -95,7 +94,7 @@ class CardEncargoDisponible extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey5.resolveFrom(context),
+                    color: JPCupertinoColors.systemGrey5(context),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -125,7 +124,7 @@ class CardEncargoDisponible extends StatelessWidget {
                   child: Text(
                     encargo.zonaEntrega,
                     style: TextStyle(
-                      color: CupertinoColors.label.resolveFrom(context),
+                      color: JPCupertinoColors.label(context),
                       fontSize: 14,
                     ),
                   ),
@@ -154,7 +153,7 @@ class CardEncargoDisponible extends StatelessWidget {
                 Text(
                   '\$${encargo.totalConRecargo.toStringAsFixed(2)}',
                   style: TextStyle(
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
@@ -176,22 +175,22 @@ class CardEncargoDisponible extends StatelessWidget {
                 Text(
                   encargo.metodoPago,
                   style: TextStyle(
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                     fontSize: 13,
                   ),
                 ),
                 if (encargo.comisionRepartidor != null) ...[
                   const Spacer(),
-                  const Icon(
+                  Icon(
                     CupertinoIcons.money_dollar_circle_fill,
                     size: 16,
-                    color: _success,
+                    color: successColor,
                   ),
                   const SizedBox(width: 4),
                   Text(
                     'Ganancia \$${encargo.gananciaTotal.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      color: _success,
+                    style: TextStyle(
+                      color: successColor,
                       fontWeight: FontWeight.w600,
                       fontSize: 13,
                     ),
@@ -208,13 +207,13 @@ class CardEncargoDisponible extends StatelessWidget {
                 Expanded(
                   child: CupertinoButton(
                     padding: const EdgeInsets.symmetric(vertical: 12),
-                    color: CupertinoColors.systemGrey5.resolveFrom(context),
+                    color: JPCupertinoColors.systemGrey5(context),
                     borderRadius: BorderRadius.circular(12),
                     onPressed: onRechazar,
                     child: Text(
                       'Rechazar',
                       style: TextStyle(
-                        color: CupertinoColors.label.resolveFrom(context),
+                        color: JPCupertinoColors.label(context),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -224,7 +223,7 @@ class CardEncargoDisponible extends StatelessWidget {
                 Expanded(
                   child: CupertinoButton(
                     padding: const EdgeInsets.symmetric(vertical: 12),
-                    color: _colorEncargo,
+                    color: colorEncargo,
                     borderRadius: BorderRadius.circular(12),
                     onPressed: onAceptar,
                     child: const Text(

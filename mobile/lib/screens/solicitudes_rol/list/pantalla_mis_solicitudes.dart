@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../../models/auth/solicitud_cambio_rol.dart';
 import '../../../../../services/solicitudes/solicitudes_service.dart';
 import '../../../../../theme/primary_colors.dart';
+import '../../../../../theme/jp_theme.dart';
 import '../create/pantalla_solicitar_rol.dart';
 
 /// 📋 PANTALLA DE MIS SOLICITUDES
@@ -73,16 +74,14 @@ class _PantallaMisSolicitudesState extends State<PantallaMisSolicitudes> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground.resolveFrom(
-        context,
-      ),
+      backgroundColor: JPCupertinoColors.background(context),
       navigationBar: CupertinoNavigationBar(
-        backgroundColor: CupertinoColors.systemBackground
-            .resolveFrom(context)
-            .withValues(alpha: 0.9),
+        backgroundColor: JPCupertinoColors.surface(
+          context,
+        ).withValues(alpha: 0.9),
         border: Border(
           bottom: BorderSide(
-            color: CupertinoColors.separator.resolveFrom(context),
+            color: JPCupertinoColors.separator(context),
             width: 0.5,
           ),
         ),
@@ -120,17 +119,17 @@ class _PantallaMisSolicitudesState extends State<PantallaMisSolicitudes> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               CupertinoIcons.exclamationmark_circle,
               size: 64,
-              color: CupertinoColors.systemRed,
+              color: JPCupertinoColors.error(context),
             ),
             const SizedBox(height: 16),
             Text(
               _error!,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 17,
-                color: CupertinoColors.secondaryLabel,
+                color: JPCupertinoColors.secondaryLabel(context),
               ),
             ),
             const SizedBox(height: 16),

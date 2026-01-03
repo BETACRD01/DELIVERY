@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
 import '../../../services/pago/pago_service.dart';
 import '../../../models/payments/pago_model.dart';
+import '../../../theme/jp_theme.dart';
 
 /// Pantalla para que el repartidor vea el comprobante de transferencia
 class PantallaVerComprobante extends StatefulWidget {
@@ -26,18 +27,14 @@ class _PantallaVerComprobanteState extends State<PantallaVerComprobante> {
   String? _error;
   bool _comprobantePendiente = false;
 
-  static const Color _success = Color(0xFF34C759);
-  static const Color _errorColor = Color(0xFFFF3B30);
-  static const Color _warningColor = Color(0xFFFF9500);
-
   // Dynamic Colors
-  Color get _surface =>
-      CupertinoColors.systemGroupedBackground.resolveFrom(context);
-  Color get _cardBg =>
-      CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context);
-  Color get _textPrimary => CupertinoColors.label.resolveFrom(context);
-  Color get _textSecondary =>
-      CupertinoColors.secondaryLabel.resolveFrom(context);
+  Color get _surface => JPCupertinoColors.background(context);
+  Color get _cardBg => JPCupertinoColors.secondarySurface(context);
+  Color get _textPrimary => JPCupertinoColors.label(context);
+  Color get _textSecondary => JPCupertinoColors.secondaryLabel(context);
+  Color get _success => JPCupertinoColors.success(context);
+  Color get _errorColor => JPCupertinoColors.error(context);
+  Color get _warningColor => JPCupertinoColors.warning(context);
 
   @override
   void initState() {
@@ -215,7 +212,7 @@ class _PantallaVerComprobanteState extends State<PantallaVerComprobante> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
+              Icon(
                 CupertinoIcons.exclamationmark_circle,
                 size: 64,
                 color: _errorColor,
@@ -245,11 +242,7 @@ class _PantallaVerComprobanteState extends State<PantallaVerComprobante> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                CupertinoIcons.hourglass,
-                size: 64,
-                color: _warningColor,
-              ),
+              Icon(CupertinoIcons.hourglass, size: 64, color: _warningColor),
               const SizedBox(height: 16),
               Text(
                 'Comprobante no disponible',
@@ -315,11 +308,11 @@ class _PantallaVerComprobanteState extends State<PantallaVerComprobante> {
       padding: const EdgeInsets.only(bottom: 8, left: 4),
       child: Text(
         title.toUpperCase(),
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12,
           letterSpacing: 1.0,
           fontWeight: FontWeight.w600,
-          color: CupertinoColors.secondaryLabel,
+          color: JPCupertinoColors.secondaryLabel(context),
         ),
       ),
     );
@@ -357,9 +350,9 @@ class _PantallaVerComprobanteState extends State<PantallaVerComprobante> {
                   : null,
             ),
             child: _comprobante!.clienteFoto == null
-                ? const Icon(
+                ? Icon(
                     CupertinoIcons.person_fill,
-                    color: CupertinoColors.systemGrey,
+                    color: JPCupertinoColors.systemGrey(context),
                     size: 24,
                   )
                 : null,
@@ -415,12 +408,12 @@ class _PantallaVerComprobanteState extends State<PantallaVerComprobante> {
               fit: BoxFit.cover,
               width: double.infinity,
               placeholder: (context, url) => Container(
-                color: CupertinoColors.systemGroupedBackground,
+                color: JPCupertinoColors.systemGrey6(context),
                 child: const Center(child: CupertinoActivityIndicator()),
               ),
               errorWidget: (context, url, error) => Container(
-                color: CupertinoColors.systemGroupedBackground,
-                child: const Center(
+                color: JPCupertinoColors.systemGrey6(context),
+                child: Center(
                   child: Icon(
                     CupertinoIcons.exclamationmark_circle,
                     color: _errorColor,
@@ -442,7 +435,7 @@ class _PantallaVerComprobanteState extends State<PantallaVerComprobante> {
       decoration: BoxDecoration(
         color: _cardBg,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: CupertinoColors.systemGrey4),
+        border: Border.all(color: JPCupertinoColors.systemGrey4(context)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -483,17 +476,13 @@ class _PantallaVerComprobanteState extends State<PantallaVerComprobante> {
       ),
       child: Row(
         children: [
-          const Icon(
-            CupertinoIcons.checkmark_seal_fill,
-            color: _success,
-            size: 24,
-          ),
+          Icon(CupertinoIcons.checkmark_seal_fill, color: _success, size: 24),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Comprobante visto',
                   style: TextStyle(
                     fontSize: 15,

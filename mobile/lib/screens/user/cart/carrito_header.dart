@@ -17,7 +17,7 @@ class CarritoHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         border: Border(
@@ -33,7 +33,7 @@ class CarritoHeader extends StatelessWidget {
             CupertinoIcons.cart_fill,
             color: AppColorsPrimary.main,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Text(
             '$cantidadItems productos',
             style: TextStyle(
@@ -42,7 +42,7 @@ class CarritoHeader extends StatelessWidget {
               color: JPCupertinoColors.label(context),
             ),
           ),
-          const Spacer(),
+          Spacer(),
           Text(
             '$cantidadTotal items',
             style: TextStyle(

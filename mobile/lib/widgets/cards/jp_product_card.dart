@@ -2,8 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mobile/theme/primary_colors.dart';
-// unused import
+import 'package:mobile/theme/jp_theme.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
 // 🛍️ PRODUCT CARD - Card de producto unificada estilo iOS
@@ -149,15 +148,15 @@ class _JPProductCardState extends State<JPProductCard>
                                 width: 28,
                                 height: 28,
                                 decoration: BoxDecoration(
-                                  color: AppColorsPrimary.main.withValues(
-                                    alpha: 0.1,
-                                  ),
+                                  color: JPCupertinoColors.primary(
+                                    context,
+                                  ).withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(14),
                                 ),
                                 alignment: Alignment.center,
                                 child: Icon(
                                   CupertinoIcons.cart_fill_badge_plus,
-                                  color: AppColorsPrimary.main,
+                                  color: JPCupertinoColors.primary(context),
                                   size: 14,
                                 ),
                               ),
@@ -224,19 +223,19 @@ class _JPProductCardState extends State<JPProductCard>
 
     switch (widget.badgeType) {
       case 'oferta':
-        bgColor = const Color(0xFFFF5252);
+        bgColor = JPCupertinoColors.systemRed(context);
         textColor = CupertinoColors.white;
         text = widget.porcentajeDescuento != null
             ? '-${widget.porcentajeDescuento}%'
             : 'OFERTA';
         break;
       case 'nuevo':
-        bgColor = const Color(0xFF4CAF50);
+        bgColor = JPCupertinoColors.systemGreen(context);
         textColor = CupertinoColors.white;
         text = 'NUEVO';
         break;
       case 'popular':
-        bgColor = PrimaryColors.main; // Orange
+        bgColor = JPCupertinoColors.systemOrange(context); // Orange
         textColor = CupertinoColors.white;
         text = 'POPULAR';
         break;

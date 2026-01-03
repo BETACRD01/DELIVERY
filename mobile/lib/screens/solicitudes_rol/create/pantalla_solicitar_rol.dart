@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../theme/primary_colors.dart';
+import '../../../../theme/jp_theme.dart';
 import '../list/pantalla_mis_solicitudes.dart';
 import 'widgets/formulario_proveedor.dart';
 import 'widgets/formulario_repartidor.dart';
@@ -87,7 +88,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
           .withValues(alpha: 0.9),
       border: Border(
         bottom: BorderSide(
-          color: CupertinoColors.separator.resolveFrom(context),
+          color: JPCupertinoColors.separator(context),
           width: 0.5,
         ),
       ),
@@ -102,7 +103,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
       ),
       middle: Text(
         _currentPage == 0 ? 'Selecciona tu rol' : 'Completa tu solicitud',
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 17,
           fontWeight: FontWeight.w600,
           letterSpacing: -0.4,
@@ -124,13 +125,13 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
           const SizedBox(height: 8),
 
           // Título grande estilo iOS
-          const Text(
+          Text(
             '¿Qué rol deseas?',
             style: TextStyle(
               fontSize: 34,
               fontWeight: FontWeight.w700,
               letterSpacing: -1.0,
-              color: CupertinoColors.label,
+              color: JPCupertinoColors.label(context),
             ),
           ),
           const SizedBox(height: 8),
@@ -139,7 +140,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w400,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               letterSpacing: -0.4,
             ),
           ),
@@ -156,14 +157,14 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
                     color: AppColorsPrimary.main.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     CupertinoIcons.doc_text_search,
                     color: AppColorsPrimary.main,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 10),
-                const Expanded(
+                Expanded(
                   child: Text(
                     'Ver estado de mis solicitudes',
                     style: TextStyle(
@@ -201,7 +202,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
             icon: CupertinoIcons.car_fill,
             titulo: 'Repartidor',
             descripcion: 'Entrega pedidos y gana dinero con cada delivery',
-            color: CupertinoColors.systemGreen,
+            color: JPCupertinoColors.success(context),
             seleccionado: _rolSeleccionado == 'REPARTIDOR',
             onTap: () => setState(() => _rolSeleccionado = 'REPARTIDOR'),
           ),
@@ -223,7 +224,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
                     )
                   : null,
               color: _rolSeleccionado == null
-                  ? CupertinoColors.systemGrey5.resolveFrom(context)
+                  ? JPCupertinoColors.systemGrey5(context)
                   : null,
             ),
             child: CupertinoButton(
@@ -237,7 +238,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
                   color: _rolSeleccionado != null
-                      ? CupertinoColors.white
+                      ? JPCupertinoColors.white
                       : CupertinoColors.systemGrey,
                   letterSpacing: -0.4,
                 ),
@@ -268,12 +269,12 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: CupertinoColors.systemBackground.resolveFrom(context),
+          color: JPCupertinoColors.surface(context),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: seleccionado
                 ? color
-                : CupertinoColors.separator.resolveFrom(context),
+                : JPCupertinoColors.separator(context),
             width: seleccionado ? 2.5 : 1,
           ),
           boxShadow: seleccionado
@@ -314,10 +315,10 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
                 children: [
                   Text(
                     titulo,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: CupertinoColors.label,
+                      color: JPCupertinoColors.label(context),
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -344,7 +345,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
                   : CupertinoIcons.chevron_right,
               color: seleccionado
                   ? color
-                  : CupertinoColors.systemGrey3.resolveFrom(context),
+                  : JPCupertinoColors.systemGrey3(context),
               size: 24,
             ),
           ],
@@ -366,14 +367,14 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
             Icon(
               CupertinoIcons.exclamationmark_circle,
               size: 64,
-              color: CupertinoColors.systemGrey.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey(context),
             ),
             const SizedBox(height: 16),
             Text(
               'Selecciona un rol primero',
               style: TextStyle(
                 fontSize: 17,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
               ),
             ),
           ],
@@ -410,7 +411,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
       context: context,
       barrierDismissible: false,
       builder: (context) => Material(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         child: SafeArea(
           child: Container(
             width: double.infinity,
@@ -435,13 +436,13 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
                 const SizedBox(height: 24),
 
                 // Título
-                const Text(
+                Text(
                   '¡Solicitud Enviada!',
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.w700,
                     letterSpacing: -0.8,
-                    color: CupertinoColors.label,
+                    color: JPCupertinoColors.label(context),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -453,7 +454,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w400,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                     letterSpacing: -0.4,
                   ),
                   textAlign: TextAlign.center,
@@ -463,7 +464,7 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
                   'Revisaremos tu información y te notificaremos pronto.',
                   style: TextStyle(
                     fontSize: 15,
-                    color: CupertinoColors.tertiaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.tertiaryLabel(context),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -486,12 +487,12 @@ class _PantallaSolicitarRolState extends State<PantallaSolicitarRol> {
                     child: CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () => Navigator.pop(context),
-                      child: const Text(
+                      child: Text(
                         'Entendido',
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
-                          color: CupertinoColors.white,
+                          color: JPCupertinoColors.white,
                           letterSpacing: -0.4,
                         ),
                       ),

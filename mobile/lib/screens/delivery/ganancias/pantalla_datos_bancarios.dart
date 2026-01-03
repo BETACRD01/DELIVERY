@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import '../../../services/repartidor/repartidor_datos_bancarios_service.dart';
 import '../../../models/payments/datos_bancarios.dart';
+import '../../../theme/jp_theme.dart';
 
 /// Pantalla para gestionar los datos bancarios del repartidor
 class PantallaDatosBancarios extends StatefulWidget {
@@ -28,18 +29,14 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
   bool _isSaving = false;
   bool _modoEdicion = false;
 
-  static const Color _accent = Color(0xFF0CB7F2); // Celeste corporativo
-  static const Color _success = Color(0xFF34C759);
-  static const Color _errorColor = Color(0xFFFF3B30);
-
   // Dynamic Colors
-  Color get _surface =>
-      CupertinoColors.systemGroupedBackground.resolveFrom(context);
-  Color get _cardBg =>
-      CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context);
-  Color get _textPrimary => CupertinoColors.label.resolveFrom(context);
-  Color get _textSecondary =>
-      CupertinoColors.secondaryLabel.resolveFrom(context);
+  Color get _surface => JPCupertinoColors.background(context);
+  Color get _cardBg => JPCupertinoColors.secondarySurface(context);
+  Color get _textPrimary => JPCupertinoColors.label(context);
+  Color get _textSecondary => JPCupertinoColors.secondaryLabel(context);
+  Color get _accent => JPCupertinoColors.systemBlue(context);
+  Color get _success => JPCupertinoColors.success(context);
+  Color get _errorColor => JPCupertinoColors.error(context);
 
   final List<Map<String, String>> _tiposCuenta = [
     {'value': 'ahorros', 'label': 'Ahorros'},
@@ -270,7 +267,7 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
           trailing: _datosActuales?.estanCompletos == true && !_modoEdicion
               ? CupertinoButton(
                   padding: EdgeInsets.zero,
-                  child: const Text('Editar', style: TextStyle(color: _accent)),
+                  child: Text('Editar', style: TextStyle(color: _accent)),
                   onPressed: () => setState(() => _modoEdicion = true),
                 )
               : null,
@@ -310,9 +307,9 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
             children: [
               CupertinoTextFormFieldRow(
                 controller: _bancoNombreController,
-                prefix: const Icon(
+                prefix: Icon(
                   CupertinoIcons.building_2_fill,
-                  color: CupertinoColors.systemGrey,
+                  color: JPCupertinoColors.systemGrey(context),
                 ),
                 placeholder: 'Nombre del banco',
                 validator: (value) {
@@ -330,9 +327,9 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
                   ),
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         CupertinoIcons.creditcard_fill,
-                        color: CupertinoColors.systemGrey,
+                        color: JPCupertinoColors.systemGrey(context),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
@@ -343,17 +340,16 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
                                   (e) => e['value'] == _tipoCuentaSeleccionada,
                                 )['label']!,
                           style: TextStyle(
-                            fontSize: 17,
                             color: _tipoCuentaSeleccionada == null
-                                ? CupertinoColors.placeholderText
+                                ? JPCupertinoColors.placeholder(context)
                                 : _textPrimary,
                           ),
                         ),
                       ),
-                      const Icon(
+                      Icon(
                         CupertinoIcons.chevron_up_chevron_down,
                         size: 16,
-                        color: CupertinoColors.systemGrey2,
+                        color: JPCupertinoColors.systemGrey2(context),
                       ),
                     ],
                   ),
@@ -361,9 +357,9 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
               ),
               CupertinoTextFormFieldRow(
                 controller: _numeroCuentaController,
-                prefix: const Icon(
+                prefix: Icon(
                   CupertinoIcons.number,
-                  color: CupertinoColors.systemGrey,
+                  color: JPCupertinoColors.systemGrey(context),
                 ),
                 placeholder: 'Número de cuenta',
                 keyboardType: TextInputType.number,
@@ -384,9 +380,9 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
             children: [
               CupertinoTextFormFieldRow(
                 controller: _titularController,
-                prefix: const Icon(
+                prefix: Icon(
                   CupertinoIcons.person_solid,
-                  color: CupertinoColors.systemGrey,
+                  color: JPCupertinoColors.systemGrey(context),
                 ),
                 placeholder: 'Nombre del titular',
                 validator: (value) {
@@ -397,9 +393,9 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
               ),
               CupertinoTextFormFieldRow(
                 controller: _cedulaTitularController,
-                prefix: const Icon(
+                prefix: Icon(
                   CupertinoIcons.person_badge_plus_fill,
-                  color: CupertinoColors.systemGrey,
+                  color: JPCupertinoColors.systemGrey(context),
                 ),
                 placeholder: 'Cédula / Documento (10 dígitos)',
                 keyboardType: TextInputType.number,
@@ -445,7 +441,7 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
                             setState(() => _modoEdicion = false);
                             _cargarDatos();
                           },
-                    child: const Text(
+                    child: Text(
                       'Cancelar',
                       style: TextStyle(color: _errorColor),
                     ),
@@ -464,7 +460,7 @@ class _PantallaDatosBancariosState extends State<PantallaDatosBancarios> {
       context: context,
       builder: (_) => Container(
         height: 280,
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.background(context),
         child: Column(
           children: [
             SizedBox(

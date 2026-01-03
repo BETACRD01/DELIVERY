@@ -1,8 +1,6 @@
 // lib/screens/user/inicio/widgets/inicio/home_app_bar.dart
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mobile/theme/primary_colors.dart';
-// unused import
 
 import 'package:mobile/theme/jp_theme.dart';
 
@@ -35,7 +33,7 @@ class HomeAppBar extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.fromLTRB(20, topPadding + 12, 20, 16),
         decoration: BoxDecoration(
-          color: CupertinoColors.systemBackground.resolveFrom(context),
+          color: JPCupertinoColors.surface(context),
           boxShadow: AppConstants.subtleShadow(context),
         ),
         child: Column(
@@ -49,7 +47,7 @@ class HomeAppBar extends StatelessWidget {
                   assetPath: logoAssetPath,
                   networkUrl: logoNetworkUrl,
                 ),
-                const SizedBox(width: 14),
+                SizedBox(width: 14),
 
                 // Título
                 Expanded(
@@ -58,7 +56,9 @@ class HomeAppBar extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24, // Matches iOS big title better
                       fontWeight: FontWeight.w800,
-                      color: AppColorsPrimary.main, // Corporate Celeste
+                      color: JPCupertinoColors.primary(
+                        context,
+                      ), // Corporate Celeste
                       letterSpacing: -0.8,
                     ),
                   ),
@@ -68,10 +68,12 @@ class HomeAppBar extends StatelessWidget {
                 _ActionButton(
                   icon: CupertinoIcons.bell_fill,
                   badge: unreadCount,
-                  color: AppColorsPrimary.main, // Corporate Celeste
+                  color: JPCupertinoColors.primary(
+                    context,
+                  ), // Corporate Celeste
                   onTap: onNotificationTap,
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
 
                 // Logout
                 _ActionButton(
@@ -82,7 +84,7 @@ class HomeAppBar extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 14),
+            SizedBox(height: 14),
 
             // Barra de búsqueda
             _SearchBar(onTap: onSearchTap),
@@ -96,8 +98,8 @@ class HomeAppBar extends StatelessWidget {
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: const Text('Cerrar sesión'),
-        content: const Padding(
+        title: Text('Cerrar sesión'),
+        content: Padding(
           padding: EdgeInsets.only(top: 8),
           child: Text('¿Estás seguro de que deseas cerrar sesión?'),
         ),
@@ -105,7 +107,7 @@ class HomeAppBar extends StatelessWidget {
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancelar'),
+            child: Text('Cancelar'),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
@@ -113,7 +115,7 @@ class HomeAppBar extends StatelessWidget {
               Navigator.of(context).pop();
               onLogoutTap?.call();
             },
-            child: const Text('Cerrar sesión'),
+            child: Text('Cerrar sesión'),
           ),
         ],
       ),
@@ -179,10 +181,10 @@ class _Logo extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      color: CupertinoColors.systemGrey5.resolveFrom(context),
+      color: JPCupertinoColors.systemGrey5(context),
       child: Icon(
         CupertinoIcons.cube_box_fill,
-        color: CupertinoColors.systemGrey.resolveFrom(context),
+        color: JPCupertinoColors.systemGrey(context),
         size: size * 0.5,
       ),
     );
@@ -213,8 +215,8 @@ class _ActionButton extends StatelessWidget {
         height: 42,
         decoration: BoxDecoration(
           color: isDestructive
-              ? CupertinoColors.systemRed.withValues(alpha: 0.1)
-              : CupertinoColors.systemGrey6.resolveFrom(context),
+              ? JPCupertinoColors.error(context).withValues(alpha: 0.1)
+              : JPCupertinoColors.systemGrey6(context),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Stack(
@@ -223,8 +225,8 @@ class _ActionButton extends StatelessWidget {
             Icon(
               icon,
               color: isDestructive
-                  ? CupertinoColors.systemRed
-                  : (color ?? CupertinoColors.label.resolveFrom(context)),
+                  ? JPCupertinoColors.error(context)
+                  : (color ?? JPCupertinoColors.label(context)),
               size: 22,
             ),
             if (badge > 0)
@@ -232,20 +234,17 @@ class _ActionButton extends StatelessWidget {
                 top: 6,
                 right: 6,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
-                    vertical: 2,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemRed,
+                    color: JPCupertinoColors.error(context),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   constraints: const BoxConstraints(minWidth: 18),
                   child: Text(
                     badge > 9 ? '9+' : '$badge',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: CupertinoColors.white,
+                    style: TextStyle(
+                      color: JPCupertinoColors.white,
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
                     ),
@@ -269,24 +268,24 @@ class _SearchBar extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: CupertinoColors.systemGrey6.resolveFrom(context),
+          color: JPCupertinoColors.systemGrey6(context),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
             Icon(
               CupertinoIcons.search,
-              color: CupertinoColors.placeholderText.resolveFrom(context),
+              color: JPCupertinoColors.placeholderText(context),
               size: 20,
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Expanded(
               child: Text(
                 'Buscar productos o tiendas',
                 style: TextStyle(
-                  color: CupertinoColors.placeholderText.resolveFrom(context),
+                  color: JPCupertinoColors.placeholderText(context),
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
@@ -294,7 +293,7 @@ class _SearchBar extends StatelessWidget {
             ),
             Icon(
               CupertinoIcons.slider_horizontal_3,
-              color: CupertinoColors.placeholderText.resolveFrom(context),
+              color: JPCupertinoColors.placeholderText(context),
               size: 20,
             ),
           ],

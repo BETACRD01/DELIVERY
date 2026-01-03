@@ -267,11 +267,11 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
           child: Form(
             key: _formKey,
             child: ListView(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
               children: [
                 // Dirección con autocompletado
                 _buildCampoDireccionConAutocompletado(),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Calle secundaria
                 _buildCampoTexto(
@@ -281,7 +281,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                   hint: 'Ej: Esq. con Calle 10',
                   opcional: true,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Piso/Departamento
                 _buildCampoTexto(
@@ -291,7 +291,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                   hint: 'Ej: Torre B, depto 302',
                   opcional: true,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Ciudad
                 _buildCampoTexto(
@@ -306,7 +306,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Indicaciones
                 _buildCampoTexto(
@@ -317,11 +317,11 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                   maxLines: 3,
                   opcional: true,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Teléfono
                 _buildCampoTelefono(),
-                const SizedBox(height: 32),
+                SizedBox(height: 32),
 
                 // Botón guardar
                 SizedBox(
@@ -329,10 +329,10 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                   child: CupertinoButton.filled(
                     onPressed: _guardando ? null : _guardarDireccion,
                     borderRadius: BorderRadius.circular(12),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(vertical: 16),
                     child: _guardando
-                        ? const CupertinoActivityIndicator(
-                            color: CupertinoColors.white,
+                        ? CupertinoActivityIndicator(
+                            color: JPCupertinoColors.white,
                           )
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -342,25 +342,25 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                                 _modoEdicion
                                     ? CupertinoIcons.check_mark
                                     : CupertinoIcons.location_fill,
-                                color: CupertinoColors.white,
+                                color: JPCupertinoColors.white,
                                 size: 20,
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               Text(
                                 _modoEdicion
                                     ? 'Actualizar dirección'
                                     : 'Guardar dirección',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: CupertinoColors.white,
+                                  color: JPCupertinoColors.white,
                                 ),
                               ),
                             ],
                           ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
               ],
             ),
           ), // Form
@@ -409,7 +409,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
         Row(
           children: [
             Icon(CupertinoIcons.home, color: AppColorsPrimary.main, size: 20),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Text(
               'Dirección principal',
               style: TextStyle(
@@ -423,14 +423,14 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
-                color: JPCupertinoColors.systemRed(context),
+                color: JPCupertinoColors.error(context),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
         Material(
-          color: CupertinoColors.transparent,
+          color: JPCupertinoColors.transparent,
           child: Stack(
             children: [
               GooglePlaceAutoCompleteTextField(
@@ -442,7 +442,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                 inputDecoration: InputDecoration(
                   hintText: 'Ej: Av. Amazonas y 10 de Agosto',
                   hintStyle: TextStyle(
-                    color: CupertinoColors.placeholderText.resolveFrom(context),
+                    color: JPCupertinoColors.placeholderText(context),
                     fontSize: 14,
                   ),
                   border: OutlineInputBorder(
@@ -455,7 +455,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
                     borderSide: BorderSide(
                       color: AppColorsPrimary.main,
                       width: 2,
@@ -464,12 +464,12 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
-                      color: JPCupertinoColors.systemRed(context),
+                      color: JPCupertinoColors.error(context),
                     ),
                   ),
                   filled: true,
                   fillColor: JPCupertinoColors.surface(context),
-                  contentPadding: const EdgeInsets.all(16),
+                  contentPadding: EdgeInsets.all(16),
                   suffixIcon: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -526,7 +526,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                                 '',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 12),
+                            style: TextStyle(fontSize: 12),
                           )
                         : null,
                   );
@@ -552,9 +552,9 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
         ),
         if (_latitud != null && _longitud != null)
           Padding(
-            padding: const EdgeInsets.only(top: 8),
+            padding: EdgeInsets.only(top: 8),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 color: JPCupertinoColors.systemGreen(
                   context,
@@ -569,7 +569,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                     color: JPCupertinoColors.systemGreen(context),
                     size: 18,
                   ),
-                  const SizedBox(width: 6),
+                  SizedBox(width: 6),
                   Text(
                     'Ubicación confirmada',
                     style: TextStyle(
@@ -631,7 +631,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
         Row(
           children: [
             Icon(icon, color: AppColorsPrimary.main, size: 20),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Text(
               label,
               style: TextStyle(
@@ -646,14 +646,14 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: JPCupertinoColors.systemRed(context),
+                  color: JPCupertinoColors.error(context),
                 ),
               ),
           ],
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
         Material(
-          color: CupertinoColors.transparent,
+          color: JPCupertinoColors.transparent,
           child: TextFormField(
             controller: controller,
             keyboardType: keyboardType,
@@ -664,7 +664,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
-                color: CupertinoColors.placeholderText.resolveFrom(context),
+                color: JPCupertinoColors.placeholderText(context),
                 fontSize: 14,
               ),
               border: OutlineInputBorder(
@@ -677,18 +677,16 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                 ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
                 borderSide: BorderSide(color: AppColorsPrimary.main, width: 2),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(
-                  color: JPCupertinoColors.systemRed(context),
-                ),
+                borderSide: BorderSide(color: JPCupertinoColors.error(context)),
               ),
               filled: true,
               fillColor: JPCupertinoColors.surface(context),
-              contentPadding: const EdgeInsets.all(16),
+              contentPadding: EdgeInsets.all(16),
             ),
             maxLines: maxLines,
             validator: validator,
@@ -705,7 +703,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
         Row(
           children: [
             Icon(CupertinoIcons.phone, color: AppColorsPrimary.main, size: 20),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Text(
               'Teléfono de contacto',
               style: TextStyle(
@@ -719,14 +717,14 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
-                color: JPCupertinoColors.systemRed(context),
+                color: JPCupertinoColors.error(context),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
         Material(
-          color: CupertinoColors.transparent,
+          color: JPCupertinoColors.transparent,
           child: IntlPhoneField(
             controller: _telefonoController,
             initialCountryCode: 'EC',
@@ -739,7 +737,7 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
             decoration: InputDecoration(
               hintText: 'Número de teléfono',
               hintStyle: TextStyle(
-                color: CupertinoColors.placeholderText.resolveFrom(context),
+                color: JPCupertinoColors.placeholderText(context),
                 fontSize: 14,
               ),
               border: OutlineInputBorder(
@@ -752,18 +750,16 @@ class _PantallaAgregarDireccionState extends State<PantallaAgregarDireccion> {
                 ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
                 borderSide: BorderSide(color: AppColorsPrimary.main, width: 2),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(
-                  color: JPCupertinoColors.systemRed(context),
-                ),
+                borderSide: BorderSide(color: JPCupertinoColors.error(context)),
               ),
               filled: true,
               fillColor: JPCupertinoColors.surface(context),
-              contentPadding: const EdgeInsets.all(12),
+              contentPadding: EdgeInsets.all(12),
             ),
             onChanged: (phone) {
               final dial = phone.countryCode;

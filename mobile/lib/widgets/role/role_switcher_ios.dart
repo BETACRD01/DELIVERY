@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../theme/primary_colors.dart';
+import '../../theme/jp_theme.dart';
 
 class RoleSwitcherIOS extends StatefulWidget {
   final Map<String, String> opciones;
@@ -374,13 +374,13 @@ class _RoleSwitcherIOSState extends State<RoleSwitcherIOS>
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      AppColorsPrimary.main,
-                      AppColorsPrimary.main.withValues(alpha: 0.8),
+                      JPColors.primary,
+                      JPColors.primary.withValues(alpha: 0.8),
                     ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColorsPrimary.main.withValues(alpha: 0.3),
+                      color: JPColors.primary.withValues(alpha: 0.3),
                       blurRadius: 12,
                       offset: const Offset(0, 4),
                     ),
@@ -484,16 +484,15 @@ class _RoleSwitcherIOSState extends State<RoleSwitcherIOS>
           border: Border.all(
             color: isDisabled
                 ? CupertinoColors.systemGrey.resolveFrom(context)
-                : CupertinoColors.systemBlue.resolveFrom(context),
+                : JPColors.primary,
             width: 2,
           ),
           boxShadow: [
             BoxShadow(
               color:
                   (isDisabled
-                          ? CupertinoColors.systemGrey
-                          : CupertinoColors.systemBlue)
-                      .resolveFrom(context)
+                          ? CupertinoColors.systemGrey.resolveFrom(context)
+                          : JPColors.primary)
                       .withValues(alpha: 0.1),
               blurRadius: 12,
               offset: const Offset(0, 4),
@@ -508,7 +507,7 @@ class _RoleSwitcherIOSState extends State<RoleSwitcherIOS>
               decoration: BoxDecoration(
                 color: isDisabled
                     ? CupertinoColors.systemGrey.resolveFrom(context)
-                    : CupertinoColors.systemBlue.resolveFrom(context),
+                    : JPColors.primary,
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -526,7 +525,7 @@ class _RoleSwitcherIOSState extends State<RoleSwitcherIOS>
                   fontWeight: FontWeight.w600,
                   color: isDisabled
                       ? CupertinoColors.systemGrey.resolveFrom(context)
-                      : CupertinoColors.systemBlue.resolveFrom(context),
+                      : JPColors.primary,
                 ),
               ),
             ),
@@ -536,7 +535,7 @@ class _RoleSwitcherIOSState extends State<RoleSwitcherIOS>
               size: 18,
               color: isDisabled
                   ? CupertinoColors.systemGrey.resolveFrom(context)
-                  : CupertinoColors.systemBlue.resolveFrom(context),
+                  : JPColors.primary,
             ),
             if (isDisabled) ...[
               const SizedBox(width: 4),

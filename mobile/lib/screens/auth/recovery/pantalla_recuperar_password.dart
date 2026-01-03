@@ -460,8 +460,8 @@ class _PantallaRecuperarPasswordState extends State<PantallaRecuperarPassword> {
         borderRadius: BorderRadius.circular(14),
         padding: EdgeInsets.zero,
         child: _loading
-            ? const CupertinoActivityIndicator(
-                color: CupertinoColors.white,
+            ? CupertinoActivityIndicator(
+                color: JPCupertinoColors.white,
                 radius: 12,
               )
             : Text(
@@ -470,7 +470,7 @@ class _PantallaRecuperarPasswordState extends State<PantallaRecuperarPassword> {
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: canSend
-                      ? CupertinoColors.white
+                      ? JPCupertinoColors.white
                       : JPCupertinoColors.tertiaryLabel(context),
                   letterSpacing: 0.2,
                 ),

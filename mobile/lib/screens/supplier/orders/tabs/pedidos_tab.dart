@@ -1,8 +1,8 @@
 // lib/screens/supplier/tabs/pedidos_tab.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../theme/primary_colors.dart';
 
 /// Tab de pedidos - Estilo iOS nativo
@@ -14,7 +14,7 @@ class PedidosTab extends StatelessWidget {
     return Material(
       type: MaterialType.transparency,
       child: Container(
-        color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
+        color: JPCupertinoColors.background(context),
         child: SafeArea(
           child: Column(
             children: [
@@ -43,7 +43,7 @@ class PedidosTab extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -51,7 +51,7 @@ class PedidosTab extends StatelessWidget {
                   'Gestiona los pedidos de tu negocio',
                   style: TextStyle(
                     fontSize: 14,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
               ],
@@ -90,7 +90,7 @@ class PedidosTab extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
             const SizedBox(height: 12),
@@ -101,7 +101,7 @@ class PedidosTab extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
                 height: 1.5,
               ),
             ),
@@ -111,7 +111,7 @@ class PedidosTab extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: CupertinoColors.systemBackground.resolveFrom(context),
+                color: JPCupertinoColors.surface(context),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
@@ -133,7 +133,7 @@ class PedidosTab extends StatelessWidget {
                   _buildInfoRow(
                     context,
                     icon: CupertinoIcons.checkmark_circle_fill,
-                    iconColor: CupertinoColors.activeGreen,
+                    iconColor: JPCupertinoColors.success(context),
                     text: 'Acepta o rechaza pedidos fácilmente',
                   ),
                 ],
@@ -168,7 +168,7 @@ class PedidosTab extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: 14,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
             ),
           ),
         ),

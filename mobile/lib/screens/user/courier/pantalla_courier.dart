@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:mobile/theme/jp_theme.dart';
 import 'dart:ui'; // For ImageFilter
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -382,8 +383,8 @@ class _PantallaCourierState extends State<PantallaCourier> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
-        title: const Text('Método de Pago'),
-        message: const Text(
+        title: Text('Método de Pago'),
+        message: Text(
           'Selecciona cómo pagarás al repartidor al recibir tu pedido.',
         ),
         actions: [
@@ -419,7 +420,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
         cancelButton: CupertinoActionSheetAction(
           onPressed: () => Navigator.pop(context),
           isDestructiveAction: true,
-          child: const Text('Cancelar'),
+          child: Text('Cancelar'),
         ),
       ),
     );
@@ -475,22 +476,22 @@ class _PantallaCourierState extends State<PantallaCourier> {
       await showCupertinoDialog(
         context: context,
         builder: (context) => CupertinoAlertDialog(
-          title: const Icon(
+          title: Icon(
             CupertinoIcons.checkmark_circle_fill,
-            color: Colors.green,
+            color: JPCupertinoColors.success(context),
             size: 50,
           ),
           content: Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(top: 10),
             child: Text(
               '¡Pedido Solicitado!\n\nNúmero: $numeroPedido\n\nEstamos buscando un repartidor cercano.',
-              style: const TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: 15),
             ),
           ),
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
-              child: const Text('Aceptar'),
+              child: Text('Aceptar'),
               onPressed: () {
                 Navigator.pop(context); // Solo cerrar el diálogo
                 _limpiarFormulario(); // Resetear formulario
@@ -544,9 +545,9 @@ class _PantallaCourierState extends State<PantallaCourier> {
     // Glass effect background color
     final isDark = CupertinoTheme.of(context).brightness == Brightness.dark;
     final glassColor = isDark
-        ? CupertinoColors.black.withValues(alpha: 0.85)
-        : CupertinoColors.white.withValues(alpha: 0.92);
-    final textColor = CupertinoColors.label.resolveFrom(context);
+        ? JPCupertinoColors.black.withValues(alpha: 0.85)
+        : JPCupertinoColors.white.withValues(alpha: 0.92);
+    final textColor = JPCupertinoColors.label(context);
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -586,7 +587,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 14,
                     ),
@@ -594,12 +595,12 @@ class _PantallaCourierState extends State<PantallaCourier> {
                       color: glassColor,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.2),
+                        color: JPCupertinoColors.white.withValues(alpha: 0.2),
                         width: 1,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
+                          color: JPCupertinoColors.black.withValues(alpha: 0.1),
                           blurRadius: 20,
                           offset: const Offset(0, 4),
                         ),
@@ -644,7 +645,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                 maxHeight: screenHeight * 0.52, // Máximo 52% de pantalla
               ),
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
+                borderRadius: BorderRadius.vertical(
                   top: Radius.circular(30),
                 ),
                 child: BackdropFilter(
@@ -652,18 +653,18 @@ class _PantallaCourierState extends State<PantallaCourier> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: glassColor,
-                      borderRadius: const BorderRadius.vertical(
+                      borderRadius: BorderRadius.vertical(
                         top: Radius.circular(30),
                       ),
                       border: Border(
                         top: BorderSide(
-                          color: Colors.white.withValues(alpha: 0.3),
+                          color: JPCupertinoColors.white.withValues(alpha: 0.3),
                           width: 1.5,
                         ),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.15),
+                          color: JPCupertinoColors.black.withValues(alpha: 0.15),
                           blurRadius: 30,
                           spreadRadius: 5,
                           offset: const Offset(0, -5),
@@ -676,7 +677,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                       children: [
                         // --- STATIC HEADER SECTION ---
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+                          padding: EdgeInsets.fromLTRB(24, 12, 24, 0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -691,7 +692,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              SizedBox(height: 16),
 
                               // Título con precio
                               Row(
@@ -705,10 +706,10 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                       letterSpacing: -0.5,
                                     ),
                                   ),
-                                  const Spacer(),
+                                  Spacer(),
                                   if (_cotizacion != null)
                                     Container(
-                                      padding: const EdgeInsets.symmetric(
+                                      padding: EdgeInsets.symmetric(
                                         horizontal: 14,
                                         vertical: 8,
                                       ),
@@ -733,8 +734,8 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                       ),
                                       child: Text(
                                         '\$${_cotizacion!['total_envio']}',
-                                        style: const TextStyle(
-                                          color: Colors.white,
+                                        style: TextStyle(
+                                          color: JPCupertinoColors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 17,
                                         ),
@@ -742,7 +743,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                     ),
                                 ],
                               ),
-                              const SizedBox(height: 10),
+                              SizedBox(height: 10),
                             ],
                           ),
                         ),
@@ -764,7 +765,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                 // SECCIÓN 1: RUTA MEJORADA
                                 _buildEnhancedRouteSelector(context, textColor),
 
-                                const SizedBox(height: 20),
+                                SizedBox(height: 20),
 
                                 // SECCIÓN 2: TIPO DE PAQUETE
                                 Text(
@@ -776,14 +777,14 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                         .resolveFrom(context),
                                   ),
                                 ),
-                                const SizedBox(height: 10),
+                                SizedBox(height: 10),
                                 SizedBox(
                                   height: 75,
                                   child: ListView.separated(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: _tiposPaquete.length,
                                     separatorBuilder: (c, i) =>
-                                        const SizedBox(width: 10),
+                                        SizedBox(width: 10),
                                     itemBuilder: (context, index) {
                                       final item = _tiposPaquete[index];
                                       final isSelected =
@@ -798,7 +799,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                 ),
 
                                 if (_tipoPaquete == 'Otro') ...[
-                                  const SizedBox(height: 10),
+                                  SizedBox(height: 10),
                                   _buildInput(
                                     context,
                                     controller: _otroDetalleCtrl,
@@ -808,7 +809,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                   ),
                                 ],
 
-                                const SizedBox(height: 16),
+                                SizedBox(height: 16),
 
                                 // SECCIÓN 3: DESTINATARIO
                                 Text(
@@ -820,7 +821,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                         .resolveFrom(context),
                                   ),
                                 ),
-                                const SizedBox(height: 10),
+                                SizedBox(height: 10),
 
                                 Row(
                                   children: [
@@ -833,7 +834,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                         placeholder: 'Nombres',
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
+                                    SizedBox(width: 10),
                                     Expanded(
                                       flex:
                                           6, // 60% para teléfono (necesita mas espacio por la bandera)
@@ -871,7 +872,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                                 InputBorder.none,
                                             counterText: '',
                                             contentPadding:
-                                                const EdgeInsets.only(
+                                                EdgeInsets.only(
                                                   top: 14,
                                                 ), // Centrado vertical
                                             isDense: true,
@@ -896,7 +897,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                             size: 18,
                                           ),
                                           flagsButtonPadding:
-                                              const EdgeInsets.only(left: 8),
+                                              EdgeInsets.only(left: 8),
                                           showCountryFlag: true,
                                           disableLengthCheck: true,
                                           showDropdownIcon:
@@ -907,7 +908,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                   ],
                                 ),
 
-                                const SizedBox(height: 10),
+                                SizedBox(height: 10),
 
                                 // SECCIÓN 4: DESCRIPCIÓN
                                 _buildInput(
@@ -919,7 +920,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                   maxLines: 1,
                                 ),
 
-                                const SizedBox(height: 20),
+                                SizedBox(height: 20),
 
                                 // BOTÓN DE ACCIÓN
                                 SizedBox(
@@ -936,15 +937,15 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                       _cotizacion == null
                                           ? 'Cotizar Envío'
                                           : 'Solicitar Shopper',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 17,
-                                        color: CupertinoColors.white,
+                                        color: JPCupertinoColors.white,
                                       ),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 8),
+                                SizedBox(height: 8),
                               ],
                             ),
                           ),
@@ -961,12 +962,12 @@ class _PantallaCourierState extends State<PantallaCourier> {
           if (_loading)
             Positioned.fill(
               child: Container(
-                color: Colors.black.withValues(alpha: 0.3),
+                color: JPCupertinoColors.black.withValues(alpha: 0.3),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                   child: Center(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         vertical: 24,
                         horizontal: 32,
                       ),
@@ -977,7 +978,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.15),
+                            color: JPCupertinoColors.black.withValues(alpha: 0.15),
                             blurRadius: 24,
                             offset: const Offset(0, 8),
                           ),
@@ -987,13 +988,13 @@ class _PantallaCourierState extends State<PantallaCourier> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           const CupertinoActivityIndicator(radius: 18),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16),
                           Text(
                             _cotizacion == null
                                 ? 'Calculando tarifa...'
                                 : 'Procesando...',
                             style: TextStyle(
-                              color: CupertinoColors.label.resolveFrom(context),
+                              color: JPCupertinoColors.label(context),
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
                             ),
@@ -1024,24 +1025,24 @@ class _PantallaCourierState extends State<PantallaCourier> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon, size: 18, color: color),
-            const SizedBox(width: 6),
+            SizedBox(width: 6),
             Text(
               label,
               style: TextStyle(
                 fontSize: 12,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
                 fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4),
         Text(
           value,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: CupertinoColors.label.resolveFrom(context),
+            color: JPCupertinoColors.label(context),
           ),
         ),
       ],
@@ -1050,15 +1051,15 @@ class _PantallaCourierState extends State<PantallaCourier> {
 
   /// Selector de ruta mejorado con diseño visual
   Widget _buildEnhancedRouteSelector(BuildContext context, Color textColor) {
-    final secondaryLabel = CupertinoColors.secondaryLabel.resolveFrom(context);
+    final secondaryLabel = JPCupertinoColors.secondaryLabel(context);
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
+        color: JPCupertinoColors.background(context),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: CupertinoColors.separator.resolveFrom(context),
+          color: JPCupertinoColors.separator(context),
           width: 0.5,
         ),
       ),
@@ -1076,7 +1077,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                   shape: BoxShape.circle,
                   border: Border.all(color: AppColorsPrimary.main, width: 2),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.my_location,
                   color: AppColorsPrimary.main,
                   size: 18,
@@ -1086,7 +1087,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
               Container(
                 width: 2,
                 height: 30,
-                margin: const EdgeInsets.symmetric(vertical: 4),
+                margin: EdgeInsets.symmetric(vertical: 4),
                 child: CustomPaint(
                   painter: _DottedLinePainter(
                     color: CupertinoColors.systemGrey3,
@@ -1098,22 +1099,22 @@ class _PantallaCourierState extends State<PantallaCourier> {
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: CupertinoColors.systemRed.withValues(alpha: 0.15),
+                  color: JPCupertinoColors.error(context).withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: CupertinoColors.systemRed,
+                    color: JPCupertinoColors.error(context),
                     width: 2,
                   ),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.location_on,
-                  color: CupertinoColors.systemRed,
+                  color: JPCupertinoColors.error(context),
                   size: 18,
                 ),
               ),
             ],
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14),
 
           // Textos de dirección
           Expanded(
@@ -1123,7 +1124,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                 GestureDetector(
                   onTap: () => _seleccionarUbicacion(true),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 10,
                     ),
@@ -1147,7 +1148,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                   letterSpacing: 0.5,
                                 ),
                               ),
-                              const SizedBox(height: 2),
+                              SizedBox(height: 2),
                               Text(
                                 _direccionOrigen,
                                 style: TextStyle(
@@ -1171,13 +1172,13 @@ class _PantallaCourierState extends State<PantallaCourier> {
                   ),
                 ),
 
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
 
                 // DESTINO
                 GestureDetector(
                   onTap: () => _seleccionarUbicacion(false),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 10,
                     ),
@@ -1197,11 +1198,11 @@ class _PantallaCourierState extends State<PantallaCourier> {
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
-                                  color: CupertinoColors.systemRed,
+                                  color: JPCupertinoColors.error(context),
                                   letterSpacing: 0.5,
                                 ),
                               ),
-                              const SizedBox(height: 2),
+                              SizedBox(height: 2),
                               Text(
                                 _direccionDestino,
                                 style:
@@ -1235,7 +1236,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
             ),
           ),
 
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
 
           // Botón de swap
           GestureDetector(
@@ -1249,7 +1250,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                 ),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: CupertinoColors.separator.resolveFrom(context),
+                  color: JPCupertinoColors.separator(context),
                   width: 0.5,
                 ),
               ),
@@ -1283,7 +1284,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
           border: isSelected
               ? Border.all(color: AppColorsPrimary.main, width: 2)
               : Border.all(
-                  color: CupertinoColors.separator.resolveFrom(context),
+                  color: JPCupertinoColors.separator(context),
                   width: 0.5,
                 ),
           boxShadow: isSelected
@@ -1303,10 +1304,10 @@ class _PantallaCourierState extends State<PantallaCourier> {
               item['icon'],
               color: isSelected
                   ? AppColorsPrimary.main
-                  : CupertinoColors.secondaryLabel.resolveFrom(context),
+                  : JPCupertinoColors.secondaryLabel(context),
               size: 24,
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Text(
               item['label'],
               style: TextStyle(
@@ -1314,7 +1315,7 @@ class _PantallaCourierState extends State<PantallaCourier> {
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                 color: isSelected
                     ? AppColorsPrimary.main
-                    : CupertinoColors.secondaryLabel.resolveFrom(context),
+                    : JPCupertinoColors.secondaryLabel(context),
               ),
               maxLines: 1,
             ),
@@ -1337,33 +1338,33 @@ class _PantallaCourierState extends State<PantallaCourier> {
         color: CupertinoColors.tertiarySystemBackground.resolveFrom(context),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: CupertinoColors.separator.resolveFrom(context),
+          color: JPCupertinoColors.separator(context),
           width: 0.5,
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       child: Row(
         children: [
           Icon(
             icon,
-            color: CupertinoColors.secondaryLabel.resolveFrom(context),
+            color: JPCupertinoColors.secondaryLabel(context),
             size: 20,
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Expanded(
             child: CupertinoTextField(
               controller: controller,
               placeholder: placeholder,
-              padding: const EdgeInsets.symmetric(vertical: 12),
+              padding: EdgeInsets.symmetric(vertical: 12),
               decoration: null, // Remove default border
               keyboardType: keyboardType,
               maxLines: maxLines,
               style: TextStyle(
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
                 fontSize: 15,
               ),
               placeholderStyle: TextStyle(
-                color: CupertinoColors.placeholderText.resolveFrom(context),
+                color: JPCupertinoColors.placeholderText(context),
                 fontSize: 15,
               ),
             ),

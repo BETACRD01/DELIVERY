@@ -206,19 +206,19 @@ class JPCourierCard extends StatelessWidget {
     Color color;
     switch (estado.toLowerCase()) {
       case 'pendiente':
-        color = const Color(0xFFFF9500);
+        color = JPColors.warning;
         break;
       case 'en_ruta':
-        color = const Color(0xFF34C759);
+        color = JPColors.success;
         break;
       case 'entregado':
-        color = const Color(0xFF34C759);
+        color = JPColors.success;
         break;
       case 'cancelado':
-        color = const Color(0xFFFF3B30);
+        color = JPColors.error;
         break;
       default:
-        color = const Color(0xFF8E8E93);
+        color = JPCupertinoColors.systemGrey(context);
     }
 
     return Container(

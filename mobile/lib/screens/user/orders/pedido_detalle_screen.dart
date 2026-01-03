@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mobile/theme/jp_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -51,7 +52,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
         title: Text(
           'Detalle del pedido',
           style: TextStyle(
-            color: CupertinoColors.label.resolveFrom(context),
+            color: JPCupertinoColors.label(context),
             fontSize: 17,
             fontWeight: FontWeight.w600,
           ),
@@ -59,7 +60,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: groupedBackground,
-        foregroundColor: CupertinoColors.label.resolveFrom(context),
+        foregroundColor: JPCupertinoColors.label(context),
       ),
       body: Consumer<PedidoProvider>(
         builder: (context, provider, child) {
@@ -88,56 +89,56 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildHeaderStatus(pedido),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   _buildDireccionesCard(pedido),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   if (pedido.proveedor != null) ...[
                     _buildProveedorCard(pedido),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                   ],
 
                   if (pedido.estado == 'entregado' &&
                       pedido.puedeCalificarProveedor) ...[
                     _buildCalificacionProveedorCTA(pedido),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                   ] else if (pedido.calificacionProveedor != null) ...[
                     _buildCalificacionProveedorResumen(pedido),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                   ],
 
                   if (pedido.repartidor != null) ...[
                     _buildRepartidorCard(pedido),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                   ],
 
                   if (pedido.estado == 'entregado' &&
                       pedido.puedeCalificarRepartidor) ...[
                     _buildCalificacionCTA(pedido),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                   ] else if (pedido.calificacionRepartidor != null) ...[
                     _buildCalificacionResumen(pedido),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                   ],
 
                   if (pedido.imagenEvidencia != null) ...[
                     _buildEvidenciaCard(pedido),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                   ],
 
                   if (pedido.estado == 'cancelado') ...[
                     _buildCancelacionCard(pedido),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                   ],
 
                   _buildAccionesCard(pedido),
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40),
                 ],
               ),
             ),
@@ -150,30 +151,37 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
   Widget _buildError(String error) {
     return Center(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 80, color: Colors.red[300]),
-            const SizedBox(height: 16),
-            const Text(
+            Icon(
+              Icons.error_outline,
+              size: 80,
+              color: JPCupertinoColors.error(context),
+            ),
+            SizedBox(height: 16),
+            Text(
               'Ocurrió un problema',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               error,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              style: TextStyle(
+                fontSize: 14,
+                color: JPCupertinoColors.systemGrey2(context),
+              ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 final provider = context.read<PedidoProvider>();
                 provider.limpiarError();
                 provider.cargarDetalle(widget.pedidoId);
               },
-              child: const Text('Reintentar'),
+              child: Text('Reintentar'),
             ),
           ],
         ),
@@ -183,7 +191,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
 
   Widget _buildCalificacionCTA(Pedido pedido) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
           context,
@@ -191,7 +199,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: JPCupertinoColors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -202,7 +210,9 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
           // Foto de perfil del repartidor
           CircleAvatar(
             radius: 20,
-            backgroundColor: Colors.green.withValues(alpha: 0.1),
+            backgroundColor: JPCupertinoColors.success(
+              context,
+            ).withValues(alpha: 0.1),
             child:
                 pedido.repartidor?.fotoPerfil != null &&
                     pedido.repartidor!.fotoPerfil!.isNotEmpty
@@ -214,20 +224,20 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
                       fit: BoxFit.cover,
                       placeholder: (context, url) =>
                           const CupertinoActivityIndicator(radius: 10),
-                      errorWidget: (context, url, error) => const Icon(
+                      errorWidget: (context, url, error) => Icon(
                         Icons.delivery_dining,
-                        color: Colors.green,
+                        color: JPCupertinoColors.success(context),
                         size: 20,
                       ),
                     ),
                   )
-                : const Icon(
+                : Icon(
                     Icons.delivery_dining,
-                    color: Colors.green,
+                    color: JPCupertinoColors.success(context),
                     size: 20,
                   ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           const Expanded(
             child: Text(
               'Califica al repartidor',
@@ -253,13 +263,13 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
                     }
                   },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
-              foregroundColor: Colors.white,
+              backgroundColor: JPCupertinoColors.warning(context),
+              foregroundColor: JPCupertinoColors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text('Calificar'),
+            child: Text('Calificar'),
           ),
         ],
       ),
@@ -268,21 +278,21 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
 
   Widget _buildCalificacionResumen(Pedido pedido) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
           context,
         ),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: JPCupertinoColors.systemGrey6(context)),
       ),
       child: Row(
         children: [
-          const Icon(Icons.verified, color: Colors.green),
-          const SizedBox(width: 8),
+          Icon(Icons.verified, color: JPCupertinoColors.success(context)),
+          SizedBox(width: 8),
           Text(
             'Calificado: ${pedido.calificacionRepartidor?.toStringAsFixed(1) ?? ''} ⭐',
-            style: const TextStyle(fontWeight: FontWeight.w700),
+            style: TextStyle(fontWeight: FontWeight.w700),
           ),
         ],
       ),
@@ -291,7 +301,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
 
   Widget _buildCalificacionProveedorCTA(Pedido pedido) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
           context,
@@ -299,7 +309,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: JPCupertinoColors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -310,7 +320,9 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
           // Foto de perfil del proveedor
           CircleAvatar(
             radius: 20,
-            backgroundColor: Colors.orange.withValues(alpha: 0.1),
+            backgroundColor: JPCupertinoColors.warning(
+              context,
+            ).withValues(alpha: 0.1),
             child:
                 pedido.proveedor?.fotoPerfil != null &&
                     pedido.proveedor!.fotoPerfil!.isNotEmpty
@@ -322,20 +334,20 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
                       fit: BoxFit.cover,
                       placeholder: (context, url) =>
                           const CupertinoActivityIndicator(radius: 10),
-                      errorWidget: (context, url, error) => const Icon(
+                      errorWidget: (context, url, error) => Icon(
                         Icons.store_mall_directory_rounded,
-                        color: Colors.orange,
+                        color: JPCupertinoColors.warning(context),
                         size: 20,
                       ),
                     ),
                   )
-                : const Icon(
+                : Icon(
                     Icons.store_mall_directory_rounded,
-                    color: Colors.orange,
+                    color: JPCupertinoColors.warning(context),
                     size: 20,
                   ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           const Expanded(
             child: Text(
               'Califica al proveedor',
@@ -358,9 +370,9 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
 
               if (provId == 0) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text('Error: No se identificó al proveedor'),
-                    backgroundColor: Colors.red,
+                    backgroundColor: JPCupertinoColors.error(context),
                   ),
                 );
                 return;
@@ -383,13 +395,13 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
-              foregroundColor: Colors.white,
+              backgroundColor: JPCupertinoColors.warning(context),
+              foregroundColor: JPCupertinoColors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text('Calificar'),
+            child: Text('Calificar'),
           ),
         ],
       ),
@@ -398,21 +410,21 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
 
   Widget _buildCalificacionProveedorResumen(Pedido pedido) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
           context,
         ),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: JPCupertinoColors.systemGrey6(context)),
       ),
       child: Row(
         children: [
-          const Icon(Icons.verified, color: Colors.green),
-          const SizedBox(width: 8),
+          Icon(Icons.verified, color: JPCupertinoColors.success(context)),
+          SizedBox(width: 8),
           Text(
             'Proveedor calificado: ${pedido.calificacionProveedor?.toStringAsFixed(1) ?? ''} ⭐',
-            style: const TextStyle(fontWeight: FontWeight.w700),
+            style: TextStyle(fontWeight: FontWeight.w700),
           ),
         ],
       ),
@@ -446,14 +458,11 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
                 'Estado Actual',
                 style: TextStyle(
                   fontSize: 13,
-                  color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  color: JPCupertinoColors.secondaryLabel(context),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(20),
@@ -469,7 +478,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           _buildInfoRow('Pago', pedido.metodoPagoDisplay),
           if (tiempoEstimado != null && tiempoEstimado > 0)
             _buildInfoRow('Tiempo estimado', '$tiempoEstimado min'),
@@ -481,16 +490,16 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
               'Productos',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             ...pedido.items.map((item) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildProductoItemRow(item, pedido),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                 ],
               );
             }),
@@ -528,7 +537,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
         children: [
           if (pedido.direccionOrigen != null) ...[
             _buildRowIcon(Icons.store, 'Retiro', pedido.direccionOrigen!),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
           ],
           _buildRowIcon(Icons.location_on, 'Entrega', pedido.direccionEntrega),
         ],
@@ -540,12 +549,8 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          size: 20,
-          color: CupertinoColors.secondaryLabel.resolveFrom(context),
-        ),
-        const SizedBox(width: 12),
+        Icon(icon, size: 20, color: JPCupertinoColors.secondaryLabel(context)),
+        SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -554,10 +559,10 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
                 label,
                 style: TextStyle(
                   fontSize: 12,
-                  color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  color: JPCupertinoColors.secondaryLabel(context),
                 ),
               ),
-              Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
+              Text(value, style: TextStyle(fontWeight: FontWeight.w500)),
             ],
           ),
         ),
@@ -572,12 +577,12 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
         Expanded(
           child: Text(
             '${item.cantidad}x ${item.productoNombre}',
-            style: const TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 14),
           ),
         ),
         Text(
           '\$${item.subtotal.toStringAsFixed(2)}',
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ],
     );
@@ -589,7 +594,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
       nombre: pedido.proveedor!.nombre,
       detalle: pedido.proveedor!.direccion ?? 'Sin información',
       icono: Icons.store_mall_directory_rounded,
-      color: Colors.orange,
+      color: JPCupertinoColors.warning(context),
       fotoPerfil: pedido.proveedor!.fotoPerfil,
       onWhatsapp: null,
       onCall: null,
@@ -602,7 +607,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
       nombre: pedido.repartidor!.nombre,
       detalle: pedido.repartidor!.telefono ?? 'Sin teléfono',
       icono: Icons.delivery_dining,
-      color: Colors.green,
+      color: JPCupertinoColors.success(context),
       fotoPerfil: pedido.repartidor!.fotoPerfil,
       onWhatsapp: pedido.repartidor!.telefono != null
           ? () => _abrirWhatsapp(pedido.repartidor!.telefono, pedido)
@@ -624,7 +629,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
     VoidCallback? onCall,
   }) {
     return _buildSurfaceCard(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
         children: [
           CircleAvatar(
@@ -645,7 +650,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
                   )
                 : Icon(icono, color: color, size: 24),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -654,23 +659,23 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
                   titulo,
                   style: TextStyle(
                     fontSize: 12,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: 2),
                 Text(
                   nombre,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: 2),
                 Text(
                   detalle,
                   style: TextStyle(
                     fontSize: 12,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
               ],
@@ -678,13 +683,19 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
           ),
           if (onWhatsapp != null)
             IconButton(
-              icon: const Icon(FontAwesomeIcons.whatsapp, color: Colors.green),
+              icon: Icon(
+                FontAwesomeIcons.whatsapp,
+                color: JPCupertinoColors.success(context),
+              ),
               onPressed: onWhatsapp,
               tooltip: 'Contactar por WhatsApp',
             ),
           if (onCall != null)
             IconButton(
-              icon: const Icon(FontAwesomeIcons.phone, color: Colors.blueGrey),
+              icon: Icon(
+                FontAwesomeIcons.phone,
+                color: JPCupertinoColors.systemBlue(context),
+              ),
               onPressed: onCall,
               tooltip: 'Llamar',
             ),
@@ -700,19 +711,17 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16),
             child: Text(
               'Foto de Entrega',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
           ),
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              bottom: Radius.circular(14),
-            ),
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(14)),
             child: Image.network(
               pedido.imagenEvidencia!,
               height: 200,
@@ -720,9 +729,12 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
               fit: BoxFit.cover,
               errorBuilder: (_, _, _) => Container(
                 height: 200,
-                color: Colors.grey[200],
-                child: const Center(
-                  child: Icon(Icons.broken_image, color: Colors.grey),
+                color: JPCupertinoColors.systemGrey5(context),
+                child: Center(
+                  child: Icon(
+                    Icons.broken_image,
+                    color: JPCupertinoColors.systemGrey(context),
+                  ),
                 ),
               ),
             ),
@@ -734,26 +746,24 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
 
   Widget _buildCancelacionCard(Pedido pedido) {
     return _buildSurfaceCard(
-      backgroundColor: CupertinoColors.systemRed
-          .resolveFrom(context)
-          .withValues(alpha: 0.1),
+      backgroundColor: JPCupertinoColors.error(context).withValues(alpha: 0.1),
       child: Column(
         children: [
           Row(
             children: [
-              Icon(Icons.cancel, color: Colors.red[700]),
-              const SizedBox(width: 8),
+              Icon(Icons.cancel, color: JPCupertinoColors.error(context)),
+              SizedBox(width: 8),
               Text(
                 'Pedido Cancelado',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: CupertinoColors.systemRed.resolveFrom(context),
+                  color: JPCupertinoColors.error(context),
                   fontSize: 16,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildInfoRow('Por', pedido.canceladoPor ?? 'Desconocido'),
           _buildInfoRow(
             'Motivo',
@@ -784,7 +794,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
     if (!isCancelVisible &&
         !mostrarSubirComprobante &&
         !mostrarComprobanteCargado) {
-      return const SizedBox.shrink();
+      return SizedBox.shrink();
     }
 
     return Column(
@@ -797,40 +807,39 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
               ElevatedButton.icon(
                 onPressed: () => _abrirSubirComprobante(pedido),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  backgroundColor: JPCupertinoColors.warning(context),
+                  foregroundColor: JPCupertinoColors.white,
+                  padding: EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                icon: const Icon(Icons.upload_file_rounded),
-                label: const Text('Datos de Transferencia'),
+                icon: Icon(Icons.upload_file_rounded),
+                label: Text('Datos de Transferencia'),
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6),
               Text(
                 'Aqui veras los datos del repartidor para transferir.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey[600],
+                  color: JPCupertinoColors.systemGrey2(context),
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ],
           ),
-        if (mostrarSubirComprobante && isCancelVisible)
-          const SizedBox(height: 10),
+        if (mostrarSubirComprobante && isCancelVisible) SizedBox(height: 10),
         if (mostrarComprobanteCargado)
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
               color: CupertinoColors.secondarySystemGroupedBackground
                   .resolveFrom(context),
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.03),
+                  color: JPCupertinoColors.black.withValues(alpha: 0.03),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -838,14 +847,17 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
             ),
             child: Row(
               children: [
-                const Icon(Icons.receipt_long, color: Colors.green),
-                const SizedBox(width: 12),
+                Icon(
+                  Icons.receipt_long,
+                  color: JPCupertinoColors.success(context),
+                ),
+                SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     'Comprobante registrado',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: Colors.green[800],
+                      color: JPCupertinoColors.success(context),
                     ),
                   ),
                 ),
@@ -863,34 +875,33 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
                         ),
                       );
                     },
-                    icon: const Icon(Icons.visibility),
-                    color: Colors.green[700],
+                    icon: Icon(Icons.visibility),
+                    color: JPCupertinoColors.success(context),
                   ),
               ],
             ),
           ),
-        if (mostrarComprobanteCargado && isCancelVisible)
-          const SizedBox(height: 16),
+        if (mostrarComprobanteCargado && isCancelVisible) SizedBox(height: 16),
         if (isCancelVisible)
           OutlinedButton.icon(
             onPressed: _isCancelling
                 ? null
                 : () => _mostrarDialogoCancelar(pedido),
             style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.red,
-              side: const BorderSide(color: Colors.red),
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              foregroundColor: JPCupertinoColors.error(context),
+              side: BorderSide(color: JPCupertinoColors.error(context)),
+              padding: EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
             icon: _isCancelling
-                ? const SizedBox(
+                ? SizedBox(
                     width: 20,
                     height: 20,
                     child: CupertinoActivityIndicator(radius: 14),
                   )
-                : const Icon(Icons.cancel_outlined),
+                : Icon(Icons.cancel_outlined),
             label: Text(_isCancelling ? 'Procesando...' : 'Cancelar Pedido'),
           ),
       ],
@@ -901,14 +912,14 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
 
   Widget _buildInfoRow(String label, String? value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
             style: TextStyle(
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               fontSize: 13,
             ),
           ),
@@ -919,7 +930,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 13,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
           ),
@@ -934,15 +945,13 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
     Color? backgroundColor,
   }) {
     return Container(
-      padding: padding ?? const EdgeInsets.all(16),
+      padding: padding ?? EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color:
-            backgroundColor ??
-            CupertinoColors.systemBackground.resolveFrom(context),
+        color: backgroundColor ?? JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: JPCupertinoColors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -958,12 +967,12 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Cancelar Pedido'),
+        title: Text('Cancelar Pedido'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('¿Estás seguro? Esta acción no se puede deshacer.'),
-            const SizedBox(height: 16),
+            Text('¿Estás seguro? Esta acción no se puede deshacer.'),
+            SizedBox(height: 16),
             TextField(
               controller: motivoController,
               decoration: const InputDecoration(
@@ -978,7 +987,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Volver'),
+            child: Text('Volver'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -990,8 +999,10 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
               }
               Navigator.pop(ctx, true);
             },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Confirmar'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: JPCupertinoColors.error(context),
+            ),
+            child: Text('Confirmar'),
           ),
         ],
       ),
@@ -1010,9 +1021,9 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
 
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text('Pedido cancelado'),
-            backgroundColor: Colors.green,
+            backgroundColor: JPCupertinoColors.success(context),
           ),
         );
         // Recargar vista para mostrar el nuevo estado
@@ -1025,7 +1036,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
             content: Text(
               context.read<PedidoProvider>().error ?? 'Error al cancelar',
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: JPCupertinoColors.error(context),
           ),
         );
       }
@@ -1071,7 +1082,7 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(mensaje),
-          backgroundColor: Colors.orange,
+          backgroundColor: JPCupertinoColors.warning(context),
           duration: const Duration(seconds: 4),
         ),
       );
@@ -1081,17 +1092,17 @@ class _PedidoDetalleScreenState extends State<PedidoDetalleScreen> {
   Color _getColorEstado(String estado) {
     switch (estado.toLowerCase()) {
       case 'confirmado':
-        return Colors.orange;
+        return JPCupertinoColors.warning(context);
       case 'en_preparacion':
-        return Colors.blue;
+        return JPCupertinoColors.systemBlue(context);
       case 'en_ruta':
         return Colors.cyan;
       case 'entregado':
-        return Colors.green;
+        return JPCupertinoColors.success(context);
       case 'cancelado':
-        return Colors.red;
+        return JPCupertinoColors.error(context);
       default:
-        return Colors.grey;
+        return JPCupertinoColors.systemGrey(context);
     }
   }
 

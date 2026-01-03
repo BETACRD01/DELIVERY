@@ -96,10 +96,7 @@ class JPOrderCard extends StatelessWidget {
             ),
             // Divider
             const SizedBox(height: JPConstants.spacingItem),
-            Container(
-              height: 0.5,
-              color: JPCupertinoColors.separator(context),
-            ),
+            Container(height: 0.5, color: JPCupertinoColors.separator(context)),
             const SizedBox(height: JPConstants.spacingItem),
             // Footer: total + botón
             Row(
@@ -136,7 +133,11 @@ class JPOrderCard extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(BuildContext context, {required IconData icon, required String text}) {
+  Widget _buildInfoRow(
+    BuildContext context, {
+    required IconData icon,
+    required String text,
+  }) {
     return Row(
       children: [
         Icon(
@@ -159,17 +160,14 @@ class JPOrderCard extends StatelessWidget {
   }
 
   Widget _buildEstadoBadge(BuildContext context) {
-    final (color, displayText) = _getEstadoColorAndText();
+    final (color, displayText) = _getEstadoColorAndText(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-          width: 1,
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
       ),
       child: Text(
         displayText,
@@ -182,25 +180,28 @@ class JPOrderCard extends StatelessWidget {
     );
   }
 
-  (Color, String) _getEstadoColorAndText() {
+  (Color, String) _getEstadoColorAndText(BuildContext context) {
     final displayText = estadoDisplay ?? _getDefaultEstadoDisplay(estado);
 
     // Retornar (color, texto)
     switch (estado.toLowerCase()) {
       case 'pendiente':
-        return (const Color(0xFFFF9500), displayText); // Orange
+        return (JPColors.warning, displayText); // Orange
       case 'confirmado':
-        return (const Color(0xFF007AFF), displayText); // Blue
+        return (JPColors.info, displayText); // Blue
       case 'en_preparacion':
-        return (const Color(0xFF00C7BE), displayText); // Cyan
+        return (
+          JPCupertinoColors.systemTeal(context),
+          displayText,
+        ); // Cyan (keep custom if no JPColor match)
       case 'en_ruta':
-        return (const Color(0xFF34C759), displayText); // Green
+        return (JPColors.success, displayText); // Green
       case 'entregado':
-        return (const Color(0xFF34C759), displayText); // Green
+        return (JPColors.success, displayText); // Green
       case 'cancelado':
-        return (const Color(0xFFFF3B30), displayText); // Red
+        return (JPColors.error, displayText); // Red
       default:
-        return (const Color(0xFF8E8E93), displayText); // Grey
+        return (JPCupertinoColors.systemGrey(context), displayText); // Grey
     }
   }
 

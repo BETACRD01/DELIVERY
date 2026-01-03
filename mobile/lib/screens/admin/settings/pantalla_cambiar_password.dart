@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../../config/routing/rutas.dart';
 import '../../../../services/auth/auth_service.dart';
-import '../dashboard/constants/dashboard_colors.dart';
+import '../../../../theme/jp_theme.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
 
 class PantallaCambiarPasswordAdmin extends StatefulWidget {
@@ -52,9 +52,9 @@ class _PantallaCambiarPasswordAdminState
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Contraseña actualizada correctamente'),
-            backgroundColor: DashboardColors.verde,
+          SnackBar(
+            content: const Text('Contraseña actualizada correctamente'),
+            backgroundColor: JPColors.success,
           ),
         );
         Navigator.of(context).pop();
@@ -78,12 +78,24 @@ class _PantallaCambiarPasswordAdminState
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
+
     return Scaffold(
+      backgroundColor: bgColor,
       appBar: AppBar(
         title: const Text('Cambiar contraseña'),
-        backgroundColor: Colors.white,
-        foregroundColor: DashboardColors.morado,
-        elevation: 1,
+        backgroundColor: bgColor,
+        foregroundColor: primaryColor,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          color: JPCupertinoColors.label(context),
+          fontSize: 17,
+          fontWeight: FontWeight.w600,
+        ),
+        iconTheme: IconThemeData(color: primaryColor),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
@@ -96,9 +108,12 @@ class _PantallaCambiarPasswordAdminState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Por seguridad, ingresa tu contraseña actual y una nueva.',
-                style: TextStyle(fontSize: 14, color: DashboardColors.gris),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: JPCupertinoColors.secondaryLabel(context),
+                ),
               ),
               const SizedBox(height: 16),
               _buildPasswordField(
@@ -144,10 +159,7 @@ class _PantallaCambiarPasswordAdminState
               ),
               if (_error != null) ...[
                 const SizedBox(height: 12),
-                Text(
-                  _error!,
-                  style: const TextStyle(color: DashboardColors.rojo),
-                ),
+                Text(_error!, style: const TextStyle(color: JPColors.error)),
               ],
               const SizedBox(height: 20),
               SizedBox(
@@ -164,7 +176,7 @@ class _PantallaCambiarPasswordAdminState
                     _loading ? 'Actualizando...' : 'Actualizar contraseña',
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: DashboardColors.morado,
+                    backgroundColor: primaryColor,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
@@ -197,11 +209,22 @@ class _PantallaCambiarPasswordAdminState
     return TextFormField(
       controller: controller,
       obscureText: obscure,
+      style: TextStyle(color: JPCupertinoColors.label(context)),
       decoration: InputDecoration(
         labelText: label,
+        labelStyle: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
         border: const OutlineInputBorder(),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: JPCupertinoColors.systemGrey4(context)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: JPCupertinoColors.primary(context)),
+        ),
         suffixIcon: IconButton(
-          icon: Icon(obscure ? Icons.visibility_off : Icons.visibility),
+          icon: Icon(
+            obscure ? Icons.visibility_off : Icons.visibility,
+            color: JPCupertinoColors.secondaryLabel(context),
+          ),
           onPressed: onToggle,
         ),
       ),

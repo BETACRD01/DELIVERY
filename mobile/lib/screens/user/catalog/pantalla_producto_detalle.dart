@@ -41,7 +41,7 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
 
     if (producto == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Error')),
+        appBar: AppBar(title: Text('Error')),
         body: const Center(child: Text('Producto no encontrado')),
       );
     }
@@ -70,13 +70,11 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
                     _buildHeader(producto),
                     const Divider(height: 32),
                     _buildDescripcion(producto),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
                     _buildInformacionAdicional(producto),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     _buildSugerencias(),
-                    const SizedBox(
-                      height: 100,
-                    ), // Espacio para el botón flotante
+                    SizedBox(height: 100), // Espacio para el botón flotante
                   ],
                 ),
               ),
@@ -98,15 +96,15 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
     return SliverAppBar(
       expandedHeight: 280,
       pinned: true,
-      backgroundColor: CupertinoColors.systemBackground.resolveFrom(context),
-      foregroundColor: JPColors.textPrimary,
+      backgroundColor: JPCupertinoColors.surface(context),
+      foregroundColor: JPCupertinoColors.label(context),
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
           children: [
             // Imagen del producto
             Container(
-              color: Colors.grey[100],
+              color: JPCupertinoColors.systemGrey6(context),
               child: producto.imagenUrl != null
                   ? Image.network(
                       producto.imagenUrl!,
@@ -128,8 +126,10 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.transparent,
-                      Colors.black.withValues(alpha: 0.7), // ✅ CORREGIDO
+                      JPCupertinoColors.transparent,
+                      JPCupertinoColors.black.withValues(
+                        alpha: 0.7,
+                      ), // ✅ CORREGIDO
                     ],
                   ),
                 ),
@@ -142,18 +142,15 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
                 top: 80,
                 right: 16,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: JPColors.error,
+                    color: JPCupertinoColors.error(context),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Text(
+                  child: Text(
                     'NO DISPONIBLE',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: JPCupertinoColors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
@@ -168,46 +165,50 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
 
   Widget _buildPlaceholderImage() {
     return Container(
-      color: Colors.grey[200],
-      child: Icon(Icons.restaurant_menu, size: 120, color: Colors.grey[400]),
+      color: JPCupertinoColors.systemGrey5(context),
+      child: Icon(
+        Icons.restaurant_menu,
+        size: 120,
+        color: JPCupertinoColors.systemGrey3(context),
+      ),
     );
   }
 
   Widget _buildHeader(ProductoModel producto) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Nombre del producto
           Text(
             producto.nombre,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: JPColors.textPrimary,
+              color: JPCupertinoColors.label(context),
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildProveedorBadge(producto),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
 
           // Rating y reseñas
           _buildRatingSummary(producto),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Precio
           Row(
             children: [
               Text(
                 producto.precioFormateado,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
                   color: AppColorsSupport.price,
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               // Selector de cantidad
               _buildCantidadSelector(),
             ],
@@ -221,7 +222,7 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
     final logo = producto.proveedorLogoUrl;
     final nombre = producto.proveedorNombre;
     if ((logo == null || logo.isEmpty) && (nombre == null || nombre.isEmpty)) {
-      return const SizedBox.shrink();
+      return SizedBox.shrink();
     }
 
     return Row(
@@ -229,26 +230,26 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
       children: [
         CircleAvatar(
           radius: 14,
-          backgroundColor: Colors.grey[200],
+          backgroundColor: JPCupertinoColors.systemGrey5(context),
           backgroundImage: (logo != null && logo.isNotEmpty)
               ? NetworkImage(logo)
               : null,
           child: (logo == null || logo.isEmpty)
-              ? const Icon(
+              ? Icon(
                   Icons.storefront_outlined,
                   size: 16,
-                  color: Colors.grey,
+                  color: JPCupertinoColors.systemGrey(context),
                 )
               : null,
         ),
         if (nombre != null && nombre.isNotEmpty) ...[
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Text(
             nombre,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: JPColors.textPrimary,
+              color: JPCupertinoColors.label(context),
             ),
           ),
         ],
@@ -262,11 +263,13 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
     final hasResenas = totalResenas > 0;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: JPColors.background,
+        color: JPCupertinoColors.background(context),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black.withValues(alpha: 0.06)),
+        border: Border.all(
+          color: JPCupertinoColors.black.withValues(alpha: 0.06),
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -277,22 +280,22 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
             size: 18,
             showCount: false,
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Text(
             rating.toStringAsFixed(1),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w700,
-              color: JPColors.textPrimary,
+              color: JPCupertinoColors.label(context),
             ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Text(
             hasResenas ? '$totalResenas resenas' : 'Sin resenas',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: JPColors.textSecondary,
+              color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
         ],
@@ -310,7 +313,7 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
         mainAxisSize: MainAxisSize.min,
         children: [
           CupertinoButton(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             onPressed: _cantidad > 1 ? () => setState(() => _cantidad--) : null,
             minimumSize: Size(0, 0),
             child: Icon(
@@ -322,10 +325,10 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               _cantidad.toString(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: AppColorsSupport.textPrimary,
@@ -333,7 +336,7 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
             ),
           ),
           CupertinoButton(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             onPressed: () => setState(() => _cantidad++),
             minimumSize: Size(0, 0),
             child: Icon(
@@ -349,20 +352,20 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
 
   Widget _buildDescripcion(ProductoModel producto) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Descripción',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             producto.descripcion,
             style: TextStyle(
               fontSize: 15,
-              color: Colors.grey[700],
+              color: JPCupertinoColors.secondaryLabel(context),
               height: 1.5,
             ),
           ),
@@ -373,22 +376,22 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
 
   Widget _buildInformacionAdicional(ProductoModel producto) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Información adicional',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           if (producto.proveedorNombre != null)
             _InfoItem(
               icono: Icons.store,
               titulo: 'Proveedor',
               valor: producto.proveedorNombre!,
             ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
         ],
       ),
     );
@@ -397,29 +400,29 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
   Widget _buildSugerencias() {
     if (_cargandoSugeridos) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'También te puede gustar',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
-                color: JPColors.textPrimary,
+                color: JPCupertinoColors.label(context),
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             SizedBox(
               height: 150,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: 3,
-                separatorBuilder: (_, _) => const SizedBox(width: 12),
+                separatorBuilder: (_, _) => SizedBox(width: 12),
                 itemBuilder: (_, _) => Container(
                   width: 140,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: JPCupertinoColors.systemGrey5(context),
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
@@ -430,28 +433,28 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
       );
     }
 
-    if (_sugeridos.isEmpty) return const SizedBox.shrink();
+    if (_sugeridos.isEmpty) return SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'También te puede gustar',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w800,
-              color: JPColors.textPrimary,
+              color: JPCupertinoColors.label(context),
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           SizedBox(
             height: 170,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: _sugeridos.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 12),
+              separatorBuilder: (_, _) => SizedBox(width: 12),
               itemBuilder: (context, index) {
                 final prod = _sugeridos[index];
                 return Container(
@@ -463,7 +466,7 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.06),
+                        color: JPCupertinoColors.black.withValues(alpha: 0.06),
                         blurRadius: 10,
                         offset: const Offset(0, 6),
                       ),
@@ -483,7 +486,7 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
-                          borderRadius: const BorderRadius.vertical(
+                          borderRadius: BorderRadius.vertical(
                             top: Radius.circular(14),
                           ),
                           child: SizedBox(
@@ -495,27 +498,39 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
                                 ? CachedNetworkImage(
                                     imageUrl: prod.imagenUrl!,
                                     fit: BoxFit.cover,
-                                    placeholder: (_, _) =>
-                                        Container(color: Colors.grey.shade200),
+                                    placeholder: (_, _) => Container(
+                                      color: JPCupertinoColors.systemGrey5(
+                                        context,
+                                      ),
+                                    ),
                                     errorWidget: (_, _, _) => Container(
-                                      color: Colors.grey.shade200,
-                                      child: const Icon(
+                                      color: JPCupertinoColors.systemGrey5(
+                                        context,
+                                      ),
+                                      child: Icon(
                                         Icons.fastfood,
-                                        color: JPColors.textHint,
+                                        color:
+                                            JPCupertinoColors.placeholderText(
+                                              context,
+                                            ),
                                       ),
                                     ),
                                   )
                                 : Container(
-                                    color: Colors.grey.shade200,
-                                    child: const Icon(
+                                    color: JPCupertinoColors.systemGrey5(
+                                      context,
+                                    ),
+                                    child: Icon(
                                       Icons.fastfood,
-                                      color: JPColors.textHint,
+                                      color: JPCupertinoColors.placeholderText(
+                                        context,
+                                      ),
                                     ),
                                   ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 6),
+                          padding: EdgeInsets.fromLTRB(12, 8, 12, 6),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -524,16 +539,16 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
                                 prod.nombre,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 13.5,
                                   fontWeight: FontWeight.w800,
-                                  color: JPColors.textPrimary,
+                                  color: JPCupertinoColors.label(context),
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               Text(
                                 prod.precioFormateado,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12.5,
                                   fontWeight: FontWeight.w700,
                                   color: AppColorsSupport.price,
@@ -556,12 +571,14 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
 
   Widget _buildBottomBar(ProductoModel producto) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08), // ✅ CORREGIDO
+            color: JPCupertinoColors.black.withValues(
+              alpha: 0.08,
+            ), // ✅ CORREGIDO
             blurRadius: 8,
             offset: const Offset(0, -5),
           ),
@@ -576,16 +593,16 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Total',
                     style: TextStyle(
-                      color: JPColors.textSecondary,
+                      color: JPCupertinoColors.secondaryLabel(context),
                       fontSize: 12,
                     ),
                   ),
                   Text(
                     '\$${(producto.precio * _cantidad).toStringAsFixed(2)}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: AppColorsSupport.price,
@@ -603,26 +620,23 @@ class _PantallaProductoDetalleState extends State<PantallaProductoDetalle> {
                     ? () => _agregarAlCarrito(producto)
                     : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: JPColors.primary,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  backgroundColor: JPCupertinoColors.primary(context),
+                  foregroundColor: JPCupertinoColors.white,
+                  padding: EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 icon: _loading
-                    ? const SizedBox(
+                    ? SizedBox(
                         width: 20,
                         height: 20,
                         child: CupertinoActivityIndicator(radius: 14),
                       )
-                    : const Icon(Icons.shopping_cart),
+                    : Icon(Icons.shopping_cart),
                 label: Text(
                   _loading ? 'Agregando...' : 'Agregar al carrito',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -774,11 +788,11 @@ class _CarritoCircularButton extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: CupertinoColors.systemBackground.resolveFrom(context),
+              color: JPCupertinoColors.surface(context),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
+                  color: JPCupertinoColors.black.withValues(alpha: 0.2),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -797,9 +811,9 @@ class _CarritoCircularButton extends StatelessWidget {
                     top: 8,
                     right: 8,
                     child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: JPCupertinoColors.error(context),
                         shape: BoxShape.circle,
                       ),
                       constraints: const BoxConstraints(
@@ -809,8 +823,8 @@ class _CarritoCircularButton extends StatelessWidget {
                       child: Text(
                         cantidad > 9 ? '9+' : '$cantidad',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: JPCupertinoColors.white,
                           fontSize: 10,
                           fontWeight: FontWeight.w900,
                         ),
@@ -840,22 +854,29 @@ class _InfoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          Icon(icono, size: 20, color: JPColors.textSecondary),
-          const SizedBox(width: 12),
+          Icon(
+            icono,
+            size: 20,
+            color: JPCupertinoColors.secondaryLabel(context),
+          ),
+          SizedBox(width: 12),
           Text(
             '$titulo:',
-            style: const TextStyle(color: JPColors.textSecondary, fontSize: 14),
+            style: TextStyle(
+              color: JPCupertinoColors.secondaryLabel(context),
+              fontSize: 14,
+            ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Text(
             valor,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 14,
-              color: JPColors.textPrimary,
+              color: JPCupertinoColors.label(context),
             ),
           ),
         ],

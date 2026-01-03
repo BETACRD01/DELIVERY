@@ -1,34 +1,24 @@
 // lib/screens/supplier/screens/pantalla_estadisticas_proveedor.dart
-
+import 'package:mobile/theme/jp_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-
 import '../../../controllers/supplier/supplier_controller.dart';
 
 /// Pantalla dedicada de estadísticas del proveedor
 class PantallaEstadisticasProveedor extends StatelessWidget {
   const PantallaEstadisticasProveedor({super.key});
 
-  static const Color _primario = Color(0xFF1E88E5);
-  static const Color _exito = Color(0xFF10B981);
-  static const Color _alerta = Color(0xFFF59E0B);
-  static const Color _morado = Color(0xFF8B5CF6);
-  static const Color _textoSecundario = Color(0xFF6B7280);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground.resolveFrom(
-        context,
-      ),
+      backgroundColor: JPCupertinoColors.background(context),
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Estadísticas',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        backgroundColor: _primario,
-        foregroundColor: Colors.white,
+        backgroundColor: JPColors.dashboardBlue,
+        foregroundColor: JPCupertinoColors.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -49,7 +39,7 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               children: [
                 // Resumen rápido
-                _buildResumenRapido(controller),
+                _buildResumenRapido(context, controller),
                 const SizedBox(height: 24),
 
                 // Ventas
@@ -59,19 +49,21 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
                   children: [
                     Expanded(
                       child: _buildStatCard(
+                        context,
                         valor: '\$${controller.ventasHoy.toStringAsFixed(2)}',
                         etiqueta: 'Hoy',
                         icono: Icons.today_outlined,
-                        color: _exito,
+                        color: JPColors.dashboardGreen,
                       ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: _buildStatCard(
+                        context,
                         valor: '\$${controller.ventasMes.toStringAsFixed(2)}',
                         etiqueta: 'Este mes',
                         icono: Icons.calendar_month_outlined,
-                        color: _primario,
+                        color: JPColors.dashboardBlue,
                       ),
                     ),
                   ],
@@ -82,27 +74,29 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
                 _buildSeccion('Rendimiento'),
                 const SizedBox(height: 10),
                 _buildStatCardLarge(
+                  context,
                   valor: controller.valoracionPromedio > 0
                       ? controller.valoracionPromedio.toStringAsFixed(1)
                       : '--',
                   etiqueta: 'Valoración promedio',
                   subtitulo: '${controller.totalResenas} reseñas totales',
                   icono: Icons.star_outline,
-                  color: _morado,
+                  color: JPColors.dashboardViolet,
                 ),
                 const SizedBox(height: 12),
                 _buildStatCardLarge(
+                  context,
                   valor: '${controller.totalProductos}',
                   etiqueta: 'Productos activos',
                   subtitulo: 'En tu catálogo',
                   icono: Icons.inventory_2_outlined,
-                  color: _primario,
+                  color: JPColors.dashboardBlue,
                 ),
 
                 const SizedBox(height: 24),
 
                 // Gráfico placeholder
-                _buildGraficoPlaceholder(),
+                _buildGraficoPlaceholder(context),
 
                 const SizedBox(height: 32),
               ],
@@ -113,12 +107,18 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
     );
   }
 
-  Widget _buildResumenRapido(SupplierController controller) {
+  Widget _buildResumenRapido(
+    BuildContext context,
+    SupplierController controller,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [_primario, _primario.withValues(alpha: 0.8)],
+          colors: [
+            JPColors.dashboardBlue,
+            JPColors.dashboardBlue.withValues(alpha: 0.8),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -127,35 +127,47 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Resumen del día',
-            style: TextStyle(color: Colors.white70, fontSize: 13),
+            style: TextStyle(
+              color: JPCupertinoColors.white.withValues(alpha: 0.7),
+              fontSize: 13,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             '\$${controller.ventasHoy.toStringAsFixed(2)}',
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: JPCupertinoColors.white,
               fontSize: 32,
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 4),
-          const Text(
+          Text(
             'en ventas hoy',
-            style: TextStyle(color: Colors.white70, fontSize: 14),
+            style: TextStyle(
+              color: JPCupertinoColors.white.withValues(alpha: 0.7),
+              fontSize: 14,
+            ),
           ),
           const SizedBox(height: 16),
           Row(
             children: [
               _buildMiniStat(
+                context,
                 '${controller.pedidosPendientesCount}',
                 'Pendientes',
               ),
               const SizedBox(width: 24),
-              _buildMiniStat('${controller.totalProductos}', 'Productos'),
+              _buildMiniStat(
+                context,
+                '${controller.totalProductos}',
+                'Productos',
+              ),
               const SizedBox(width: 24),
               _buildMiniStat(
+                context,
                 controller.valoracionPromedio > 0
                     ? '${controller.valoracionPromedio.toStringAsFixed(1)}★'
                     : '--',
@@ -168,21 +180,24 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
     );
   }
 
-  Widget _buildMiniStat(String valor, String etiqueta) {
+  Widget _buildMiniStat(BuildContext context, String valor, String etiqueta) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           valor,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: JPCupertinoColors.white,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
         ),
         Text(
           etiqueta,
-          style: const TextStyle(color: Colors.white60, fontSize: 11),
+          style: TextStyle(
+            color: JPCupertinoColors.white.withValues(alpha: 0.6),
+            fontSize: 11,
+          ),
         ),
       ],
     );
@@ -191,16 +206,17 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
   Widget _buildSeccion(String titulo) {
     return Text(
       titulo.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 11,
         fontWeight: FontWeight.w700,
-        color: _textoSecundario,
+        color: JPColors.dashboardGray,
         letterSpacing: 0.5,
       ),
     );
   }
 
-  Widget _buildStatCard({
+  Widget _buildStatCard(
+    BuildContext context, {
     required String valor,
     required String etiqueta,
     required IconData icono,
@@ -209,9 +225,9 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: JPCupertinoColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: JPCupertinoColors.systemGrey5(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,19 +243,20 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             valor,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 2),
           Text(
             etiqueta,
-            style: const TextStyle(fontSize: 12, color: _textoSecundario),
+            style: TextStyle(fontSize: 12, color: JPColors.dashboardGray),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildStatCardLarge({
+  Widget _buildStatCardLarge(
+    BuildContext context, {
     required String valor,
     required String etiqueta,
     required String subtitulo,
@@ -249,9 +266,9 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: JPCupertinoColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: JPCupertinoColors.systemGrey5(context)),
       ),
       child: Row(
         children: [
@@ -270,19 +287,16 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
               children: [
                 Text(
                   etiqueta,
-                  style: const TextStyle(fontSize: 13, color: _textoSecundario),
+                  style: TextStyle(fontSize: 13, color: JPColors.dashboardGray),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   valor,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
                 ),
                 Text(
                   subtitulo,
-                  style: const TextStyle(fontSize: 12, color: _textoSecundario),
+                  style: TextStyle(fontSize: 12, color: JPColors.dashboardGray),
                 ),
               ],
             ),
@@ -292,13 +306,13 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
     );
   }
 
-  Widget _buildGraficoPlaceholder() {
+  Widget _buildGraficoPlaceholder(BuildContext context) {
     return Container(
       height: 200,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: JPCupertinoColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: JPCupertinoColors.systemGrey5(context)),
       ),
       child: Center(
         child: Column(
@@ -307,17 +321,20 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
             Icon(
               Icons.bar_chart_outlined,
               size: 48,
-              color: Colors.grey.shade300,
+              color: JPCupertinoColors.systemGrey4(context),
             ),
             const SizedBox(height: 12),
-            const Text(
+            Text(
               'Gráfico de ventas',
-              style: TextStyle(color: _textoSecundario, fontSize: 14),
+              style: TextStyle(color: JPColors.dashboardGray, fontSize: 14),
             ),
             const SizedBox(height: 4),
             Text(
               'Próximamente',
-              style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
+              style: TextStyle(
+                color: JPCupertinoColors.systemGrey2(context),
+                fontSize: 12,
+              ),
             ),
           ],
         ),
@@ -335,18 +352,18 @@ class PantallaEstadisticasProveedor extends StatelessWidget {
             Icon(
               Icons.bar_chart_outlined,
               size: 64,
-              color: _alerta.withValues(alpha: 0.5),
+              color: JPColors.dashboardAmber.withValues(alpha: 0.5),
             ),
             const SizedBox(height: 20),
-            const Text(
+            Text(
               'Estadísticas no disponibles',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Las estadísticas estarán disponibles cuando tu cuenta sea verificada.',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: _textoSecundario),
+              style: TextStyle(fontSize: 14, color: JPColors.dashboardGray),
             ),
           ],
         ),

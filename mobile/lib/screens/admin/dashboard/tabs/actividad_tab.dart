@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../../../../apis/admin/acciones_admin_api.dart';
-import '../constants/dashboard_colors.dart';
-
-import 'package:provider/provider.dart';
-import '../../../../providers/core/theme_provider.dart';
-import '../../../../theme/primary_colors.dart';
+import '../../../../theme/jp_theme.dart';
 
 class ActividadTab extends StatefulWidget {
   const ActividadTab({super.key});
@@ -53,8 +49,6 @@ class _ActividadTabState extends State<ActividadTab> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-
     if (_loading) {
       return const Center(child: CupertinoActivityIndicator(radius: 14));
     }
@@ -63,7 +57,7 @@ class _ActividadTabState extends State<ActividadTab> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(_error!, style: const TextStyle(color: DashboardColors.rojo)),
+            Text(_error!, style: const TextStyle(color: JPColors.error)),
             const SizedBox(height: 16),
             CupertinoButton.filled(
               onPressed: _cargar,
@@ -77,21 +71,19 @@ class _ActividadTabState extends State<ActividadTab> {
       return Center(
         child: Text(
           'Sin actividad reciente',
-          style: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[600]),
+          style: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
         ),
       );
     }
 
     return RefreshIndicator(
       onRefresh: _cargar,
-      color: AppColorsPrimary.main,
+      color: JPCupertinoColors.primary(context),
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         itemCount: _acciones.length,
-        separatorBuilder: (_, _) => Divider(
-          height: 1,
-          color: isDark ? Colors.grey[800] : Colors.grey[300],
-        ),
+        separatorBuilder: (_, _) =>
+            Divider(height: 1, color: JPCupertinoColors.separator(context)),
         itemBuilder: (context, index) {
           final a = _acciones[index] as Map<String, dynamic>;
           final titulo =
@@ -107,7 +99,6 @@ class _ActividadTabState extends State<ActividadTab> {
             admin: admin,
             fecha: fecha,
             exitosa: exitosa,
-            isDark: isDark,
           );
         },
       ),
@@ -120,9 +111,8 @@ class _ActividadTabState extends State<ActividadTab> {
     required String admin,
     required String fecha,
     required bool exitosa,
-    required bool isDark,
   }) {
-    final color = exitosa ? DashboardColors.verde : DashboardColors.rojo;
+    final color = exitosa ? JPColors.success : JPColors.error;
     final icon = exitosa ? Icons.check : Icons.error_outline;
 
     return Padding(
@@ -152,7 +142,7 @@ class _ActividadTabState extends State<ActividadTab> {
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 15,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: JPCupertinoColors.label(context),
                         ),
                       ),
                     ),
@@ -161,7 +151,7 @@ class _ActividadTabState extends State<ActividadTab> {
                       fecha,
                       style: TextStyle(
                         fontSize: 11,
-                        color: isDark ? Colors.grey[500] : Colors.grey[500],
+                        color: JPCupertinoColors.tertiaryLabel(context),
                       ),
                     ),
                   ],
@@ -173,13 +163,16 @@ class _ActividadTabState extends State<ActividadTab> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 14,
-                    color: isDark ? Colors.grey[400] : Colors.grey[700],
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   admin,
-                  style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: JPCupertinoColors.tertiaryLabel(context),
+                  ),
                 ),
               ],
             ),

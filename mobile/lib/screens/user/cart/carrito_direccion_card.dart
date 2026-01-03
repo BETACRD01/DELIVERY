@@ -20,7 +20,7 @@ class CarritoDireccionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
@@ -30,7 +30,7 @@ class CarritoDireccionCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: AppColorsPrimary.main.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
@@ -40,7 +40,7 @@ class CarritoDireccionCard extends StatelessWidget {
               color: AppColorsPrimary.main,
             ),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +57,7 @@ class CarritoDireccionCard extends StatelessWidget {
                 ),
                 if (direccionCompleta != null &&
                     direccionCompleta!.isNotEmpty) ...[
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2),
                   Text(
                     direccionCompleta!,
                     style: TextStyle(
@@ -69,9 +69,9 @@ class CarritoDireccionCard extends StatelessWidget {
                   ),
                 ],
                 if (esPredeterminada) ...[
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Container(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 6,
                       vertical: 2,
                     ),

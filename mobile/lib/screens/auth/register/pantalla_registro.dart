@@ -49,7 +49,7 @@ class _PantallaRegistroState extends State<PantallaRegistro>
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.white, // Fondo blanco
+      backgroundColor: JPCupertinoColors.surface(context),
       navigationBar: CupertinoNavigationBar(
         backgroundColor: JPCupertinoColors.surface(
           context,

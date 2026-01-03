@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../../../../theme/jp_theme.dart';
 import '../../../../config/network/api_config.dart';
 import '../../../../controllers/supplier/supplier_controller.dart';
 import '../../../../models/products/producto_model.dart';
@@ -158,7 +158,7 @@ class _ProductosTabState extends State<ProductosTab> {
                   final result = await showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: JPCupertinoColors.transparent,
                     builder: (context) => SizedBox(
                       height: MediaQuery.of(context).size.height * 0.9,
                       child: const ProductEditSheet(),
@@ -171,7 +171,7 @@ class _ProductosTabState extends State<ProductosTab> {
                   }
                 },
                 backgroundColor: const Color(0xFF6366F1),
-                child: const Icon(Icons.add, color: Colors.white),
+                child: Icon(Icons.add, color: JPCupertinoColors.white),
               ),
             ),
           ],
@@ -203,7 +203,7 @@ class _ProductosTabState extends State<ProductosTab> {
             final result = await showModalBottomSheet(
               context: context,
               isScrollControlled: true,
-              backgroundColor: Colors.transparent,
+              backgroundColor: JPCupertinoColors.transparent,
               builder: (context) => SizedBox(
                 height: MediaQuery.of(context).size.height * 0.9,
                 child: const ProductEditSheet(),
@@ -225,7 +225,7 @@ class _ProductosTabState extends State<ProductosTab> {
                 BoxShadow(color: _exito.withValues(alpha: 0.3), blurRadius: 8),
               ],
             ),
-            child: const Icon(Icons.add, color: Colors.white),
+            child: Icon(Icons.add, color: JPCupertinoColors.white),
           ),
         ),
       ],
@@ -269,12 +269,14 @@ class _ProductosTabState extends State<ProductosTab> {
           decoration: BoxDecoration(
             color: _vistaAgrupada
                 ? _exito.withValues(alpha: 0.08)
-                : Colors.grey.withValues(alpha: 0.05),
+                : JPCupertinoColors.systemGrey(context).withValues(alpha: 0.05),
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
               color: _vistaAgrupada
                   ? _exito.withValues(alpha: 0.2)
-                  : Colors.grey.withValues(alpha: 0.1),
+                  : JPCupertinoColors.systemGrey(
+                      context,
+                    ).withValues(alpha: 0.1),
             ),
           ),
           child: Row(
@@ -284,7 +286,9 @@ class _ProductosTabState extends State<ProductosTab> {
                 decoration: BoxDecoration(
                   color: _vistaAgrupada
                       ? _exito.withValues(alpha: 0.15)
-                      : Colors.grey.withValues(alpha: 0.1),
+                      : JPCupertinoColors.systemGrey(
+                          context,
+                        ).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Icon(
@@ -303,17 +307,16 @@ class _ProductosTabState extends State<ProductosTab> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: _vistaAgrupada ? _exito : Colors.black87,
+                        color: _vistaAgrupada
+                            ? _exito
+                            : JPCupertinoColors.black,
                       ),
                     ),
                     Text(
                       _vistaAgrupada
                           ? 'Productos agrupados por categoría'
                           : 'Todos los productos en orden',
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: _textoSecundario,
-                      ),
+                      style: TextStyle(fontSize: 11, color: _textoSecundario),
                     ),
                   ],
                 ),
@@ -373,7 +376,9 @@ class _ProductosTabState extends State<ProductosTab> {
               border: Border.all(
                 color: expandida
                     ? _exito.withValues(alpha: 0.3)
-                    : Colors.grey.withValues(alpha: 0.15),
+                    : JPCupertinoColors.systemGrey(
+                        context,
+                      ).withValues(alpha: 0.15),
                 width: expandida ? 2 : 1,
               ),
               boxShadow: [
@@ -416,7 +421,7 @@ class _ProductosTabState extends State<ProductosTab> {
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
-                          color: expandida ? _exito : Colors.black87,
+                          color: expandida ? _exito : JPCupertinoColors.black,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -502,14 +507,14 @@ class _ProductosTabState extends State<ProductosTab> {
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(false),
-                      child: const Text('Cancelar'),
+                      child: Text('Cancelar'),
                     ),
                     FilledButton(
                       onPressed: () => Navigator.of(ctx).pop(true),
                       style: FilledButton.styleFrom(
-                        backgroundColor: Colors.red.shade400,
+                        backgroundColor: JPCupertinoColors.systemRed(context),
                       ),
-                      child: const Text('Eliminar'),
+                      child: Text('Eliminar'),
                     ),
                   ],
                 ),
@@ -520,10 +525,10 @@ class _ProductosTabState extends State<ProductosTab> {
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.only(right: 20),
           decoration: BoxDecoration(
-            color: Colors.red.shade400,
+            color: JPCupertinoColors.systemRed(context),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: const Icon(Icons.delete_outline, color: Colors.white),
+          child: Icon(Icons.delete_outline, color: JPCupertinoColors.white),
         ),
         onDismissed: (_) async {
           // Llamar al API para eliminar el producto
@@ -542,7 +547,7 @@ class _ProductosTabState extends State<ProductosTab> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Error al eliminar: $e'),
-                  backgroundColor: Colors.red,
+                  backgroundColor: JPCupertinoColors.systemRed(context),
                 ),
               );
               // Recargar para mostrar el producto nuevamente
@@ -553,15 +558,19 @@ class _ProductosTabState extends State<ProductosTab> {
         child: Container(
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: JPCupertinoColors.white,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: seleccionada ? _exito : Colors.grey.withValues(alpha: 0.2),
+              color: seleccionada
+                  ? _exito
+                  : JPCupertinoColors.systemGrey(
+                      context,
+                    ).withValues(alpha: 0.2),
               width: seleccionada ? 1.5 : 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.03),
+                color: JPCupertinoColors.black.withValues(alpha: 0.03),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -574,17 +583,14 @@ class _ProductosTabState extends State<ProductosTab> {
             ),
             title: Text(
               producto.nombre,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(fontWeight: FontWeight.w600),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '\$${_formatPrecio(producto.precio)}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: _exito,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w700, color: _exito),
                 ),
                 const SizedBox(height: 4),
                 Row(
@@ -601,7 +607,9 @@ class _ProductosTabState extends State<ProductosTab> {
                       decoration: BoxDecoration(
                         color: producto.disponible
                             ? _exito.withValues(alpha: 0.12)
-                            : Colors.red.withValues(alpha: 0.12),
+                            : JPCupertinoColors.systemRed(
+                                context,
+                              ).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
@@ -609,7 +617,9 @@ class _ProductosTabState extends State<ProductosTab> {
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: producto.disponible ? _exito : Colors.red,
+                          color: producto.disponible
+                              ? _exito
+                              : JPCupertinoColors.systemRed(context),
                         ),
                       ),
                     ),
@@ -621,7 +631,10 @@ class _ProductosTabState extends State<ProductosTab> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.delete_outline, color: Colors.red.shade400),
+                  icon: Icon(
+                    Icons.delete_outline,
+                    color: JPCupertinoColors.systemRed(context),
+                  ),
                   onPressed: () async {
                     final confirmar = await showDialog<bool>(
                       context: context,
@@ -633,14 +646,16 @@ class _ProductosTabState extends State<ProductosTab> {
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(ctx).pop(false),
-                            child: const Text('Cancelar'),
+                            child: Text('Cancelar'),
                           ),
                           FilledButton(
                             onPressed: () => Navigator.of(ctx).pop(true),
                             style: FilledButton.styleFrom(
-                              backgroundColor: Colors.red.shade400,
+                              backgroundColor: JPCupertinoColors.systemRed(
+                                context,
+                              ),
                             ),
-                            child: const Text('Eliminar'),
+                            child: Text('Eliminar'),
                           ),
                         ],
                       ),
@@ -664,7 +679,9 @@ class _ProductosTabState extends State<ProductosTab> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Error al eliminar: $e'),
-                              backgroundColor: Colors.red,
+                              backgroundColor: JPCupertinoColors.systemRed(
+                                context,
+                              ),
                             ),
                           );
                         }
@@ -708,7 +725,7 @@ class _ProductosTabState extends State<ProductosTab> {
         width: 60,
         height: 60,
         decoration: BoxDecoration(
-          color: Colors.grey.shade100,
+          color: JPCupertinoColors.systemGrey(context),
           borderRadius: BorderRadius.circular(8),
         ),
         child: ClipRRect(
@@ -727,7 +744,11 @@ class _ProductosTabState extends State<ProductosTab> {
 
   Widget _buildPlaceholder() {
     return Center(
-      child: Icon(Icons.image_outlined, color: Colors.grey.shade400, size: 24),
+      child: Icon(
+        Icons.image_outlined,
+        color: JPCupertinoColors.systemGrey4(context),
+        size: 24,
+      ),
     );
   }
 
@@ -762,13 +783,13 @@ class _ProductosTabState extends State<ProductosTab> {
             const SizedBox(height: 20),
             Text(
               titulo,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
             Text(
               mensaje,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 color: _textoSecundario,
                 height: 1.4,
@@ -788,7 +809,7 @@ class _ProductosTabState extends State<ProductosTab> {
     String text;
 
     if (stock == 0) {
-      badgeColor = Colors.red;
+      badgeColor = JPCupertinoColors.systemRed(context);
       icon = Icons.warning_rounded;
       text = 'Agotado';
     } else if (stock <= 5) {
@@ -851,7 +872,7 @@ class _ProductosTabState extends State<ProductosTab> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: JPCupertinoColors.white,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -859,13 +880,13 @@ class _ProductosTabState extends State<ProductosTab> {
           children: [
             Text(
               '${_seleccionados.length} seleccionados',
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(fontWeight: FontWeight.w600),
             ),
             Row(
               children: [
                 TextButton(
                   onPressed: _limpiarSeleccion,
-                  child: const Text('Limpiar'),
+                  child: Text('Limpiar'),
                 ),
                 const SizedBox(width: 8),
                 FilledButton(
@@ -874,7 +895,7 @@ class _ProductosTabState extends State<ProductosTab> {
                       const SnackBar(content: Text('Acción masiva ejecutada')),
                     );
                   },
-                  child: const Text('Pausar'),
+                  child: Text('Pausar'),
                 ),
               ],
             ),

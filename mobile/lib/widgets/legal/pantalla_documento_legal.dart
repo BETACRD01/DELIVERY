@@ -1,17 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import '../../models/entities/documento_legal_model.dart';
 import '../../services/legal/legal_service.dart';
-import '../../theme/primary_colors.dart';
 import '../../theme/jp_theme.dart';
 
 /// Pantalla para mostrar documentos legales estilo iPhone
 class PantallaDocumentoLegal extends StatefulWidget {
   final TipoDocumento tipo;
 
-  const PantallaDocumentoLegal({
-    super.key,
-    required this.tipo,
-  });
+  const PantallaDocumentoLegal({super.key, required this.tipo});
 
   @override
   State<PantallaDocumentoLegal> createState() => _PantallaDocumentoLegalState();
@@ -69,7 +65,9 @@ class _PantallaDocumentoLegalState extends State<PantallaDocumentoLegal> {
       child: CupertinoPageScaffold(
         backgroundColor: JPCupertinoColors.background(context),
         navigationBar: CupertinoNavigationBar(
-          backgroundColor: JPCupertinoColors.surface(context).withValues(alpha: 0.95),
+          backgroundColor: JPCupertinoColors.surface(
+            context,
+          ).withValues(alpha: 0.95),
           border: Border(
             bottom: BorderSide(
               color: JPCupertinoColors.separator(context),
@@ -82,18 +80,11 @@ class _PantallaDocumentoLegalState extends State<PantallaDocumentoLegal> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  CupertinoIcons.back,
-                  color: AppColorsPrimary.main,
-                  size: 28,
-                ),
+                Icon(CupertinoIcons.back, color: JPColors.primary, size: 28),
                 const SizedBox(width: 4),
                 Text(
                   'Atrás',
-                  style: TextStyle(
-                    color: AppColorsPrimary.main,
-                    fontSize: 17,
-                  ),
+                  style: TextStyle(color: JPColors.primary, fontSize: 17),
                 ),
               ],
             ),
@@ -102,15 +93,10 @@ class _PantallaDocumentoLegalState extends State<PantallaDocumentoLegal> {
             widget.tipo == TipoDocumento.terminos
                 ? 'Términos y Condiciones'
                 : 'Política de Privacidad',
-            style: const TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
           ),
         ),
-        child: SafeArea(
-          child: _buildBody(),
-        ),
+        child: SafeArea(child: _buildBody()),
       ),
     );
   }
@@ -129,7 +115,7 @@ class _PantallaDocumentoLegalState extends State<PantallaDocumentoLegal> {
             children: [
               const CupertinoActivityIndicator(
                 radius: 16,
-                color: AppColorsPrimary.main,
+                color: JPColors.primary,
               ),
               const SizedBox(height: 16),
               const Text('Cargando documento...'),
@@ -198,7 +184,7 @@ class _PantallaDocumentoLegalState extends State<PantallaDocumentoLegal> {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           decoration: BoxDecoration(
-            color: AppColorsPrimary.main.withValues(alpha: 0.08),
+            color: JPColors.primary.withValues(alpha: 0.08),
             border: Border(
               bottom: BorderSide(
                 color: JPCupertinoColors.separator(context),
@@ -217,13 +203,13 @@ class _PantallaDocumentoLegalState extends State<PantallaDocumentoLegal> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColorsPrimary.main.withValues(alpha: 0.15),
+                      color: JPColors.primary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       'Versión ${_documento!.version}',
                       style: TextStyle(
-                        color: AppColorsPrimary.main,
+                        color: JPColors.primary,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
@@ -268,8 +254,18 @@ class _PantallaDocumentoLegalState extends State<PantallaDocumentoLegal> {
 
   String _formatearFecha(DateTime fecha) {
     final meses = [
-      'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-      'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+      'enero',
+      'febrero',
+      'marzo',
+      'abril',
+      'mayo',
+      'junio',
+      'julio',
+      'agosto',
+      'septiembre',
+      'octubre',
+      'noviembre',
+      'diciembre',
     ];
     return '${fecha.day} de ${meses[fecha.month - 1]} de ${fecha.year}';
   }

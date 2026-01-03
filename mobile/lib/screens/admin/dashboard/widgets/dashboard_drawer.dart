@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../../providers/core/theme_provider.dart';
-import '../../../../theme/primary_colors.dart';
+
+import '../../../../theme/jp_theme.dart';
 import '../../../../config/routing/rutas.dart';
 import '../../../../config/network/api_config.dart';
 
@@ -25,21 +24,20 @@ class DashboardDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final backgroundColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
+    final backgroundColor = JPCupertinoColors.background(context);
 
     return Drawer(
       backgroundColor: backgroundColor,
       child: SafeArea(
         child: Column(
           children: [
-            _buildHeader(context, isDark),
+            _buildHeader(context),
             const SizedBox(height: 16),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 children: [
-                  _buildSectionTitle('PRINCIPAL', isDark),
+                  _buildSectionTitle('PRINCIPAL', context),
                   _buildMenuItem(
                     context,
                     icon: Icons.dashboard_outlined,
@@ -47,7 +45,6 @@ class DashboardDrawer extends StatelessWidget {
                     isActive:
                         true, // Assuming current route logic or state if needed
                     onTap: () => Navigator.pop(context),
-                    isDark: isDark,
                   ),
                   _buildMenuItem(
                     context,
@@ -57,7 +54,6 @@ class DashboardDrawer extends StatelessWidget {
                       Navigator.pop(context);
                       Rutas.irA(context, Rutas.adminUsuariosGestion);
                     },
-                    isDark: isDark,
                   ),
                   _buildMenuItem(
                     context,
@@ -67,9 +63,8 @@ class DashboardDrawer extends StatelessWidget {
                       Navigator.pop(context);
                       Rutas.irA(context, Rutas.adminProveedoresGestion);
                     },
-                    isDark: isDark,
                   ),
-                  _buildSolicitudesMenuItem(context, isDark),
+                  _buildSolicitudesMenuItem(context),
                   _buildMenuItem(
                     context,
                     icon: Icons.delivery_dining_outlined,
@@ -78,7 +73,6 @@ class DashboardDrawer extends StatelessWidget {
                       Navigator.pop(context);
                       Rutas.irA(context, Rutas.adminRepartidoresGestion);
                     },
-                    isDark: isDark,
                   ),
                   _buildMenuItem(
                     context,
@@ -88,14 +82,13 @@ class DashboardDrawer extends StatelessWidget {
                       Navigator.pop(context);
                       Rutas.irA(context, Rutas.adminRifasGestion);
                     },
-                    isDark: isDark,
                   ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(16),
-              child: _buildLogoutButton(context, isDark),
+              child: _buildLogoutButton(context),
             ),
           ],
         ),
@@ -103,7 +96,7 @@ class DashboardDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context, bool isDark) {
+  Widget _buildHeader(BuildContext context) {
     final rawUrl = usuario?['foto_perfil'] as String?;
     final fotoUrl = (rawUrl != null && rawUrl.isNotEmpty)
         ? ApiConfig.getMediaUrl(rawUrl)
@@ -119,7 +112,9 @@ class DashboardDrawer extends StatelessWidget {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: AppColorsPrimary.main.withValues(alpha: 0.1),
+                  color: JPCupertinoColors.primary(
+                    context,
+                  ).withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                   image: fotoUrl != null
                       ? DecorationImage(
@@ -135,7 +130,7 @@ class DashboardDrawer extends StatelessWidget {
                               .substring(0, 1)
                               .toUpperCase(),
                           style: TextStyle(
-                            color: AppColorsPrimary.main,
+                            color: JPCupertinoColors.primary(context),
                             fontWeight: FontWeight.bold,
                             fontSize: 24,
                           ),
@@ -152,12 +147,10 @@ class DashboardDrawer extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: AppColorsPrimary.main,
+                        color: JPCupertinoColors.primary(context),
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: isDark
-                              ? const Color(0xFF1C1C1E)
-                              : Colors.white,
+                          color: JPCupertinoColors.background(context),
                           width: 2,
                         ),
                       ),
@@ -182,14 +175,14 @@ class DashboardDrawer extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: isDark ? Colors.white : Colors.black,
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
                 Text(
                   usuario?['email'] ?? 'admin@deliber.com',
                   style: TextStyle(
                     fontSize: 13,
-                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -202,13 +195,13 @@ class DashboardDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title, bool isDark) {
+  Widget _buildSectionTitle(String title, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Text(
         title,
         style: TextStyle(
-          color: isDark ? Colors.grey[500] : Colors.grey[600],
+          color: JPCupertinoColors.tertiaryLabel(context),
           fontSize: 12,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.5,
@@ -223,12 +216,11 @@ class DashboardDrawer extends StatelessWidget {
     required String title,
     required VoidCallback onTap,
     bool isActive = false,
-    required bool isDark,
     Widget? trailing,
   }) {
-    final activeBg = AppColorsPrimary.main.withValues(alpha: 0.1);
-    final activeColor = AppColorsPrimary.main;
-    final inactiveColor = isDark ? Colors.white : Colors.black87;
+    final activeBg = JPCupertinoColors.primary(context).withValues(alpha: 0.1);
+    final activeColor = JPCupertinoColors.primary(context);
+    final inactiveColor = JPCupertinoColors.label(context);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 4),
@@ -241,7 +233,7 @@ class DashboardDrawer extends StatelessWidget {
           icon,
           color: isActive
               ? activeColor
-              : (isDark ? Colors.grey[400] : Colors.grey[600]),
+              : JPCupertinoColors.secondaryLabel(context),
           size: 22,
         ),
         title: Text(
@@ -261,7 +253,7 @@ class DashboardDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildSolicitudesMenuItem(BuildContext context, bool isDark) {
+  Widget _buildSolicitudesMenuItem(BuildContext context) {
     return _buildMenuItem(
       context,
       icon: Icons.notifications_none,
@@ -270,7 +262,6 @@ class DashboardDrawer extends StatelessWidget {
         Navigator.pop(context);
         onSolicitudesTap();
       },
-      isDark: isDark,
       trailing: solicitudesPendientesCount > 0
           ? Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -291,7 +282,7 @@ class DashboardDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildLogoutButton(BuildContext context, bool isDark) {
+  Widget _buildLogoutButton(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.pop(context);
@@ -301,18 +292,18 @@ class DashboardDrawer extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF2C2C2E) : Colors.grey[100],
+          color: JPCupertinoColors.systemGrey5(context),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.logout, color: Colors.red[400], size: 20),
+            Icon(Icons.logout, color: JPColors.error, size: 20),
             const SizedBox(width: 8),
             Text(
               'Cerrar Sesión',
               style: TextStyle(
-                color: Colors.red[400],
+                color: JPColors.error,
                 fontWeight: FontWeight.w600,
               ),
             ),

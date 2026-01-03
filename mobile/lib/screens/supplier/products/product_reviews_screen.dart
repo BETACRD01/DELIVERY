@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/theme/jp_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobile/models/products/producto_model.dart';
 import 'package:mobile/services/productos/productos_service.dart';
@@ -32,14 +33,12 @@ class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground.resolveFrom(
-        context,
-      ),
+      backgroundColor: JPCupertinoColors.background(context),
       appBar: AppBar(
         title: Text('Reseñas de ${widget.productoNombre}'),
         centerTitle: true,
-        backgroundColor: CupertinoColors.systemBackground.resolveFrom(context),
-        surfaceTintColor: CupertinoColors.systemBackground.resolveFrom(context),
+        backgroundColor: JPCupertinoColors.surface(context),
+        surfaceTintColor: JPCupertinoColors.surface(context),
       ),
       body: FutureBuilder<List<ResenaPreview>>(
         future: _futureReviews,
@@ -53,10 +52,13 @@ class _ProductReviewsScreenState extends State<ProductReviewsScreen> {
 
           final reviews = snapshot.data ?? [];
           if (reviews.isEmpty) {
-            return const Center(
+            return Center(
               child: Text(
                 'No hay reseñas aún.',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: JPCupertinoColors.systemGrey(context),
+                ),
               ),
             );
           }
@@ -86,11 +88,11 @@ class _ReviewCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: JPCupertinoColors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -104,8 +106,8 @@ class _ReviewCard extends StatelessWidget {
               CircleAvatar(
                 radius: 16,
                 backgroundColor: review.usuarioFoto != null
-                    ? Colors.transparent
-                    : Colors.grey.shade200,
+                    ? JPCupertinoColors.transparent
+                    : JPCupertinoColors.systemGrey5(context),
                 backgroundImage: review.usuarioFoto != null
                     ? NetworkImage(review.usuarioFoto!)
                     : null,
@@ -114,7 +116,7 @@ class _ReviewCard extends StatelessWidget {
                         review.usuario.isNotEmpty
                             ? review.usuario[0].toUpperCase()
                             : '?',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
@@ -125,16 +127,16 @@ class _ReviewCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   review.usuario,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
               Text(
                 review
                     .fecha, // Assuming already formatted string or will formatting later
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+                style: TextStyle(
+                  color: JPCupertinoColors.systemGrey(context),
+                  fontSize: 12,
+                ),
               ),
             ],
           ),
@@ -145,14 +147,14 @@ class _ReviewCard extends StatelessWidget {
                 index < review.estrellas
                     ? Icons.star_rounded
                     : Icons.star_outline_rounded,
-                color: Colors.amber,
+                color: JPCupertinoColors.systemYellow(context),
                 size: 20,
               );
             }),
           ),
           if (review.comentario != null && review.comentario!.isNotEmpty) ...[
             const SizedBox(height: 8),
-            Text(review.comentario!, style: const TextStyle(height: 1.4)),
+            Text(review.comentario!, style: TextStyle(height: 1.4)),
           ],
         ],
       ),

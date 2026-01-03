@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../services/pedidos/pedido_service.dart';
+import '../../theme/jp_theme.dart';
 import 'star_rating_input.dart';
 
 /// Diálogo para calificar al repartidor después de un pedido
@@ -30,10 +31,12 @@ class DialogoCalificarRepartidor extends StatefulWidget {
   });
 
   @override
-  State<DialogoCalificarRepartidor> createState() => _DialogoCalificarRepartidorState();
+  State<DialogoCalificarRepartidor> createState() =>
+      _DialogoCalificarRepartidorState();
 }
 
-class _DialogoCalificarRepartidorState extends State<DialogoCalificarRepartidor> {
+class _DialogoCalificarRepartidorState
+    extends State<DialogoCalificarRepartidor> {
   final _comentarioController = TextEditingController();
   final _pedidoService = PedidoService();
   int _rating = 0;
@@ -99,7 +102,11 @@ class _DialogoCalificarRepartidorState extends State<DialogoCalificarRepartidor>
         title: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(CupertinoIcons.checkmark_circle_fill, color: Color(0xFF38A169), size: 24),
+            Icon(
+              CupertinoIcons.checkmark_circle_fill,
+              color: JPColors.success,
+              size: 24,
+            ),
             SizedBox(width: 8),
             Text('Gracias'),
           ],
@@ -205,7 +212,9 @@ class _DialogoCalificarRepartidorState extends State<DialogoCalificarRepartidor>
                         _getRatingText(_rating),
                         style: TextStyle(
                           fontSize: 13,
-                          color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                          color: CupertinoColors.secondaryLabel.resolveFrom(
+                            context,
+                          ),
                         ),
                       ),
                     ],
@@ -216,9 +225,12 @@ class _DialogoCalificarRepartidorState extends State<DialogoCalificarRepartidor>
                   // Campo de comentario
                   CupertinoTextField(
                     controller: _comentarioController,
-                    placeholder: 'Cuéntanos más sobre tu experiencia (opcional)',
+                    placeholder:
+                        'Cuéntanos más sobre tu experiencia (opcional)',
                     placeholderStyle: TextStyle(
-                      color: CupertinoColors.placeholderText.resolveFrom(context),
+                      color: CupertinoColors.placeholderText.resolveFrom(
+                        context,
+                      ),
                     ),
                     maxLines: 4,
                     maxLength: 500,
@@ -240,12 +252,12 @@ class _DialogoCalificarRepartidorState extends State<DialogoCalificarRepartidor>
                       color: CupertinoColors.activeBlue,
                       onPressed: _enviando ? null : _enviarCalificacion,
                       child: _enviando
-                          ? const CupertinoActivityIndicator(color: CupertinoColors.white)
+                          ? const CupertinoActivityIndicator(
+                              color: CupertinoColors.white,
+                            )
                           : const Text(
                               'Enviar Calificación',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: TextStyle(fontWeight: FontWeight.w600),
                             ),
                     ),
                   ),

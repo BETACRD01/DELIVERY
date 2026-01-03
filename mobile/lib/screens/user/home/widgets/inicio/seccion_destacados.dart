@@ -28,7 +28,7 @@ class SeccionDestacados extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildHeader(context),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         if (loading)
           _buildLoadingState()
         else if (productos.isEmpty)
@@ -41,13 +41,13 @@ class SeccionDestacados extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Text(
         'Más Populares',
         style: TextStyle(
           fontSize: 20, // Slightly larger for iOS feel
           fontWeight: FontWeight.bold,
-          color: CupertinoColors.label.resolveFrom(context),
+          color: JPCupertinoColors.label(context),
           letterSpacing: -0.5,
         ),
       ),
@@ -57,7 +57,7 @@ class SeccionDestacados extends StatelessWidget {
   Widget _buildProductosList() {
     return ListView.builder(
       // Use builder for clean index access
-      padding: const EdgeInsets.symmetric(
+      padding: EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 8,
       ), // Add vertical padding for shadows
@@ -65,12 +65,13 @@ class SeccionDestacados extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: productos.length,
       itemBuilder: (context, index) {
+        final producto = productos[index];
         return Padding(
-          padding: const EdgeInsets.only(bottom: 16), // Spacing between cards
+          padding: EdgeInsets.only(bottom: 16), // Spacing between cards
           child: _ProductoCard(
-            producto: productos[index],
-            onTap: () => onProductoPressed?.call(productos[index]),
-            onAgregarCarrito: () => onAgregarCarrito?.call(productos[index]),
+            producto: producto,
+            onTap: () => onProductoPressed?.call(producto),
+            onAgregarCarrito: () => onAgregarCarrito?.call(producto),
           ),
         );
       },
@@ -79,16 +80,16 @@ class SeccionDestacados extends StatelessWidget {
 
   Widget _buildLoadingState() {
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 3,
-      separatorBuilder: (_, _) => const SizedBox(height: 16),
+      separatorBuilder: (_, _) => SizedBox(height: 16),
       itemBuilder: (context, index) {
         return Container(
           height: 104,
           decoration: BoxDecoration(
-            color: Colors.grey[200],
+            color: JPCupertinoColors.systemGrey5(context),
             borderRadius: BorderRadius.circular(AppConstants.radiusCard),
           ),
         );
@@ -98,13 +99,11 @@ class SeccionDestacados extends StatelessWidget {
 
   Widget _buildEmptyState(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child: Center(
         child: Text(
           'No hay productos destacados',
-          style: TextStyle(
-            color: CupertinoColors.secondaryLabel.resolveFrom(context),
-          ),
+          style: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
         ),
       ),
     );
@@ -136,12 +135,12 @@ class _ProductoCard extends StatelessWidget {
           boxShadow: AppConstants.cardShadow(context), // iOS-style shadow
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.all(12),
           child: Row(
             children: [
               // Imagen del producto (OPTIMIZADA)
               _buildProductImage(context),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
 
               // Información del producto
               Expanded(
@@ -153,15 +152,15 @@ class _ProductoCard extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
-                        color: CupertinoColors.label.resolveFrom(context),
+                        color: JPCupertinoColors.label(context),
                         letterSpacing: -0.3,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     _buildProveedorBadge(context),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Text(
                       producto.descripcion,
                       style: TextStyle(
@@ -175,7 +174,7 @@ class _ProductoCard extends StatelessWidget {
                           2, // Allow 2 lines for better description visibility
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -192,7 +191,7 @@ class _ProductoCard extends StatelessWidget {
                         // Rating removed to clean up UI or moved, let's keep it minimal
                         Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.star_rounded,
                               size: 18,
                               color: PrimaryColors.main, // Orange
@@ -216,22 +215,22 @@ class _ProductoCard extends StatelessWidget {
               ),
 
               // Botón agregar al carrito
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               if (onAgregarCarrito != null && producto.disponible)
                 Hero(
                   tag: 'add_to_cart_${producto.id}',
                   child: Material(
-                    color: Colors.transparent,
+                    color: JPCupertinoColors.transparent,
                     child: InkWell(
                       onTap: onAgregarCarrito,
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: AppColorsPrimary.main.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           CupertinoIcons.cart_fill_badge_plus, // iOS icon
                           color: AppColorsPrimary.main,
                           size: 20,
@@ -268,7 +267,7 @@ class _ProductoCard extends StatelessWidget {
                     .resolveFrom(context),
                 child: Icon(
                   Icons.broken_image_outlined,
-                  color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  color: JPCupertinoColors.secondaryLabel(context),
                   size: 24,
                 ),
               );
@@ -290,7 +289,7 @@ class _ProductoCard extends StatelessWidget {
       ),
       child: Icon(
         Icons.fastfood_outlined,
-        color: CupertinoColors.secondaryLabel.resolveFrom(context),
+        color: JPCupertinoColors.secondaryLabel(context),
         size: 32,
       ),
     );
@@ -301,7 +300,7 @@ class _ProductoCard extends StatelessWidget {
         producto.proveedorLogoUrl != null &&
         producto.proveedorLogoUrl!.isNotEmpty;
     final tieneNombre = (producto.proveedorNombre ?? '').isNotEmpty;
-    if (!tieneLogo && !tieneNombre) return const SizedBox.shrink();
+    if (!tieneLogo && !tieneNombre) return SizedBox.shrink();
 
     return Row(
       children: [
@@ -309,23 +308,23 @@ class _ProductoCard extends StatelessWidget {
           Container(
             width: 20,
             height: 20,
-            margin: const EdgeInsets.only(right: 6),
+            margin: EdgeInsets.only(right: 6),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
                 image: NetworkImage(producto.proveedorLogoUrl!),
                 fit: BoxFit.cover,
               ),
-              border: Border.all(color: Colors.grey[200]!),
+              border: Border.all(color: JPCupertinoColors.systemGrey5(context)),
             ),
           )
         else
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(right: 6),
             child: Icon(
               Icons.storefront_outlined,
               size: 16,
-              color: Colors.grey,
+              color: JPCupertinoColors.systemGrey(context),
             ),
           ),
 
@@ -335,7 +334,7 @@ class _ProductoCard extends StatelessWidget {
               producto.proveedorNombre!,
               style: TextStyle(
                 fontSize: 12,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
                 fontWeight: FontWeight.w500,
               ),
               maxLines: 1,

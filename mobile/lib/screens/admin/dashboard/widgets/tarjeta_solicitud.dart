@@ -1,10 +1,8 @@
 // lib/screens/admin/dashboard/widgets/tarjeta_solicitud.dart
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../models/auth/solicitud_cambio_rol.dart';
-import '../constants/dashboard_colors.dart';
-
-import 'package:provider/provider.dart';
-import '../../../../providers/core/theme_provider.dart';
+import '../../../../theme/jp_theme.dart';
 
 class TarjetaSolicitud extends StatelessWidget {
   final SolicitudCambioRol solicitud;
@@ -18,8 +16,7 @@ class TarjetaSolicitud extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final backgroundColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
+    final backgroundColor = JPCupertinoColors.surface(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -44,16 +41,16 @@ class TarjetaSolicitud extends StatelessWidget {
                     shape: BoxShape.circle,
                     color:
                         (solicitud.esProveedor
-                                ? DashboardColors.verde
-                                : DashboardColors.azul)
+                                ? JPColors.success
+                                : CupertinoColors.activeBlue)
                             .withValues(alpha: 0.15),
                   ),
                   child: Center(
                     child: Icon(
                       solicitud.iconoRol,
                       color: solicitud.esProveedor
-                          ? DashboardColors.verde
-                          : DashboardColors.azul,
+                          ? JPColors.success
+                          : CupertinoColors.activeBlue,
                       size: 22,
                     ),
                   ),
@@ -70,7 +67,7 @@ class TarjetaSolicitud extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: JPCupertinoColors.label(context),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -82,7 +79,7 @@ class TarjetaSolicitud extends StatelessWidget {
                             : 'Solicita ser Repartidor',
                         style: TextStyle(
                           fontSize: 13,
-                          color: isDark ? Colors.grey[400] : Colors.grey[600],
+                          color: JPCupertinoColors.secondaryLabel(context),
                         ),
                       ),
                     ],

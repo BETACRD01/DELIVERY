@@ -343,7 +343,7 @@ class CalificacionRapidaSerializer(serializers.Serializer):
         # Validar que el pedido esté en estado correcto para calificar
         if self._pedido.estado not in ['entregado', 'finalizado']:
             estado_actual = self._pedido.get_estado_display()
-            print(f"[DEBUG] Error estado: {self._pedido.estado}")
+
             raise serializers.ValidationError(
                 f"Solo puedes calificar pedidos entregados o finalizados. Estado actual del pedido: {estado_actual}"
             )
@@ -351,7 +351,7 @@ class CalificacionRapidaSerializer(serializers.Serializer):
         return value
 
     def validate(self, data):
-        print(f"[DEBUG] Validating data: {data}")
+
         # Validaciones adicionales si son necesarias
         return super().validate(data)
 
@@ -375,7 +375,7 @@ class CalificacionRapidaSerializer(serializers.Serializer):
                 try:
                     proveedor = Proveedor.objects.get(id=proveedor_id)
                     if not proveedor.user:
-                         print(f"[DEBUG] Proveedor {proveedor.id} sin usuario")
+
                          raise serializers.ValidationError(
                              f"El proveedor '{proveedor.nombre}' no tiene un usuario asociado para recibir la calificación."
                          )

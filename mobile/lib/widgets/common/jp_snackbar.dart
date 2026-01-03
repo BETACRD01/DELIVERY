@@ -19,8 +19,7 @@ class JPSnackbar {
       SnackBar(
         elevation: 0,
         behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors
-            .transparent, // Transparente para usar nuestro propio contenedor
+        backgroundColor: Colors.transparent,
         duration: Duration(seconds: durationSeconds),
         content: Container(
           padding: const EdgeInsets.all(16),

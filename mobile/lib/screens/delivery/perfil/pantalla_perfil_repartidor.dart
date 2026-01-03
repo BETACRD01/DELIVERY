@@ -14,6 +14,7 @@ import '../../../models/entities/repartidor.dart';
 import '../../../services/repartidor/repartidor_datos_bancarios_service.dart';
 import '../../../services/repartidor/repartidor_service.dart';
 import '../ganancias/pantalla_datos_bancarios.dart';
+import '../../../theme/jp_theme.dart';
 
 /// Pantalla de Edición de Perfil del Repartidor (Estilo iOS)
 class PantallaEditarPerfilRepartidor extends StatefulWidget {
@@ -61,15 +62,12 @@ class _PantallaEditarPerfilRepartidorState
   // ============================================
   // COLORES
   // ============================================
-  static const Color _primary = Color(0xFF0CB7F2); // Celeste corporativo
-
   // Dynamic Colors
-  Color get _surface =>
-      CupertinoColors.systemGroupedBackground.resolveFrom(context);
-  Color get _cardBg =>
-      CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context);
-  Color get _errorColor => CupertinoColors.destructiveRed.resolveFrom(context);
-  Color get _successColor => CupertinoColors.activeGreen.resolveFrom(context);
+  Color get _primary => JPCupertinoColors.systemBlue(context);
+  Color get _surface => JPCupertinoColors.background(context);
+  Color get _cardBg => JPCupertinoColors.secondarySurface(context);
+  Color get _errorColor => JPCupertinoColors.error(context);
+  Color get _successColor => JPCupertinoColors.success(context);
 
   // ============================================
   // CICLO DE VIDA
@@ -346,7 +344,7 @@ class _PantallaEditarPerfilRepartidorState
             onPressed: _guardando ? null : _guardarCambios,
             child: _guardando
                 ? const CupertinoActivityIndicator(radius: 8)
-                : const Text(
+                : Text(
                     'Guardar',
                     style: TextStyle(
                       color: _primary,
@@ -408,7 +406,7 @@ class _PantallaEditarPerfilRepartidorState
                 shape: BoxShape.circle,
                 color: _cardBg,
                 border: Border.all(
-                  color: CupertinoColors.systemGrey5,
+                  color: JPCupertinoColors.systemGrey5(context),
                   width: 4,
                 ),
                 image: imageProvider != null
@@ -423,10 +421,10 @@ class _PantallaEditarPerfilRepartidorState
                 ],
               ),
               child: imageProvider == null
-                  ? const Icon(
+                  ? Icon(
                       CupertinoIcons.person_fill,
                       size: 60,
-                      color: CupertinoColors.systemGrey3,
+                      color: JPCupertinoColors.systemGrey3(context),
                     )
                   : null,
             ),
@@ -435,7 +433,7 @@ class _PantallaEditarPerfilRepartidorState
               right: 0,
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: _primary,
                   shape: BoxShape.circle,
                 ),
@@ -484,15 +482,15 @@ class _PantallaEditarPerfilRepartidorState
                 Row(
                   children: List.generate(5, (index) {
                     if (index < stats.calificacionPromedio.round()) {
-                      return const Icon(
+                      return Icon(
                         CupertinoIcons.star_fill,
-                        color: CupertinoColors.systemYellow,
+                        color: JPCupertinoColors.systemYellow(context),
                         size: 16,
                       );
                     }
-                    return const Icon(
+                    return Icon(
                       CupertinoIcons.star,
-                      color: CupertinoColors.systemGrey4,
+                      color: JPCupertinoColors.systemGrey4(context),
                       size: 16,
                     );
                   }),
@@ -500,9 +498,9 @@ class _PantallaEditarPerfilRepartidorState
                 const SizedBox(height: 4),
                 Text(
                   '${stats.totalCalificaciones} reseñas',
-                  style: const TextStyle(
-                    color: CupertinoColors.secondaryLabel,
-                    fontSize: 13,
+                  style: TextStyle(
+                    color: JPCupertinoColors.error(context),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -525,9 +523,7 @@ class _PantallaEditarPerfilRepartidorState
                       'Clientes muy satisfechos',
                       style: TextStyle(
                         fontSize: 13,
-                        color: CupertinoColors.secondaryLabel.resolveFrom(
-                          context,
-                        ),
+                        color: JPCupertinoColors.secondaryLabel(context),
                       ),
                     ),
                   ],
@@ -577,8 +573,8 @@ class _PantallaEditarPerfilRepartidorState
                       : 'Seleccionar',
                   style: TextStyle(
                     color: _vehiculoSeleccionado != null
-                        ? CupertinoColors.label
-                        : CupertinoColors.placeholderText,
+                        ? JPCupertinoColors.label(context)
+                        : JPCupertinoColors.placeholder(context),
                   ),
                 ),
                 const SizedBox(width: 6),
@@ -596,7 +592,7 @@ class _PantallaEditarPerfilRepartidorState
   }
 
   Widget _buildSeccionDatosContacto() {
-    const labelStyle = TextStyle(color: _primary, fontWeight: FontWeight.w500);
+    final labelStyle = TextStyle(color: _primary, fontWeight: FontWeight.w500);
 
     return CupertinoFormSection.insetGrouped(
       header: const Text('CONTACTO'),
@@ -604,19 +600,19 @@ class _PantallaEditarPerfilRepartidorState
         CupertinoTextFormFieldRow(
           controller: _emailController,
           placeholder: 'Email',
-          prefix: const Text('Email', style: labelStyle),
+          prefix: Text('Email', style: labelStyle),
           keyboardType: TextInputType.emailAddress,
         ),
         CupertinoTextFormFieldRow(
           controller: _nombreController,
           placeholder: 'Nombre',
-          prefix: const Text('Nombre', style: labelStyle),
+          prefix: Text('Nombre', style: labelStyle),
           textCapitalization: TextCapitalization.words,
         ),
         CupertinoTextFormFieldRow(
           controller: _apellidoController,
           placeholder: 'Apellido',
-          prefix: const Text('Apellido', style: labelStyle),
+          prefix: Text('Apellido', style: labelStyle),
           textCapitalization: TextCapitalization.words,
         ),
       ],
@@ -658,8 +654,8 @@ class _PantallaEditarPerfilRepartidorState
                     bankDetailsText,
                     style: TextStyle(
                       color: (bankInfo?.estanCompletos ?? false)
-                          ? CupertinoColors.label
-                          : CupertinoColors.activeBlue,
+                          ? JPCupertinoColors.label(context)
+                          : JPCupertinoColors.systemBlue(context),
                       fontSize: 15,
                     ),
                     textAlign: TextAlign.end,
@@ -697,7 +693,7 @@ class _PantallaEditarPerfilRepartidorState
       context: context,
       builder: (_) => Container(
         height: 250,
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.background(context),
         child: Column(
           children: [
             Row(

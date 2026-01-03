@@ -140,7 +140,7 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
                       color: JPCupertinoColors.label(context),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   CupertinoButton(
                     padding: EdgeInsets.zero,
                     onPressed: _mostrarFiltros,
@@ -187,16 +187,16 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
       return SliverFillRemaining(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(32),
+            padding: EdgeInsets.all(32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   CupertinoIcons.wifi_slash,
                   size: 80,
-                  color: JPCupertinoColors.systemRed(context),
+                  color: JPCupertinoColors.error(context),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Text(
                   _error,
                   style: TextStyle(
@@ -205,10 +205,10 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
                 CupertinoButton.filled(
                   onPressed: _cargarProductos,
-                  child: const Text('Reintentar'),
+                  child: Text('Reintentar'),
                 ),
               ],
             ),
@@ -228,7 +228,7 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
                 size: 80,
                 color: JPCupertinoColors.systemGrey3(context),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text(
                 'No se encontraron productos',
                 style: TextStyle(
@@ -243,7 +243,7 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
     }
 
     return SliverPadding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -306,18 +306,18 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
-          title: const Text('Buscar producto'),
+          title: Text('Buscar producto'),
           content: Padding(
-            padding: const EdgeInsets.only(top: 12),
+            padding: EdgeInsets.only(top: 12),
             child: CupertinoTextField(
               controller: searchController,
               autofocus: true,
               placeholder: 'Nombre del producto...',
-              prefix: const Padding(
+              prefix: Padding(
                 padding: EdgeInsets.only(left: 8),
                 child: Icon(CupertinoIcons.search, size: 20),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               decoration: BoxDecoration(
                 color: JPCupertinoColors.systemGrey6(context),
                 borderRadius: BorderRadius.circular(8),
@@ -327,7 +327,7 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
           actions: [
             CupertinoDialogAction(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar'),
+              child: Text('Cancelar'),
             ),
             CupertinoDialogAction(
               isDefaultAction: true,
@@ -336,7 +336,7 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
                 _aplicarFiltros();
                 Navigator.pop(context);
               },
-              child: const Text('Buscar'),
+              child: Text('Buscar'),
             ),
           ],
         );
@@ -348,7 +348,7 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
-        title: const Text('Ordenar por', style: TextStyle(fontSize: 13)),
+        title: Text('Ordenar por', style: TextStyle(fontSize: 13)),
         actions: [
           CupertinoActionSheetAction(
             onPressed: () {
@@ -359,10 +359,10 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Nombre (A-Z)'),
+                Text('Nombre (A-Z)'),
                 if (_ordenamiento == 'nombre')
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Icon(
                       CupertinoIcons.check_mark,
                       size: 18,
@@ -381,10 +381,10 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Precio: Menor a Mayor'),
+                Text('Precio: Menor a Mayor'),
                 if (_ordenamiento == 'precio_asc')
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Icon(
                       CupertinoIcons.check_mark,
                       size: 18,
@@ -403,10 +403,10 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Precio: Mayor a Menor'),
+                Text('Precio: Mayor a Menor'),
                 if (_ordenamiento == 'precio_desc')
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Icon(
                       CupertinoIcons.check_mark,
                       size: 18,
@@ -425,10 +425,10 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Mejor Calificación'),
+                Text('Mejor Calificación'),
                 if (_ordenamiento == 'rating')
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Icon(
                       CupertinoIcons.check_mark,
                       size: 18,
@@ -442,7 +442,7 @@ class _PantallaCategoriaDetalleState extends State<PantallaCategoriaDetalle> {
         cancelButton: CupertinoActionSheetAction(
           isDestructiveAction: false,
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
+          child: Text('Cancelar'),
         ),
       ),
     );

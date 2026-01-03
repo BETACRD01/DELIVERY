@@ -20,14 +20,14 @@ class CarritoEmptyState extends StatelessWidget {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Padding(
-                padding: const EdgeInsets.all(32),
+                padding: EdgeInsets.all(32),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize
                       .min, // Importante para que no se estire de más
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(32),
+                      padding: EdgeInsets.all(32),
                       decoration: BoxDecoration(
                         color: AppColorsPrimary.main.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
@@ -38,7 +38,7 @@ class CarritoEmptyState extends StatelessWidget {
                         color: AppColorsPrimary.main.withValues(alpha: 0.5),
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32),
                     Text(
                       'Tu carrito está vacío',
                       style: TextStyle(
@@ -48,7 +48,7 @@ class CarritoEmptyState extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                   ],
                 ),
               ),

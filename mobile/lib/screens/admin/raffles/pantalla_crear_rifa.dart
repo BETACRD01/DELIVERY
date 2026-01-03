@@ -5,13 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-
 import '../../../apis/admin/rifas_admin_api.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
-import '../../../providers/core/theme_provider.dart';
-import '../../../theme/primary_colors.dart';
-import '../dashboard/constants/dashboard_colors.dart';
+import '../../../theme/jp_theme.dart';
 
 enum _AccionConflictoRifa { cancelar, finalizar, descartar }
 
@@ -467,21 +463,20 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
 
   void _mostrarError(String mensaje) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(mensaje), backgroundColor: DashboardColors.rojo),
+      SnackBar(content: Text(mensaje), backgroundColor: JPColors.error),
     );
   }
 
   void _mostrarExito(String mensaje) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(mensaje), backgroundColor: DashboardColors.verde),
+      SnackBar(content: Text(mensaje), backgroundColor: JPColors.success),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
-    final primaryColor = AppColorsPrimary.main;
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -492,7 +487,7 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
@@ -509,9 +504,8 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionTitle('Datos de la rifa', isDark),
+              _buildSectionTitle('Datos de la rifa'),
               _buildCard(
-                isDark,
                 child: Column(
                   children: [
                     CupertinoTextField(
@@ -558,35 +552,31 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
                 ),
               ),
               const SizedBox(height: 24),
-              _buildSectionTitle('Fechas', isDark),
+              _buildSectionTitle('Fechas'),
               _buildCard(
-                isDark,
                 child: Column(
                   children: [
                     _buildDateRow(
                       'Fecha Inicio',
                       _fechaInicio,
                       (d) => setState(() => _fechaInicio = d),
-                      isDark,
                     ),
                     Divider(
                       height: 1,
                       indent: 16,
-                      color: isDark ? Colors.grey[800] : Colors.grey[200],
+                      color: JPCupertinoColors.separator(context),
                     ),
                     _buildDateRow(
                       'Fecha Fin',
                       _fechaFin,
                       (d) => setState(() => _fechaFin = _finDeDia(d)),
-                      isDark,
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 24),
-              _buildSectionTitle('Imagen Principal', isDark),
+              _buildSectionTitle('Imagen Principal'),
               _buildCard(
-                isDark,
                 child: Row(
                   children: [
                     CupertinoButton.filled(
@@ -599,7 +589,11 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
                       child: _imagen == null
                           ? Text(
                               'Sin imagen',
-                              style: TextStyle(color: Colors.grey[500]),
+                              style: TextStyle(
+                                color: JPCupertinoColors.secondaryLabel(
+                                  context,
+                                ),
+                              ),
                             )
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(8),
@@ -617,7 +611,7 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildSectionTitle('Premios', isDark),
+                  _buildSectionTitle('Premios'),
                   CupertinoButton(
                     padding: EdgeInsets.zero,
                     onPressed: _premios.length < 3 ? _agregarPremio : null,
@@ -634,13 +628,14 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
               const SizedBox(height: 8),
               if (_premios.isEmpty)
                 _buildCard(
-                  isDark,
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: Text(
                         'No hay premios agregados',
-                        style: TextStyle(color: Colors.grey[500]),
+                        style: TextStyle(
+                          color: JPCupertinoColors.tertiaryLabel(context),
+                        ),
                       ),
                     ),
                   ),
@@ -649,15 +644,12 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
                 ..._premios.asMap().entries.map((entry) {
                   final index = entry.key;
                   final premio = entry.value;
-                  return _buildPremioCard(premio, index, isDark);
+                  return _buildPremioCard(premio, index);
                 }),
 
               if (_error != null) ...[
                 const SizedBox(height: 20),
-                Text(
-                  _error!,
-                  style: const TextStyle(color: DashboardColors.rojo),
-                ),
+                Text(_error!, style: const TextStyle(color: JPColors.error)),
               ],
 
               const SizedBox(height: 32),
@@ -677,7 +669,7 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
     );
   }
 
-  Widget _buildSectionTitle(String text, bool isDark) {
+  Widget _buildSectionTitle(String text) {
     return Padding(
       padding: const EdgeInsets.only(left: 4, bottom: 8),
       child: Text(
@@ -685,17 +677,17 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w500,
-          color: isDark ? Colors.grey[400] : Colors.grey[600],
+          color: JPCupertinoColors.secondaryLabel(context),
         ),
       ),
     );
   }
 
-  Widget _buildCard(bool isDark, {required Widget child}) {
+  Widget _buildCard({required Widget child}) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: child,
@@ -706,7 +698,6 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
     String label,
     DateTime date,
     ValueChanged<DateTime> onSelect,
-    bool isDark,
   ) {
     return GestureDetector(
       onTap: () => _seleccionarFecha(initial: date, onSelected: onSelect),
@@ -718,7 +709,7 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
             Text(
               label,
               style: TextStyle(
-                color: isDark ? Colors.white : Colors.black,
+                color: JPCupertinoColors.label(context),
                 fontSize: 16,
               ),
             ),
@@ -735,14 +726,14 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
     );
   }
 
-  Widget _buildPremioCard(Map<String, dynamic> premio, int index, bool isDark) {
+  Widget _buildPremioCard(Map<String, dynamic> premio, int index) {
     final imagen = premio['imagen'];
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+          color: JPCupertinoColors.surface(context),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -751,7 +742,9 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: AppColorsPrimary.main.withValues(alpha: 0.1),
+                color: JPCupertinoColors.primary(
+                  context,
+                ).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               alignment: Alignment.center,
@@ -760,7 +753,7 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
                   premio['posicion'],
                 ).replaceAll('er', '').replaceAll('do', ''),
                 style: TextStyle(
-                  color: AppColorsPrimary.main,
+                  color: JPCupertinoColors.primary(context),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -775,7 +768,7 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: isDark ? Colors.white : Colors.black,
+                      color: JPCupertinoColors.label(context),
                     ),
                   ),
                   if (imagen != null && imagen is File) ...[
@@ -792,7 +785,7 @@ class _PantallaCrearRifaState extends State<PantallaCrearRifa> {
               padding: EdgeInsets.zero,
               child: const Icon(
                 CupertinoIcons.trash,
-                color: DashboardColors.rojo,
+                color: JPColors.error,
                 size: 20,
               ),
               onPressed: () => setState(() {

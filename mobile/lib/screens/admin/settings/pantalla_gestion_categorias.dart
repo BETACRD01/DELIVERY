@@ -5,11 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-
 import '../../../apis/productos/categorias_api.dart';
-import '../../../providers/core/theme_provider.dart';
-import '../../../theme/primary_colors.dart';
+import '../../../theme/jp_theme.dart';
 
 class PantallaGestionCategorias extends StatefulWidget {
   const PantallaGestionCategorias({super.key});
@@ -78,7 +75,7 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(mensaje),
-        backgroundColor: AppColorsPrimary.main,
+        backgroundColor: JPColors.success,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -140,9 +137,8 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
-    final primaryColor = AppColorsPrimary.main;
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -153,7 +149,7 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
@@ -176,7 +172,7 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
       body: _cargando
           ? const Center(child: CupertinoActivityIndicator(radius: 14))
           : _categorias.isEmpty
-          ? _buildEmptyState(isDark, primaryColor)
+          ? _buildEmptyState(primaryColor)
           : RefreshIndicator(
               onRefresh: _cargarCategorias,
               color: primaryColor,
@@ -184,7 +180,7 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
                 padding: const EdgeInsets.all(16),
                 children: [
                   // Lista de categorías
-                  _buildCategoriasCard(isDark, primaryColor),
+                  _buildCategoriasCard(primaryColor),
                   const SizedBox(height: 24),
                 ],
               ),
@@ -192,7 +188,7 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
     );
   }
 
-  Widget _buildEmptyState(bool isDark, Color primaryColor) {
+  Widget _buildEmptyState(Color primaryColor) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -213,7 +209,7 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
           Text(
             'No hay categorías',
             style: TextStyle(
-              color: isDark ? Colors.white : Colors.black,
+              color: JPCupertinoColors.label(context),
               fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
@@ -223,7 +219,7 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
             'Crea tu primera categoría para\norganizar tus productos',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: isDark ? Colors.grey[400] : Colors.grey[600],
+              color: JPCupertinoColors.secondaryLabel(context),
               fontSize: 15,
             ),
           ),
@@ -244,9 +240,9 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
     );
   }
 
-  Widget _buildCategoriasCard(bool isDark, Color primaryColor) {
-    final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
+  Widget _buildCategoriasCard(Color primaryColor) {
+    final cardColor = JPCupertinoColors.surface(context);
+    final textColor = JPCupertinoColors.label(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -261,12 +257,12 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
 
           return Column(
             children: [
-              _buildCategoriaItem(cat, isDark, primaryColor, textColor),
+              _buildCategoriaItem(cat, primaryColor, textColor),
               if (!isLast)
                 Divider(
                   height: 1,
                   indent: 86,
-                  color: isDark ? Colors.grey[800] : Colors.grey[200],
+                  color: JPCupertinoColors.separator(context),
                 ),
             ],
           );
@@ -277,12 +273,11 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
 
   Widget _buildCategoriaItem(
     Map<String, dynamic> cat,
-    bool isDark,
     Color primaryColor,
     Color textColor,
   ) {
     final imgUrl = cat['imagen_url'] ?? cat['imagen'];
-    final hintColor = isDark ? Colors.grey[400] : Colors.grey[600];
+    final hintColor = JPCupertinoColors.secondaryLabel(context);
 
     return CupertinoButton(
       padding: EdgeInsets.zero,
@@ -296,10 +291,10 @@ class _PantallaGestionCategoriasState extends State<PantallaGestionCategorias> {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: isDark ? Colors.grey[800] : Colors.grey[100],
+                color: JPCupertinoColors.systemGrey6(context),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: isDark ? Colors.grey[700]! : Colors.grey[200]!,
+                  color: JPCupertinoColors.systemGrey5(context),
                 ),
               ),
               clipBehavior: Clip.antiAlias,
@@ -571,11 +566,10 @@ class _FormularioCategoriaModalState extends State<_FormularioCategoriaModal> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
-    final hintColor = isDark ? Colors.grey[400] : Colors.grey[600];
-    final primaryColor = AppColorsPrimary.main;
+    final bgColor = JPCupertinoColors.surface(context);
+    final textColor = JPCupertinoColors.label(context);
+    final hintColor = JPCupertinoColors.secondaryLabel(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Material(
       type: MaterialType.transparency,
@@ -641,14 +635,12 @@ class _FormularioCategoriaModalState extends State<_FormularioCategoriaModal> {
                       width: 120,
                       height: 120,
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.grey[800] : Colors.grey[100],
+                        color: JPCupertinoColors.systemGrey6(context),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: _imagenFile != null
                               ? primaryColor
-                              : (isDark
-                                    ? Colors.grey[700]!
-                                    : Colors.grey[300]!),
+                              : JPCupertinoColors.systemGrey4(context),
                           width: 2,
                         ),
                         boxShadow: [
@@ -747,7 +739,7 @@ class _FormularioCategoriaModalState extends State<_FormularioCategoriaModal> {
                   padding: const EdgeInsets.all(14),
                   style: TextStyle(color: textColor),
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.grey[800] : Colors.grey[100],
+                    color: JPCupertinoColors.systemGrey6(context),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   prefix: Padding(
@@ -780,7 +772,7 @@ class _FormularioCategoriaModalState extends State<_FormularioCategoriaModal> {
                   style: TextStyle(color: textColor),
                   keyboardType: TextInputType.url,
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.grey[800] : Colors.grey[100],
+                    color: JPCupertinoColors.systemGrey6(context),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),

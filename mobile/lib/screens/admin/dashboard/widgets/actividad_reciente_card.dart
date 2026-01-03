@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../../apis/admin/acciones_admin_api.dart';
-import '../../../../providers/core/theme_provider.dart';
-import '../../../../theme/primary_colors.dart';
-import '../constants/dashboard_colors.dart';
+import '../../../../theme/jp_theme.dart';
 
 class ActividadRecienteCard extends StatefulWidget {
   const ActividadRecienteCard({super.key});
@@ -52,9 +49,8 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
+    final cardColor = JPCupertinoColors.surface(context);
+    final textColor = JPCupertinoColors.label(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -73,7 +69,7 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  color: JPCupertinoColors.secondaryLabel(context),
                 ),
               ),
               CupertinoButton(
@@ -82,7 +78,7 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
                 child: Icon(
                   CupertinoIcons.refresh,
                   size: 20,
-                  color: AppColorsPrimary.main,
+                  color: JPCupertinoColors.primary(context),
                 ),
               ),
             ],
@@ -101,7 +97,7 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
               child: Center(
                 child: Text(
                   _error!,
-                  style: const TextStyle(color: DashboardColors.rojo),
+                  style: const TextStyle(color: JPColors.error),
                 ),
               ),
             )
@@ -111,7 +107,9 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
               child: Center(
                 child: Text(
                   'Sin actividad reciente',
-                  style: TextStyle(color: Colors.grey[500]),
+                  style: TextStyle(
+                    color: JPCupertinoColors.secondaryLabel(context),
+                  ),
                 ),
               ),
             )
@@ -134,9 +132,7 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
                   final fecha = accion['fecha_accion']?.toString() ?? '';
                   final admin = accion['admin_email'] ?? 'Admin';
                   final exitosa = accion['exitosa'] != false;
-                  final color = exitosa
-                      ? DashboardColors.verde
-                      : DashboardColors.rojo;
+                  final color = exitosa ? JPColors.success : JPColors.error;
 
                   return Column(
                     children: [
@@ -147,13 +143,12 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
                         color,
                         fecha,
                         textColor,
-                        isDark,
                       ),
                       if (showDivider)
                         Divider(
                           height: 1,
                           indent: 44,
-                          color: isDark ? Colors.grey[800] : Colors.grey[200],
+                          color: JPCupertinoColors.separator(context),
                         ),
                     ],
                   );
@@ -171,7 +166,6 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
     Color color,
     String tiempo,
     Color textColor,
-    bool isDark,
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -206,7 +200,7 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
                   descripcion,
                   style: TextStyle(
                     fontSize: 13,
-                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -216,7 +210,7 @@ class _ActividadRecienteCardState extends State<ActividadRecienteCard> {
                   tiempo,
                   style: TextStyle(
                     fontSize: 11,
-                    color: isDark ? Colors.grey[600] : Colors.grey[500],
+                    color: JPCupertinoColors.tertiaryLabel(context),
                   ),
                 ),
               ],

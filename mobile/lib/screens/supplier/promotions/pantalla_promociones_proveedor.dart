@@ -1,12 +1,11 @@
 // lib/screens/supplier/screens/pantalla_promociones_proveedor.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
 import '../../../controllers/supplier/supplier_controller.dart';
 import '../../../models/products/producto_model.dart';
 import '../../../models/products/promocion_model.dart';
@@ -186,7 +185,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
         maxHeight: MediaQuery.of(context).size.height * 0.9,
       ),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       ),
       child: Column(
@@ -198,7 +197,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
             width: 36,
             height: 4,
             decoration: BoxDecoration(
-              color: CupertinoColors.systemGrey4,
+              color: JPCupertinoColors.systemGrey4(context),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -212,16 +211,16 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
                 CupertinoButton(
                   padding: const EdgeInsets.all(4),
                   onPressed: () => _mostrarGuiaPromociones(context),
                   minimumSize: Size(0, 0),
-                  child: const Icon(
+                  child: Icon(
                     CupertinoIcons.info_circle,
-                    color: CupertinoColors.activeBlue,
+                    color: JPCupertinoColors.systemBlue(context),
                     size: 20,
                   ),
                 ),
@@ -229,9 +228,9 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                 CupertinoButton(
                   padding: EdgeInsets.zero,
                   onPressed: () => Navigator.pop(context),
-                  child: const Icon(
+                  child: Icon(
                     CupertinoIcons.xmark_circle_fill,
-                    color: CupertinoColors.systemGrey3,
+                    color: JPCupertinoColors.systemGrey3(context),
                     size: 28,
                   ),
                 ),
@@ -254,13 +253,15 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                       padding: const EdgeInsets.all(12),
                       margin: const EdgeInsets.only(bottom: 12),
                       decoration: BoxDecoration(
-                        color: CupertinoColors.systemRed.withValues(alpha: 0.1),
+                        color: JPCupertinoColors.error(
+                          context,
+                        ).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
                         _errorFormulario!,
-                        style: const TextStyle(
-                          color: CupertinoColors.systemRed,
+                        style: TextStyle(
+                          color: JPCupertinoColors.error(context),
                           fontSize: 13,
                         ),
                       ),
@@ -274,14 +275,10 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                         width: 120,
                         height: 120,
                         decoration: BoxDecoration(
-                          color: CupertinoColors.systemGrey5.resolveFrom(
-                            context,
-                          ),
+                          color: JPCupertinoColors.systemGrey5(context),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: CupertinoColors.systemGrey4.resolveFrom(
-                              context,
-                            ),
+                            color: JPCupertinoColors.systemGrey4(context),
                           ),
                         ),
                         child: ClipRRect(
@@ -299,9 +296,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                               : Icon(
                                   CupertinoIcons.photo_on_rectangle,
                                   size: 36,
-                                  color: CupertinoColors.systemGrey.resolveFrom(
-                                    context,
-                                  ),
+                                  color: JPCupertinoColors.systemGrey(context),
                                 ),
                         ),
                       ),
@@ -356,7 +351,10 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                                 color: color,
                                 shape: BoxShape.circle,
                                 border: isSelected
-                                    ? Border.all(color: Colors.white, width: 3)
+                                    ? Border.all(
+                                        color: JPCupertinoColors.white,
+                                        width: 3,
+                                      )
                                     : null,
                                 boxShadow: isSelected
                                     ? [
@@ -368,9 +366,9 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                                     : null,
                               ),
                               child: isSelected
-                                  ? const Icon(
+                                  ? Icon(
                                       CupertinoIcons.checkmark,
-                                      color: Colors.white,
+                                      color: JPCupertinoColors.white,
                                       size: 18,
                                     )
                                   : null,
@@ -405,14 +403,14 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                           ? null
                           : () => _guardarPromocion(context),
                       child: _procesando
-                          ? const CupertinoActivityIndicator(
-                              color: Colors.white,
+                          ? CupertinoActivityIndicator(
+                              color: JPCupertinoColors.white,
                             )
-                          : const Text(
+                          : Text(
                               'Guardar Promoción',
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                                color: JPCupertinoColors.white,
                               ),
                             ),
                     ),
@@ -434,7 +432,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w500,
-          color: CupertinoColors.systemGrey.resolveFrom(context),
+          color: JPCupertinoColors.systemGrey(context),
         ),
       ),
     );
@@ -443,9 +441,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
   Widget _buildGroupedCard(BuildContext context, List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
-          context,
-        ),
+        color: JPCupertinoColors.secondaryBackground(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(children: children),
@@ -457,7 +453,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
       padding: const EdgeInsets.only(left: 16),
       child: Container(
         height: 0.5,
-        color: CupertinoColors.separator.resolveFrom(context),
+        color: JPCupertinoColors.separator(context),
       ),
     );
   }
@@ -471,7 +467,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
       placeholder: placeholder,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: const BoxDecoration(),
-      style: const TextStyle(fontSize: 16),
+      style: TextStyle(fontSize: 16),
     );
   }
 
@@ -516,7 +512,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
             title,
             style: TextStyle(
               fontSize: 16,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
             ),
           ),
           CupertinoSwitch(
@@ -547,14 +543,14 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                   'Productos asociados',
                   style: TextStyle(
                     fontSize: 16,
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
                 Text(
                   textoDescripcion,
                   style: TextStyle(
                     fontSize: 13,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
                 if (_productosAsociados.isNotEmpty) ...[
@@ -563,7 +559,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                     _productosAsociados.map((p) => p.nombre).join(', '),
                     style: TextStyle(
                       fontSize: 12,
-                      color: CupertinoColors.tertiaryLabel.resolveFrom(context),
+                      color: JPCupertinoColors.tertiaryLabel(context),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -575,7 +571,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
           Icon(
             CupertinoIcons.chevron_forward,
             size: 16,
-            color: CupertinoColors.systemGrey3.resolveFrom(context),
+            color: JPCupertinoColors.systemGrey3(context),
           ),
         ],
       ),
@@ -644,19 +640,19 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
               Navigator.pop(context);
               _seleccionarImagen(ImageSource.gallery);
             },
-            child: const Text('Elegir de Galería'),
+            child: Text('Elegir de Galería'),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
               Navigator.pop(context);
               _seleccionarImagen(ImageSource.camera);
             },
-            child: const Text('Tomar Foto'),
+            child: Text('Tomar Foto'),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
+          child: Text('Cancelar'),
         ),
       ),
     );
@@ -690,16 +686,16 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (context, setModalState) => DefaultTextStyle(
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: '.SF Pro Text',
             fontSize: 17,
-            color: CupertinoColors.label,
+            color: JPCupertinoColors.label(context),
             decoration: TextDecoration.none,
           ),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.6,
             decoration: BoxDecoration(
-              color: CupertinoColors.systemBackground.resolveFrom(context),
+              color: JPCupertinoColors.surface(context),
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16),
               ),
@@ -712,7 +708,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                   width: 36,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey4,
+                    color: JPCupertinoColors.systemGrey4(context),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -726,7 +722,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'Seleccionar Productos',
                               style: TextStyle(
                                 fontSize: 18,
@@ -739,8 +735,9 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                               '${productosTemporales.length} seleccionado${productosTemporales.length != 1 ? 's' : ''}',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: CupertinoColors.secondaryLabel
-                                    .resolveFrom(context),
+                                color: JPCupertinoColors.secondaryLabel(
+                                  context,
+                                ),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -758,7 +755,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                           });
                           Navigator.pop(ctx);
                         },
-                        child: const Text(
+                        child: Text(
                           'Listo',
                           style: TextStyle(
                             fontSize: 17,
@@ -780,9 +777,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                               Icon(
                                 CupertinoIcons.cube_box,
                                 size: 64,
-                                color: CupertinoColors.systemGrey3.resolveFrom(
-                                  context,
-                                ),
+                                color: JPCupertinoColors.systemGrey3(context),
                               ),
                               const SizedBox(height: 16),
                               Text(
@@ -790,9 +785,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
-                                  color: CupertinoColors.label.resolveFrom(
-                                    context,
-                                  ),
+                                  color: JPCupertinoColors.label(context),
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -803,8 +796,9 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: CupertinoColors.secondaryLabel
-                                      .resolveFrom(context),
+                                  color: JPCupertinoColors.secondaryLabel(
+                                    context,
+                                  ),
                                 ),
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
@@ -820,9 +814,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                             separatorBuilder: (_, _) => Divider(
                               height: 1,
                               indent: 16,
-                              color: CupertinoColors.separator.resolveFrom(
-                                context,
-                              ),
+                              color: JPCupertinoColors.separator(context),
                             ),
                             itemBuilder: (_, index) {
                               final prod = controller.productos[index];
@@ -883,16 +875,19 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                                             right: 12,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: CupertinoColors.systemGrey5
-                                                .resolveFrom(context),
+                                            color:
+                                                JPCupertinoColors.systemGrey5(
+                                                  context,
+                                                ),
                                             borderRadius: BorderRadius.circular(
                                               8,
                                             ),
                                           ),
                                           child: Icon(
                                             CupertinoIcons.cube_box,
-                                            color: CupertinoColors.systemGrey
-                                                .resolveFrom(context),
+                                            color: JPCupertinoColors.systemGrey(
+                                              context,
+                                            ),
                                           ),
                                         ),
                                       // Información
@@ -908,8 +903,9 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                                                 fontWeight: isSelected
                                                     ? FontWeight.w600
                                                     : FontWeight.normal,
-                                                color: CupertinoColors.label
-                                                    .resolveFrom(context),
+                                                color: JPCupertinoColors.label(
+                                                  context,
+                                                ),
                                               ),
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
@@ -930,7 +926,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                                       ),
                                       // Checkmark si está seleccionado
                                       if (isSelected)
-                                        const Icon(
+                                        Icon(
                                           CupertinoIcons.checkmark_circle_fill,
                                           color: AppColorsPrimary.main,
                                           size: 24,
@@ -962,7 +958,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
       builder: (context) => Container(
         height: MediaQuery.of(context).size.height * 0.85,
         decoration: BoxDecoration(
-          color: CupertinoColors.systemBackground.resolveFrom(context),
+          color: JPCupertinoColors.surface(context),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
         ),
         child: Column(
@@ -973,7 +969,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
               width: 36,
               height: 4,
               decoration: BoxDecoration(
-                color: CupertinoColors.systemGrey4,
+                color: JPCupertinoColors.systemGrey4(context),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -983,14 +979,14 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     '📢 Guía de Promociones',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   CupertinoButton(
                     padding: EdgeInsets.zero,
                     onPressed: () => Navigator.pop(context),
-                    child: const Icon(CupertinoIcons.xmark_circle_fill),
+                    child: Icon(CupertinoIcons.xmark_circle_fill),
                   ),
                 ],
               ),
@@ -1079,9 +1075,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
-          context,
-        ),
+        color: JPCupertinoColors.secondaryBackground(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -1089,7 +1083,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
         children: [
           Row(
             children: [
-              Text(icon, style: const TextStyle(fontSize: 20)),
+              Text(icon, style: TextStyle(fontSize: 20)),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -1097,7 +1091,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
               ),
@@ -1108,7 +1102,7 @@ class _FormularioPromocionState extends State<FormularioPromocion> {
             content,
             style: TextStyle(
               fontSize: 14,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               height: 1.5,
             ),
           ),

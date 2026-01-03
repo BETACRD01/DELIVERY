@@ -2,6 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 
+import '../../theme/jp_theme.dart';
+
 /// Widget de solo lectura para mostrar calificaciones con estrellas
 ///
 /// Características:
@@ -41,8 +43,9 @@ class StarRatingDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = this.activeColor ?? const Color(0xFFFFB800); // Amber
-    final inactiveColor = this.inactiveColor ?? CupertinoColors.systemGrey4.resolveFrom(context);
+    final activeColor = this.activeColor ?? JPColors.warning; // Amber
+    final inactiveColor =
+        this.inactiveColor ?? CupertinoColors.systemGrey4.resolveFrom(context);
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -63,7 +66,8 @@ class StarRatingDisplay extends StatelessWidget {
           SizedBox(width: size * 0.4),
           Text(
             '($reviewCount)',
-            style: textStyle ??
+            style:
+                textStyle ??
                 TextStyle(
                   fontSize: size * 0.9,
                   color: CupertinoColors.secondaryLabel.resolveFrom(context),
@@ -76,7 +80,8 @@ class StarRatingDisplay extends StatelessWidget {
           SizedBox(width: size * 0.4),
           Text(
             rating.toStringAsFixed(1),
-            style: textStyle ??
+            style:
+                textStyle ??
                 TextStyle(
                   fontSize: size * 0.9,
                   fontWeight: FontWeight.w600,
@@ -108,11 +113,7 @@ class StarRatingDisplay extends StatelessWidget {
       color = inactiveColor;
     }
 
-    return Icon(
-      icon,
-      size: size,
-      color: color,
-    );
+    return Icon(icon, size: size, color: color);
   }
 }
 
@@ -136,19 +137,13 @@ class CompactRatingDisplay extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          CupertinoIcons.star_fill,
-          size: iconSize,
-          color: const Color(0xFFFFB800),
-        ),
+        Icon(CupertinoIcons.star_fill, size: iconSize, color: JPColors.warning),
         SizedBox(width: iconSize * 0.3),
         Text(
           rating.toStringAsFixed(1),
-          style: textStyle ??
-              TextStyle(
-                fontSize: iconSize * 1.1,
-                fontWeight: FontWeight.w600,
-              ),
+          style:
+              textStyle ??
+              TextStyle(fontSize: iconSize * 1.1, fontWeight: FontWeight.w600),
         ),
         if (reviewCount != null) ...[
           SizedBox(width: iconSize * 0.2),

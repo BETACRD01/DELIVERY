@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../apis/admin/rifas_admin_api.dart';
 import '../../../config/network/api_config.dart';
-import '../../../providers/core/theme_provider.dart';
-import '../../../theme/primary_colors.dart';
+import '../../../theme/jp_theme.dart';
 import 'pantalla_crear_rifa.dart';
 import 'pantalla_rifa_detalle.dart';
 
@@ -84,9 +82,8 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
-    final primaryColor = AppColorsPrimary.main;
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -97,7 +94,7 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
@@ -134,10 +131,8 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
               onValueChanged: (val) {
                 if (val != null) _cambiarFiltro(val);
               },
-              thumbColor: isDark ? const Color(0xFF636366) : Colors.white,
-              backgroundColor: isDark
-                  ? const Color(0xFF1C1C1E)
-                  : const Color(0xFF767680).withValues(alpha: 0.12),
+              thumbColor: JPCupertinoColors.surface(context),
+              backgroundColor: JPCupertinoColors.systemGrey5(context),
             ),
           ),
 
@@ -145,9 +140,9 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
             child: _cargando
                 ? const Center(child: CupertinoActivityIndicator())
                 : _error != null
-                ? _buildError(isDark, primaryColor)
+                ? _buildError(primaryColor)
                 : _rifas.isEmpty
-                ? _buildEmpty(isDark)
+                ? _buildEmpty()
                 : RefreshIndicator(
                     onRefresh: _cargarRifas,
                     color: primaryColor,
@@ -157,11 +152,7 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 16),
                       itemBuilder: (context, index) {
-                        return _buildRifaCard(
-                          _rifas[index],
-                          isDark,
-                          primaryColor,
-                        );
+                        return _buildRifaCard(_rifas[index], primaryColor);
                       },
                     ),
                   ),
@@ -171,15 +162,11 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
     );
   }
 
-  Widget _buildRifaCard(
-    Map<String, dynamic> rifa,
-    bool isDark,
-    Color primaryColor,
-  ) {
+  Widget _buildRifaCard(Map<String, dynamic> rifa, Color primaryColor) {
     final title = rifa['titulo'] ?? 'Sin Título';
     final participantes = rifa['total_participantes'] ?? 0;
     final imagen = rifa['imagen_url'] ?? rifa['imagen'];
-    final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
+    final cardColor = JPCupertinoColors.surface(context);
 
     return GestureDetector(
       onTap: () async {
@@ -196,15 +183,13 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
           color: cardColor,
           borderRadius: BorderRadius.circular(16),
           // iOS style subtle shadow or border
-          boxShadow: isDark
-              ? []
-              : [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -217,12 +202,12 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
               Container(
                 height: 120,
                 width: double.infinity,
-                color: isDark ? Colors.grey[800] : Colors.grey[200],
+                color: JPCupertinoColors.systemGrey5(context),
                 child: Center(
                   child: Icon(
                     CupertinoIcons.ticket,
                     size: 48,
-                    color: isDark ? Colors.grey[600] : Colors.grey[400],
+                    color: JPCupertinoColors.tertiaryLabel(context),
                   ),
                 ),
               ),
@@ -237,7 +222,7 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.black,
+                      color: JPCupertinoColors.label(context),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -246,13 +231,13 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
                       Icon(
                         Icons.people_outline,
                         size: 16,
-                        color: Colors.grey[600],
+                        color: JPCupertinoColors.secondaryLabel(context),
                       ),
                       const SizedBox(width: 4),
                       Text(
                         '$participantes Participantes',
                         style: TextStyle(
-                          color: isDark ? Colors.grey[400] : Colors.grey[600],
+                          color: JPCupertinoColors.secondaryLabel(context),
                           fontSize: 14,
                         ),
                       ),
@@ -260,7 +245,7 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
                       Icon(
                         CupertinoIcons.chevron_forward,
                         size: 16,
-                        color: Colors.grey[400],
+                        color: JPCupertinoColors.secondaryLabel(context),
                       ),
                     ],
                   ),
@@ -284,25 +269,23 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
         url,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) => Container(
-          color: Colors.grey[200],
+          color: JPCupertinoColors.systemGrey5(context),
           child: const Center(child: Icon(Icons.image_not_supported)),
         ),
       ),
     );
   }
 
-  Widget _buildError(bool isDark, Color primaryColor) {
+  Widget _buildError(Color primaryColor) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 48, color: Colors.red[300]),
+          Icon(Icons.error_outline, size: 48, color: JPColors.error),
           const SizedBox(height: 16),
           Text(
             _error ?? 'Error desconocido',
-            style: TextStyle(
-              color: isDark ? Colors.grey[400] : Colors.grey[600],
-            ),
+            style: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
           ),
           const SizedBox(height: 16),
           CupertinoButton(
@@ -314,7 +297,7 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
     );
   }
 
-  Widget _buildEmpty(bool isDark) {
+  Widget _buildEmpty() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -322,14 +305,14 @@ class _PantallaRifasAdminState extends State<PantallaRifasAdmin> {
           Icon(
             CupertinoIcons.ticket,
             size: 64,
-            color: isDark ? Colors.grey[700] : Colors.grey[300],
+            color: JPCupertinoColors.secondaryLabel(context),
           ),
           const SizedBox(height: 16),
           Text(
             'No hay rifas ${_filtroEstado}s',
             style: TextStyle(
               fontSize: 16,
-              color: isDark ? Colors.grey[500] : Colors.grey[500],
+              color: JPCupertinoColors.secondaryLabel(context),
               fontWeight: FontWeight.w500,
             ),
           ),

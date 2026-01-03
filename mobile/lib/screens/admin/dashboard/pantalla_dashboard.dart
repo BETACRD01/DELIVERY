@@ -7,13 +7,11 @@ import 'package:provider/provider.dart';
 
 import '../../../config/routing/rutas.dart';
 import '../../../controllers/admin/dashboard_controller.dart';
-import '../../../theme/primary_colors.dart';
-import '../../../providers/core/theme_provider.dart';
+import '../../../theme/jp_theme.dart';
 import 'tabs/actividad_tab.dart';
 import 'tabs/resumen_tab.dart';
 import 'widgets/dashboard_drawer.dart';
 import '../../../services/auth/session_cleanup.dart';
-import 'constants/dashboard_colors.dart';
 
 class PantallaDashboard extends StatefulWidget {
   const PantallaDashboard({super.key});
@@ -59,7 +57,7 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text('Foto de perfil actualizada'),
-            backgroundColor: DashboardColors.verde,
+            backgroundColor: JPColors.success,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -69,7 +67,7 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error: ${e.toString()}'),
-          backgroundColor: DashboardColors.rojo,
+          backgroundColor: JPColors.error,
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -78,8 +76,7 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
+    final bgColor = JPCupertinoColors.background(context);
 
     return ChangeNotifierProvider.value(
       value: _controller,
@@ -106,7 +103,7 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
               centerTitle: true,
               elevation: 0,
               titleTextStyle: TextStyle(
-                color: isDark ? Colors.white : Colors.black,
+                color: JPCupertinoColors.label(context),
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
               ),
@@ -117,7 +114,7 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
                       label: Text('${controller.solicitudesPendientesCount}'),
                       child: Icon(
                         Icons.notifications_outlined,
-                        color: AppColorsPrimary.main,
+                        color: JPCupertinoColors.primary(context),
                       ),
                     ),
                     onPressed: () async {
@@ -129,7 +126,7 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
                   IconButton(
                     icon: Icon(
                       Icons.notifications_none,
-                      color: AppColorsPrimary.main,
+                      color: JPCupertinoColors.primary(context),
                     ),
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -146,7 +143,10 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
                     },
                   ),
                 IconButton(
-                  icon: Icon(Icons.settings, color: AppColorsPrimary.main),
+                  icon: Icon(
+                    Icons.settings,
+                    color: JPCupertinoColors.primary(context),
+                  ),
                   onPressed: () => Rutas.irA(context, Rutas.adminAjustes),
                 ),
               ],
@@ -172,12 +172,8 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
                           _currentIndex = val ?? 0;
                         });
                       },
-                      thumbColor: isDark
-                          ? const Color(0xFF636366)
-                          : Colors.white,
-                      backgroundColor: isDark
-                          ? const Color(0xFF1C1C1E)
-                          : const Color(0xFF767680).withValues(alpha: 0.12),
+                      thumbColor: JPCupertinoColors.surface(context),
+                      backgroundColor: JPCupertinoColors.systemGrey5(context),
                     ),
                   ),
                 ),
@@ -203,11 +199,15 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 48, color: Colors.grey[400]),
+          Icon(
+            Icons.error_outline,
+            size: 48,
+            color: JPCupertinoColors.secondaryLabel(context),
+          ),
           const SizedBox(height: 16),
           Text(
             controller.error ?? 'Error desconocido',
-            style: TextStyle(color: Colors.grey[600]),
+            style: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
           ),
           const SizedBox(height: 16),
           CupertinoButton(
@@ -242,9 +242,7 @@ class _PantallaDashboardState extends State<PantallaDashboard> {
           ),
           ElevatedButton(
             onPressed: () => Rutas.volver(context, true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: DashboardColors.rojo,
-            ),
+            style: ElevatedButton.styleFrom(backgroundColor: JPColors.error),
             child: const Text('Cerrar Sesión'),
           ),
         ],

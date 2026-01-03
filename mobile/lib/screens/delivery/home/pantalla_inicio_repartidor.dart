@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../theme/jp_theme.dart'; // Theme imports
 // Models
 import '../../../models/orders/pedido_repartidor.dart';
 import '../../../models/entities/repartidor.dart';
@@ -48,19 +49,15 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
   // ============================================
   // COLORES iOS STYLE
   // ============================================
-  static const Color _accent = Color(0xFF0CB7F2); // Celeste corporativo
-  static const Color _success = Color(0xFF34C759);
-  static const Color _rojo = Color(0xFFFF3B30);
-
   // Dynamic Colors
-  Color get _surface =>
-      CupertinoColors.systemGroupedBackground.resolveFrom(context);
-  Color get _cardBg =>
-      CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context);
-  Color get _cardBorder => CupertinoColors.separator.resolveFrom(context);
-  Color get _textPrimary => CupertinoColors.label.resolveFrom(context);
-  Color get _textSecondary =>
-      CupertinoColors.secondaryLabel.resolveFrom(context);
+  Color get _surface => JPCupertinoColors.background(context);
+  Color get _cardBg => JPCupertinoColors.secondarySurface(context);
+  Color get _cardBorder => JPCupertinoColors.separator(context);
+  Color get _textPrimary => JPCupertinoColors.label(context);
+  Color get _textSecondary => JPCupertinoColors.secondaryLabel(context);
+  Color get _accent => JPCupertinoColors.systemBlue(context);
+  Color get _success => JPCupertinoColors.success(context);
+  Color get _rojo => JPCupertinoColors.error(context);
 
   // ============================================
   // CICLO DE VIDA
@@ -226,7 +223,7 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
       context: context,
       barrierDismissible: true,
       builder: (dialogContext) => CupertinoAlertDialog(
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(CupertinoIcons.bell_fill, color: _accent, size: 22),
@@ -296,7 +293,7 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
           return CupertinoAlertDialog(
             content: Column(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 CupertinoActivityIndicator(),
                 SizedBox(height: 10),
                 Text('Asignando pedido...'),
@@ -361,7 +358,7 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               CupertinoIcons.check_mark_circled_solid,
               color: _success,
               size: 22,
@@ -387,8 +384,7 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
       context: context,
       barrierDismissible: true,
       builder: (dialogContext) => CupertinoAlertDialog(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        title: Row(
           children: [
             Icon(CupertinoIcons.xmark_circle_fill, color: _rojo, size: 22),
             SizedBox(width: 8),
@@ -430,11 +426,11 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
         return PopScope(
           canPop: false,
           child: AlertDialog(
-            title: const Row(
+            title: Row(
               children: [
                 Icon(Icons.block, color: _rojo),
-                SizedBox(width: 12),
-                Text('Acceso Denegado'),
+                const SizedBox(width: 12),
+                const Text('Acceso Denegado'),
               ],
             ),
             content: Column(
@@ -448,9 +444,11 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
                 const SizedBox(height: 12),
                 Text(_controller.error ?? ''),
                 const SizedBox(height: 8),
-                const Text(
+                Text(
                   'Serás redirigido a tu pantalla correspondiente.',
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(
+                    color: JPCupertinoColors.systemGrey(context),
+                  ),
                 ),
               ],
             ),
@@ -551,7 +549,7 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.2),
+                    color: JPCupertinoColors.black.withValues(alpha: 0.2),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -562,14 +560,14 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (icono != null) ...[
-                    Icon(icono, color: Colors.white, size: 20),
+                    Icon(icono, color: JPCupertinoColors.white, size: 20),
                     const SizedBox(width: 8),
                   ],
                   Flexible(
                     child: Text(
                       mensaje,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: JPCupertinoColors.white,
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
                       ),
@@ -597,7 +595,7 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
     final confirmar = await showCupertinoDialog<bool>(
       context: context,
       builder: (dialogContext) => CupertinoAlertDialog(
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(CupertinoIcons.power, color: _rojo, size: 22),
@@ -933,7 +931,7 @@ class _PantallaInicioRepartidorState extends State<PantallaInicioRepartidor> {
                     GestureDetector(
                       onTap: _cambiarDisponibilidad,
                       child: Container(
-                        color: Colors.transparent, // Hitbox
+                        color: JPCupertinoColors.transparent, // Hitbox
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [

@@ -1,4 +1,5 @@
 // lib/screens/user/perfil/ayuda/pantalla_ayuda_soporte.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,17 +67,17 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
           position: _slideAnimation,
           child: SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 32),
               physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildHeader(),
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32),
                   _buildCanalesContacto(),
-                  const SizedBox(height: 28),
+                  SizedBox(height: 28),
                   _buildFAQSection(),
-                  const SizedBox(height: 28),
+                  SizedBox(height: 28),
                   _buildFormularioContacto(),
                 ],
               ),
@@ -95,12 +96,12 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
           fontSize: 17,
           fontWeight: FontWeight.w600,
           letterSpacing: -0.4,
-          color: CupertinoColors.label.resolveFrom(context),
+          color: JPCupertinoColors.label(context),
         ),
       ),
       centerTitle: true,
-      backgroundColor: Colors.transparent,
-      foregroundColor: CupertinoColors.label.resolveFrom(context),
+      backgroundColor: JPCupertinoColors.transparent,
+      foregroundColor: JPCupertinoColors.label(context),
       elevation: 0,
       flexibleSpace: ClipRect(
         child: BackdropFilter(
@@ -112,7 +113,7 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
                   .withValues(alpha: 0.95),
               border: Border(
                 bottom: BorderSide(
-                  color: CupertinoColors.separator.resolveFrom(context),
+                  color: JPCupertinoColors.separator(context),
                   width: 0.5,
                 ),
               ),
@@ -124,7 +125,7 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
         icon: Icon(
           Icons.arrow_back_ios_new,
           size: 20,
-          color: CupertinoColors.label.resolveFrom(context),
+          color: JPCupertinoColors.label(context),
         ),
         onPressed: () => Navigator.pop(context),
       ),
@@ -148,23 +149,23 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
               color: AppColorsPrimary.main,
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Text(
             '¿Cómo podemos ayudarte?',
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.w700,
               letterSpacing: -0.5,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             'Estamos aquí para resolver tus dudas',
             style: TextStyle(
               fontSize: 16,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               letterSpacing: -0.2,
             ),
             textAlign: TextAlign.center,
@@ -179,13 +180,13 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 12),
+          padding: EdgeInsets.only(left: 4, bottom: 12),
           child: Text(
             'CANALES DE ATENCIÓN',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               letterSpacing: 0.5,
             ),
           ),
@@ -196,11 +197,11 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
               child: _buildContactCard(
                 icon: Icons.chat_bubble_outline,
                 label: 'Chat',
-                color: CupertinoColors.systemGreen.resolveFrom(context),
+                color: JPCupertinoColors.systemGreen(context),
                 onTap: () => _simularAccion('Abriendo WhatsApp...'),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: _buildContactCard(
                 icon: Icons.phone_outlined,
@@ -209,7 +210,7 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
                 onTap: () => _simularAccion('Llamando a soporte...'),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: _buildContactCard(
                 icon: Icons.email_outlined,
@@ -239,12 +240,12 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 24),
+          padding: EdgeInsets.symmetric(vertical: 24),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: CupertinoColors.black.withValues(alpha: 0.04),
+                color: JPCupertinoColors.black.withValues(alpha: 0.04),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -262,13 +263,13 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
                 ),
                 child: Icon(icon, color: color, size: 24),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Text(
                 label,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: CupertinoColors.label.resolveFrom(context),
+                  color: JPCupertinoColors.label(context),
                   letterSpacing: -0.2,
                 ),
               ),
@@ -284,13 +285,13 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 12),
+          padding: EdgeInsets.only(left: 4, bottom: 12),
           child: Text(
             'PREGUNTAS FRECUENTES',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               letterSpacing: 0.5,
             ),
           ),
@@ -303,7 +304,7 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: CupertinoColors.black.withValues(alpha: 0.04),
+                color: JPCupertinoColors.black.withValues(alpha: 0.04),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -342,13 +343,13 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
   }) {
     return Theme(
       data: Theme.of(context).copyWith(
-        dividerColor: Colors.transparent,
-        splashColor: CupertinoColors.systemGrey5.resolveFrom(context),
-        highlightColor: CupertinoColors.systemGrey5.resolveFrom(context),
+        dividerColor: JPCupertinoColors.transparent,
+        splashColor: JPCupertinoColors.systemGrey5(context),
+        highlightColor: JPCupertinoColors.systemGrey5(context),
       ),
       child: ExpansionTile(
-        tilePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-        childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        tilePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+        childrenPadding: EdgeInsets.fromLTRB(20, 0, 20, 20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: isFirst ? const Radius.circular(16) : Radius.zero,
@@ -360,18 +361,18 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: CupertinoColors.label.resolveFrom(context),
+            color: JPCupertinoColors.label(context),
             letterSpacing: -0.3,
           ),
         ),
         iconColor: AppColorsPrimary.main,
-        collapsedIconColor: CupertinoColors.secondaryLabel.resolveFrom(context),
+        collapsedIconColor: JPCupertinoColors.secondaryLabel(context),
         children: [
           Text(
             answer,
             style: TextStyle(
               fontSize: 15,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               height: 1.4,
               letterSpacing: -0.2,
             ),
@@ -383,11 +384,11 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
 
   Widget _buildDivider() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Divider(
         height: 1,
         thickness: 0.5,
-        color: CupertinoColors.separator.resolveFrom(context),
+        color: JPCupertinoColors.separator(context),
       ),
     );
   }
@@ -397,13 +398,13 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 12),
+          padding: EdgeInsets.only(left: 4, bottom: 12),
           child: Text(
             'ENVÍANOS UN MENSAJE',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               letterSpacing: 0.5,
             ),
           ),
@@ -416,14 +417,14 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: CupertinoColors.black.withValues(alpha: 0.04),
+                color: JPCupertinoColors.black.withValues(alpha: 0.04),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20),
             child: Form(
               key: _formKey,
               child: Column(
@@ -433,14 +434,14 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
                     label: 'ASUNTO',
                     placeholder: 'Ej: Problema con un pedido',
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   _buildIOSTextField(
                     controller: _mensajeController,
                     label: 'MENSAJE',
                     placeholder: 'Describe tu problema detalladamente...',
                     maxLines: 5,
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
                   _buildSubmitButton(),
                 ],
               ),
@@ -461,13 +462,13 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 6),
+          padding: EdgeInsets.only(left: 4, bottom: 6),
           child: Text(
             label,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               letterSpacing: 0.5,
             ),
           ),
@@ -477,14 +478,14 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
           maxLines: maxLines,
           style: TextStyle(
             fontSize: 16,
-            color: CupertinoColors.label.resolveFrom(context),
+            color: JPCupertinoColors.label(context),
             fontWeight: FontWeight.w500,
             letterSpacing: -0.3,
           ),
           decoration: InputDecoration(
             hintText: placeholder,
             hintStyle: TextStyle(
-              color: CupertinoColors.placeholderText.resolveFrom(context),
+              color: JPCupertinoColors.placeholderText(context),
               fontWeight: FontWeight.w400,
             ),
             filled: true,
@@ -509,20 +510,20 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: CupertinoColors.systemRed.resolveFrom(context),
+                color: JPCupertinoColors.error(context),
                 width: 2,
               ),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: CupertinoColors.systemRed.resolveFrom(context),
+                color: JPCupertinoColors.error(context),
                 width: 2,
               ),
             ),
             errorStyle: TextStyle(
               fontSize: 12,
-              color: CupertinoColors.systemRed.resolveFrom(context),
+              color: JPCupertinoColors.error(context),
             ),
           ),
           validator: (value) {
@@ -565,17 +566,17 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
             ),
           ),
           child: _enviando
-              ? const SizedBox(
+              ? SizedBox(
                   width: 24,
                   height: 24,
                   child: CupertinoActivityIndicator(radius: 14),
                 )
-              : const Text(
+              : Text(
                   'Enviar Mensaje',
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: JPCupertinoColors.white,
                     letterSpacing: -0.3,
                   ),
                 ),
@@ -589,8 +590,8 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
       SnackBar(
         content: Text(
           mensaje,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: JPCupertinoColors.white,
             fontSize: 15,
             fontWeight: FontWeight.w500,
           ),
@@ -599,7 +600,7 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        margin: const EdgeInsets.all(16),
+        margin: EdgeInsets.all(16),
       ),
     );
   }
@@ -628,14 +629,14 @@ class _PantallaAyudaSoporteState extends State<PantallaAyudaSoporte>
             children: [
               Icon(
                 Icons.check_circle,
-                color: CupertinoColors.systemGreen.resolveFrom(context),
+                color: JPCupertinoColors.systemGreen(context),
                 size: 24,
               ),
-              const SizedBox(width: 8),
-              const Text('Mensaje Enviado'),
+              SizedBox(width: 8),
+              Text('Mensaje Enviado'),
             ],
           ),
-          content: const Padding(
+          content: Padding(
             padding: EdgeInsets.only(top: 8),
             child: Text(
               'Hemos recibido tu mensaje. Te contactaremos pronto.',

@@ -2,6 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 
+import '../../theme/jp_theme.dart';
+
 /// Widget que muestra la distribución de calificaciones por estrellas
 ///
 /// Muestra barras horizontales con el porcentaje y conteo de cada nivel
@@ -39,8 +41,9 @@ class RatingBreakdown extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final activeColor = this.activeColor ?? const Color(0xFFFFB800);
-    final inactiveColor = this.inactiveColor ?? CupertinoColors.systemGrey5.resolveFrom(context);
+    final activeColor = this.activeColor ?? JPColors.warning;
+    final inactiveColor =
+        this.inactiveColor ?? CupertinoColors.systemGrey5.resolveFrom(context);
 
     return Column(
       children: [5, 4, 3, 2, 1].map((stars) {
@@ -65,11 +68,7 @@ class RatingBreakdown extends StatelessWidget {
               const SizedBox(width: 4),
 
               // Icono estrella
-              Icon(
-                CupertinoIcons.star_fill,
-                size: 12,
-                color: activeColor,
-              ),
+              Icon(CupertinoIcons.star_fill, size: 12, color: activeColor),
               const SizedBox(width: 8),
 
               // Barra de progreso - Estilo iOS

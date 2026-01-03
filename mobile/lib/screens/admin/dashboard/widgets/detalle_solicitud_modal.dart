@@ -1,7 +1,7 @@
-// lib/screens/admin/dashboard/widgets/detalle_solicitud_modal.dart
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../models/auth/solicitud_cambio_rol.dart';
-import '../constants/dashboard_colors.dart';
+import '../../../../theme/jp_theme.dart';
 
 class DetalleSolicitudModal {
   static Future<void> mostrar({
@@ -64,13 +64,13 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
       ),
       child: Container(
         height: MediaQuery.of(context).size.height * 0.85,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: JPCupertinoColors.surface(context),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           children: [
-            _buildHandle(),
+            _buildHandle(context),
             _buildHeader(context),
             const Divider(),
             Expanded(child: _buildContenido()),
@@ -86,13 +86,13 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
     );
   }
 
-  Widget _buildHandle() {
+  Widget _buildHandle(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 12),
       width: 40,
       height: 4,
       decoration: BoxDecoration(
-        color: Colors.grey[300],
+        color: JPCupertinoColors.systemGrey4(context),
         borderRadius: BorderRadius.circular(2),
       ),
     );
@@ -106,11 +106,11 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
           CircleAvatar(
             radius: 28,
             backgroundColor: widget.solicitud.esProveedor
-                ? DashboardColors.verde
-                : DashboardColors.azul,
+                ? JPColors.success
+                : CupertinoColors.activeBlue,
             child: Icon(
               widget.solicitud.iconoRol,
-              color: Colors.white,
+              color: Colors.white, // Keep white on colored background
               size: 28,
             ),
           ),
@@ -121,16 +121,17 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
               children: [
                 Text(
                   'Solicitud de ${widget.solicitud.rolTexto}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
                 Text(
                   widget.solicitud.usuarioEmail,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
-                    color: DashboardColors.gris,
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
               ],
@@ -138,7 +139,7 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
           ),
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.close),
+            icon: Icon(Icons.close, color: JPCupertinoColors.label(context)),
           ),
         ],
       ),
@@ -173,12 +174,12 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
           ],
 
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Motivo del Usuario:',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: DashboardColors.gris,
+              color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
           const SizedBox(height: 8),
@@ -186,13 +187,16 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.grey[50],
+              color: JPCupertinoColors.systemGrey6(context),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey[200]!),
+              border: Border.all(color: JPCupertinoColors.systemGrey4(context)),
             ),
             child: Text(
               widget.solicitud.motivo,
-              style: const TextStyle(fontSize: 14),
+              style: TextStyle(
+                fontSize: 14,
+                color: JPCupertinoColors.label(context),
+              ),
             ),
           ),
           if (widget.solicitud.esProveedor) _buildDatosProveedor(),
@@ -267,14 +271,22 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
             width: 130,
             child: Text(
               '$label:',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: DashboardColors.gris,
+                color: JPCupertinoColors.secondaryLabel(context),
               ),
             ),
           ),
-          Expanded(child: Text(valor, style: const TextStyle(fontSize: 14))),
+          Expanded(
+            child: Text(
+              valor,
+              style: TextStyle(
+                fontSize: 14,
+                color: JPCupertinoColors.label(context),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -283,30 +295,29 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
   Widget _buildCampoRespuesta() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      color: Colors.white,
+      color: JPCupertinoColors.surface(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Respuesta del Administrador:',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,
-              color: DashboardColors.gris,
+              color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
           const SizedBox(height: 8),
-          TextField(
+          CupertinoTextField(
             controller: _motivoController,
             maxLines: 2,
-            decoration: const InputDecoration(
-              hintText: 'Escribe un motivo de aprobación o rechazo...',
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 12,
-              ),
+            placeholder: 'Escribe un motivo de aprobación o rechazo...',
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              border: Border.all(color: JPCupertinoColors.systemGrey4(context)),
+              borderRadius: BorderRadius.circular(8),
             ),
+            style: TextStyle(color: JPCupertinoColors.label(context)),
           ),
         ],
       ),
@@ -317,8 +328,13 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey[200]!, width: 1)),
+        color: JPCupertinoColors.surface(context),
+        border: Border(
+          top: BorderSide(
+            color: JPCupertinoColors.separator(context),
+            width: 1,
+          ),
+        ),
       ),
       child: Row(
         children: [
@@ -332,7 +348,7 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
                       content: Text(
                         'Por favor escribe un motivo para rechazar',
                       ),
-                      backgroundColor: DashboardColors.rojo,
+                      backgroundColor: JPColors.error,
                     ),
                   );
                   return;
@@ -356,8 +372,8 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
               icon: const Icon(Icons.cancel),
               label: const Text('Rechazar'),
               style: OutlinedButton.styleFrom(
-                foregroundColor: DashboardColors.rojo,
-                side: const BorderSide(color: DashboardColors.rojo),
+                foregroundColor: JPColors.error,
+                side: const BorderSide(color: JPColors.error),
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
             ),
@@ -384,7 +400,7 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
               icon: const Icon(Icons.check_circle),
               label: const Text('Aceptar'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: DashboardColors.verde,
+                backgroundColor: JPColors.success,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
@@ -404,8 +420,13 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey[200]!, width: 1)),
+        color: JPCupertinoColors.surface(context),
+        border: Border(
+          top: BorderSide(
+            color: JPCupertinoColors.separator(context),
+            width: 1,
+          ),
+        ),
       ),
       child: Row(
         children: [
@@ -430,8 +451,8 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
                 icon: const Icon(Icons.delete),
                 label: const Text('Eliminar'),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: DashboardColors.rojo,
-                  side: const BorderSide(color: DashboardColors.rojo),
+                  foregroundColor: JPColors.error,
+                  side: const BorderSide(color: JPColors.error),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
               ),
@@ -452,7 +473,7 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
                 icon: const Icon(Icons.undo),
                 label: const Text('Revertir'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: JPColors.warning,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
@@ -495,7 +516,7 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+            style: ElevatedButton.styleFrom(backgroundColor: JPColors.warning),
             child: const Text('Revertir'),
           ),
         ],
@@ -540,8 +561,8 @@ class _DetalleSolicitudContentState extends State<_DetalleSolicitudContent> {
                 onPressed: () => Navigator.pop(context, true),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: esDestructivo
-                      ? DashboardColors.rojo
-                      : DashboardColors.verde,
+                      ? JPColors.error
+                      : JPColors.success,
                 ),
                 child: Text(esDestructivo ? 'Rechazar' : 'Aceptar'),
               ),

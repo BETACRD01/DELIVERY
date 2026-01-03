@@ -1,11 +1,9 @@
 // lib/theme/jp_theme.dart
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'primary_colors.dart';
 import 'secondary_colors.dart';
-
 // ══════════════════════════════════════════════════════════════════════════════
 // 🎨 COLORES JP EXPRESS
 // ══════════════════════════════════════════════════════════════════════════════
@@ -32,6 +30,13 @@ class JPColors {
   static const warning = SecondaryColors.warning;
   static const error = SecondaryColors.error;
   static const info = SecondaryColors.info;
+
+  // DASHBOARD / SUPPLIER
+  static const dashboardBlue = SecondaryColors.blueDashboard;
+  static const dashboardAmber = SecondaryColors.amberDashboard;
+  static const dashboardViolet = SecondaryColors.violetDashboard;
+  static const dashboardGreen = SecondaryColors.green;
+  static const dashboardGray = SecondaryColors.gray;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -163,6 +168,20 @@ class JPTheme {
           borderSide: const BorderSide(color: JPColors.error),
         ),
       ),
+      cupertinoOverrideTheme: const CupertinoThemeData(
+        primaryColor: JPColors.primary,
+        barBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: JPColors.background,
+        textTheme: CupertinoTextThemeData(
+          primaryColor: JPColors.primary,
+          navTitleTextStyle: TextStyle(
+            color: JPColors.textPrimary,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: '.SF Pro Text',
+          ),
+        ),
+      ),
     );
   }
 
@@ -236,6 +255,20 @@ class JPTheme {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: JPColors.error),
+        ),
+      ),
+      cupertinoOverrideTheme: const CupertinoThemeData(
+        primaryColor: JPColors.primary,
+        barBackgroundColor: Color(0xFF1C1C1E),
+        scaffoldBackgroundColor: Color(0xFF000000),
+        textTheme: CupertinoTextThemeData(
+          primaryColor: JPColors.primary,
+          navTitleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: '.SF Pro Text',
+          ),
         ),
       ),
     );
@@ -577,6 +610,53 @@ class JPCupertinoColors {
       context,
     );
   }
+
+  // SEMÁNTICOS iOS
+  static Color get link => CupertinoColors.link;
+  static Color get activeOrange => CupertinoColors.activeOrange;
+  static Color get activeGreen => CupertinoColors.activeGreen;
+
+  // FONDOS DE RELLENO (FILLS)
+  static Color systemFill(BuildContext context) =>
+      CupertinoColors.systemFill.resolveFrom(context);
+
+  static Color secondarySystemFill(BuildContext context) =>
+      CupertinoColors.secondarySystemFill.resolveFrom(context);
+
+  static Color tertiarySystemFill(BuildContext context) =>
+      CupertinoColors.tertiarySystemFill.resolveFrom(context);
+
+  static Color quaternarySystemFill(BuildContext context) =>
+      CupertinoColors.quaternarySystemFill.resolveFrom(context);
+
+  // SECONDARY BACKGROUND (para formularios agrupados secundarios)
+  static Color secondaryBackground(BuildContext context) =>
+      CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context);
+
+  // PLACEHOLDER TEXT
+  static Color placeholderText(BuildContext context) =>
+      CupertinoColors.placeholderText.resolveFrom(context);
+
+  // INFO COLOR (Cyan)
+  static Color info(BuildContext context) {
+    return CupertinoDynamicColor.resolve(
+      const CupertinoDynamicColor.withBrightness(
+        color: CupertinoColors.systemCyan,
+        darkColor: Color(0xFF64D2FF), // Más claro para dark mode
+      ),
+      context,
+    );
+  }
+
+  // COLORES CONSTANTES (para uso sobre fondos de marca)
+  /// Blanco puro - para texto sobre botones primarios
+  static Color get white => CupertinoColors.white;
+
+  /// Negro puro - para sombras y overlays
+  static Color get black => CupertinoColors.black;
+
+  /// Transparente - para fondos de botones con gradiente
+  static Color get transparent => const Color(0x00000000);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════

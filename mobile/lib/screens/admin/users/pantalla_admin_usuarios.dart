@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-
 import '../../../apis/admin/usuarios_admin_api.dart';
-import '../../../../providers/core/theme_provider.dart';
-import '../../../../theme/primary_colors.dart';
+import '../../../../theme/jp_theme.dart';
 
 class PantallaAdminUsuarios extends StatefulWidget {
   const PantallaAdminUsuarios({super.key});
@@ -64,10 +61,11 @@ class _PantallaAdminUsuariosState extends State<PantallaAdminUsuarios> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
-    final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-    final primaryColor = AppColorsPrimary.main;
+    final bgColor = JPCupertinoColors.background(context);
+    final cardColor = JPCupertinoColors.surface(
+      context,
+    ); // Or secondarySystemGroupedBackground if on grouped
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -78,7 +76,7 @@ class _PantallaAdminUsuariosState extends State<PantallaAdminUsuarios> {
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
@@ -98,8 +96,8 @@ class _PantallaAdminUsuariosState extends State<PantallaAdminUsuarios> {
               controller: _searchController,
               onSubmitted: (_) => _cargar(),
               placeholder: 'Buscar por email o nombre',
-              style: TextStyle(color: isDark ? Colors.white : Colors.black),
-              itemColor: isDark ? Colors.grey[400]! : Colors.grey[600]!,
+              style: TextStyle(color: JPCupertinoColors.label(context)),
+              itemColor: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
 
@@ -113,7 +111,7 @@ class _PantallaAdminUsuariosState extends State<PantallaAdminUsuarios> {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    color: JPCupertinoColors.secondaryLabel(context),
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -152,13 +150,13 @@ class _PantallaAdminUsuariosState extends State<PantallaAdminUsuarios> {
                         Icon(
                           Icons.error_outline,
                           size: 48,
-                          color: Colors.red[300],
+                          color: JPColors.error,
                         ),
                         const SizedBox(height: 16),
                         Text(
                           _error!,
                           style: TextStyle(
-                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                            color: JPCupertinoColors.secondaryLabel(context),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -224,7 +222,7 @@ class _PantallaAdminUsuariosState extends State<PantallaAdminUsuarios> {
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
-                                color: isDark ? Colors.white : Colors.black,
+                                color: JPCupertinoColors.label(context),
                               ),
                             ),
                             subtitle: Column(
@@ -234,24 +232,24 @@ class _PantallaAdminUsuariosState extends State<PantallaAdminUsuarios> {
                                 Text(
                                   email,
                                   style: TextStyle(
-                                    color: isDark
-                                        ? Colors.grey[400]
-                                        : Colors.grey[600],
+                                    color: JPCupertinoColors.secondaryLabel(
+                                      context,
+                                    ),
                                     fontSize: 14,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Row(
                                   children: [
-                                    _buildBadge(rol, isDark),
+                                    _buildBadge(rol),
                                     const SizedBox(width: 8),
                                     Text(
                                       'ID: $id',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: isDark
-                                            ? Colors.grey[500]
-                                            : Colors.grey[500],
+                                        color: JPCupertinoColors.tertiaryLabel(
+                                          context,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -269,27 +267,27 @@ class _PantallaAdminUsuariosState extends State<PantallaAdminUsuarios> {
     );
   }
 
-  Widget _buildBadge(String rol, bool isDark) {
+  Widget _buildBadge(String rol) {
     Color bg;
     Color text;
     String label = rol;
 
     switch (rol.toUpperCase()) {
       case 'ADMINISTRADOR':
-        bg = Colors.purple.withValues(alpha: 0.1);
-        text = Colors.purple;
+        bg = JPColors.dashboardViolet.withValues(alpha: 0.1);
+        text = JPColors.dashboardViolet;
         break;
       case 'PROVEEDOR':
-        bg = Colors.green.withValues(alpha: 0.1);
-        text = Colors.green;
+        bg = JPColors.dashboardGreen.withValues(alpha: 0.1);
+        text = JPColors.dashboardGreen;
         break;
       case 'REPARTIDOR':
-        bg = Colors.orange.withValues(alpha: 0.1);
-        text = Colors.orange;
+        bg = JPColors.dashboardAmber.withValues(alpha: 0.1);
+        text = JPColors.dashboardAmber;
         break;
       default:
-        bg = isDark ? Colors.grey.withValues(alpha: 0.2) : Colors.grey[200]!;
-        text = isDark ? Colors.grey[300]! : Colors.grey[700]!;
+        bg = JPCupertinoColors.systemGrey5(context);
+        text = JPCupertinoColors.secondaryLabel(context);
     }
 
     return Container(

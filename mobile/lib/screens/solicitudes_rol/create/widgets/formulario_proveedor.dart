@@ -19,6 +19,7 @@ import '../../../../../services/auth/auth_service.dart';
 import '../../../../../services/core/ui/toast_service.dart';
 import '../../../../../models/auth/solicitud_cambio_rol.dart';
 import '../../../../../widgets/maps/map_location_picker.dart';
+import '../../../../../theme/jp_theme.dart';
 
 /// 📝 FORMULARIO PARA SOLICITUD DE PROVEEDOR
 /// Diseño: iOS Native Style
@@ -203,12 +204,12 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
           width: 64,
           height: 64,
           decoration: BoxDecoration(
-            color: CupertinoColors.systemCyan.withValues(alpha: 0.15),
+            color: JPCupertinoColors.info(context).withValues(alpha: 0.15),
             shape: BoxShape.circle,
           ),
-          child: const Icon(
+          child: Icon(
             CupertinoIcons.building_2_fill,
-            color: CupertinoColors.systemCyan,
+            color: JPCupertinoColors.info(context),
             size: 32,
           ),
         ),
@@ -233,7 +234,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                 'Registra tu negocio y vende más',
                 style: TextStyle(
                   fontSize: 15,
-                  color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  color: JPCupertinoColors.secondaryLabel(context),
                   letterSpacing: -0.2,
                 ),
               ),
@@ -254,18 +255,18 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
       margin: const EdgeInsets.only(top: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemGreen.withValues(alpha: 0.1),
+        color: JPCupertinoColors.success(context).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: CupertinoColors.systemGreen.withValues(alpha: 0.3),
+          color: JPCupertinoColors.success(context).withValues(alpha: 0.3),
           width: 1,
         ),
       ),
-      child: const Row(
+      child: Row(
         children: [
           Icon(
             CupertinoIcons.check_mark_circled_solid,
-            color: CupertinoColors.systemGreen,
+            color: JPCupertinoColors.success(context),
             size: 24,
           ),
           SizedBox(width: 12),
@@ -275,7 +276,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 15,
-                color: CupertinoColors.systemGreen,
+                color: JPCupertinoColors.success(context),
               ),
             ),
           ),
@@ -292,7 +293,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: CupertinoColors.secondaryLabel.resolveFrom(context),
+          color: JPCupertinoColors.secondaryLabel(context),
           letterSpacing: -0.08,
         ),
       ),
@@ -302,7 +303,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
   Widget _buildGroupedCard(List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(children: children),
@@ -313,7 +314,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
     return Container(
       margin: const EdgeInsets.only(left: 44),
       height: 0.5,
-      color: CupertinoColors.separator.resolveFrom(context),
+      color: JPCupertinoColors.separator(context),
     );
   }
 
@@ -329,11 +330,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: [
-          Icon(
-            prefix,
-            size: 22,
-            color: CupertinoColors.systemGrey.resolveFrom(context),
-          ),
+          Icon(prefix, size: 22, color: JPCupertinoColors.systemGrey(context)),
           const SizedBox(width: 12),
           Expanded(
             child: CupertinoTextField(
@@ -343,9 +340,9 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
               inputFormatters: inputFormatters,
               textCapitalization: textCapitalization,
               decoration: null,
-              style: const TextStyle(fontSize: 17, letterSpacing: -0.4),
+              style: TextStyle(fontSize: 17, letterSpacing: -0.4),
               placeholderStyle: TextStyle(
-                color: CupertinoColors.placeholderText.resolveFrom(context),
+                color: JPCupertinoColors.placeholderText(context),
                 fontSize: 17,
               ),
             ),
@@ -369,9 +366,9 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
         maxLines: maxLines,
         maxLength: maxLength,
         decoration: null,
-        style: const TextStyle(fontSize: 17, letterSpacing: -0.4),
+        style: TextStyle(fontSize: 17, letterSpacing: -0.4),
         placeholderStyle: TextStyle(
-          color: CupertinoColors.placeholderText.resolveFrom(context),
+          color: JPCupertinoColors.placeholderText(context),
           fontSize: 17,
         ),
       ),
@@ -385,7 +382,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
   Widget _buildCampoDireccionConMapa() {
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -399,19 +396,19 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                   width: 30,
                   height: 30,
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemCyan,
+                    color: JPCupertinoColors.info(context),
                     borderRadius: BorderRadius.circular(7),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     CupertinoIcons.location_solid,
-                    color: CupertinoColors.white,
+                    color: JPCupertinoColors.white,
                     size: 18,
                   ),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Material(
-                    color: CupertinoColors.transparent,
+                    color: JPCupertinoColors.transparent,
                     child: GooglePlaceAutoCompleteTextField(
                       textEditingController: _direccionController,
                       googleAPIKey: 'AIzaSyAVomIe-K4kpGMrQTc-bZaNcBvJtkK-KBA',
@@ -436,28 +433,28 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                       textStyle: TextStyle(
                         fontSize: 17,
                         letterSpacing: -0.4,
-                        color: CupertinoColors.label.resolveFrom(context),
+                        color: JPCupertinoColors.label(context),
                       ),
                       itemBuilder: (context, index, Prediction prediction) {
                         return ListTile(
                           dense: true,
                           leading: Icon(
                             Icons.place,
-                            color: CupertinoColors.systemCyan,
+                            color: JPCupertinoColors.info(context),
                             size: 20,
                           ),
                           title: Text(
                             prediction.description ?? '',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 15),
+                            style: TextStyle(fontSize: 15),
                           ),
                         );
                       },
                       seperatedBuilder: Divider(
                         height: 1,
                         indent: 50,
-                        color: CupertinoColors.separator.resolveFrom(context),
+                        color: JPCupertinoColors.separator(context),
                       ),
                       itemClick: (Prediction prediction) {
                         _direccionController.text =
@@ -508,7 +505,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
           Container(
             margin: const EdgeInsets.only(left: 60),
             height: 0.5,
-            color: CupertinoColors.separator.resolveFrom(context),
+            color: JPCupertinoColors.separator(context),
           ),
 
           // Botón seleccionar en mapa
@@ -521,12 +518,12 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                   width: 30,
                   height: 30,
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemCyan,
+                    color: JPCupertinoColors.info(context),
                     borderRadius: BorderRadius.circular(7),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     CupertinoIcons.map_fill,
-                    color: CupertinoColors.white,
+                    color: JPCupertinoColors.white,
                     size: 18,
                   ),
                 ),
@@ -540,15 +537,15 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                       fontSize: 17,
                       letterSpacing: -0.4,
                       color: _latitud != null
-                          ? CupertinoColors.activeGreen
-                          : CupertinoColors.systemCyan,
+                          ? JPCupertinoColors.success(context)
+                          : JPCupertinoColors.info(context),
                     ),
                   ),
                 ),
                 Icon(
                   CupertinoIcons.chevron_right,
                   size: 18,
-                  color: CupertinoColors.systemGrey3.resolveFrom(context),
+                  color: JPCupertinoColors.systemGrey3(context),
                 ),
               ],
             ),
@@ -560,18 +557,22 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
               margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: CupertinoColors.activeGreen.withValues(alpha: 0.1),
+                color: JPCupertinoColors.success(
+                  context,
+                ).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: CupertinoColors.activeGreen.withValues(alpha: 0.3),
+                  color: JPCupertinoColors.success(
+                    context,
+                  ).withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     CupertinoIcons.checkmark_shield_fill,
-                    color: CupertinoColors.activeGreen,
+                    color: JPCupertinoColors.success(context),
                     size: 22,
                   ),
                   const SizedBox(width: 10),
@@ -579,12 +580,12 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Ubicación confirmada',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: CupertinoColors.activeGreen,
+                            color: JPCupertinoColors.success(context),
                           ),
                         ),
                         if (_ciudadController.text.isNotEmpty)
@@ -639,13 +640,13 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
       onTap: _mostrarSelectorTipoNegocio,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         child: Row(
           children: [
             Icon(
               CupertinoIcons.square_grid_2x2,
               size: 22,
-              color: CupertinoColors.systemGrey.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey(context),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -659,15 +660,15 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                   fontSize: 17,
                   letterSpacing: -0.4,
                   color: _tipoNegocio != null
-                      ? CupertinoColors.label.resolveFrom(context)
-                      : CupertinoColors.placeholderText.resolveFrom(context),
+                      ? JPCupertinoColors.label(context)
+                      : JPCupertinoColors.placeholderText(context),
                 ),
               ),
             ),
             Icon(
               CupertinoIcons.chevron_right,
               size: 18,
-              color: CupertinoColors.systemGrey3.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey3(context),
             ),
           ],
         ),
@@ -713,7 +714,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: CupertinoColors.tertiarySystemFill.resolveFrom(context),
+          color: JPCupertinoColors.tertiarySystemFill(context),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
@@ -724,14 +725,14 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                 Icon(
                   icon,
                   size: 18,
-                  color: CupertinoColors.systemGrey.resolveFrom(context),
+                  color: JPCupertinoColors.systemGrey(context),
                 ),
                 const SizedBox(width: 6),
                 Text(
                   label,
                   style: TextStyle(
                     fontSize: 13,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
               ],
@@ -744,8 +745,8 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                 fontWeight: FontWeight.w600,
                 letterSpacing: -0.5,
                 color: time != null
-                    ? CupertinoColors.label.resolveFrom(context)
-                    : CupertinoColors.placeholderText.resolveFrom(context),
+                    ? JPCupertinoColors.label(context)
+                    : JPCupertinoColors.placeholderText(context),
               ),
             ),
           ],
@@ -763,28 +764,26 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             gradient: !_isLoading
-                ? const LinearGradient(
+                ? LinearGradient(
                     colors: [
-                      CupertinoColors.systemCyan,
+                      JPCupertinoColors.info(context),
                       CupertinoColors.systemTeal,
                     ],
                   )
                 : null,
-            color: _isLoading
-                ? CupertinoColors.systemGrey5.resolveFrom(context)
-                : null,
+            color: _isLoading ? JPCupertinoColors.systemGrey5(context) : null,
           ),
           child: CupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: _isLoading ? null : _enviarSolicitud,
             child: _isLoading
-                ? const CupertinoActivityIndicator(color: CupertinoColors.white)
-                : const Text(
+                ? CupertinoActivityIndicator(color: JPCupertinoColors.white)
+                : Text(
                     'Enviar Solicitud',
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
-                      color: CupertinoColors.white,
+                      color: JPCupertinoColors.white,
                       letterSpacing: -0.4,
                     ),
                   ),
@@ -799,7 +798,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
               fontSize: 17,
               color: _isLoading
                   ? CupertinoColors.systemGrey
-                  : CupertinoColors.systemCyan,
+                  : JPCupertinoColors.info(context),
             ),
           ),
         ),
@@ -815,7 +814,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => Material(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         child: SizedBox(
           height: 250,
           child: Column(
@@ -826,7 +825,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: CupertinoColors.separator.resolveFrom(context),
+                      color: JPCupertinoColors.separator(context),
                       width: 0.5,
                     ),
                   ),
@@ -837,9 +836,9 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancelar'),
+                      child: Text('Cancelar'),
                     ),
-                    const Text(
+                    Text(
                       'Tipo de Negocio',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -849,7 +848,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Listo'),
+                      child: Text('Listo'),
                     ),
                   ],
                 ),
@@ -864,10 +863,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                   },
                   children: TipoNegocio.values.map((tipo) {
                     return Center(
-                      child: Text(
-                        tipo.label,
-                        style: const TextStyle(fontSize: 17),
-                      ),
+                      child: Text(tipo.label, style: TextStyle(fontSize: 17)),
                     );
                   }).toList(),
                 ),
@@ -887,7 +883,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
     await showCupertinoModalPopup(
       context: context,
       builder: (context) => Material(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         child: SizedBox(
           height: 250,
           child: Column(
@@ -898,7 +894,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: CupertinoColors.separator.resolveFrom(context),
+                      color: JPCupertinoColors.separator(context),
                       width: 0.5,
                     ),
                   ),
@@ -909,11 +905,11 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancelar'),
+                      child: Text('Cancelar'),
                     ),
                     Text(
                       esApertura ? 'Hora de Apertura' : 'Hora de Cierre',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 17,
                       ),
@@ -921,7 +917,7 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Listo'),
+                      child: Text('Listo'),
                     ),
                   ],
                 ),
@@ -1038,17 +1034,17 @@ class _FormularioProveedorState extends State<FormularioProveedor> {
               ? CupertinoIcons.exclamationmark_circle
               : CupertinoIcons.check_mark_circled,
           color: isError
-              ? CupertinoColors.systemRed
-              : CupertinoColors.systemGreen,
+              ? JPCupertinoColors.error(context)
+              : JPCupertinoColors.success(context),
           size: 48,
         ),
         content: Padding(
           padding: const EdgeInsets.only(top: 8),
-          child: Text(mensaje, style: const TextStyle(fontSize: 15)),
+          child: Text(mensaje, style: TextStyle(fontSize: 15)),
         ),
         actions: [
           CupertinoDialogAction(
-            child: const Text('OK'),
+            child: Text('OK'),
             onPressed: () => Navigator.pop(context),
           ),
         ],

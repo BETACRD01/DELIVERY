@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../config/routing/rutas.dart';
 import '../../providers/cart/proveedor_carrito.dart';
-import '../../theme/primary_colors.dart';
+import '../../theme/jp_theme.dart';
 
 /// FAB del Carrito estilo iOS
 ///
@@ -38,7 +38,7 @@ class CarritoFloatingButton extends StatelessWidget {
                   ),
                 ],
                 border: Border.all(
-                  color: CupertinoColors.systemGrey5.resolveFrom(context),
+                  color: JPCupertinoColors.separator(context),
                   width: 0.5,
                 ),
               ),
@@ -51,7 +51,7 @@ class CarritoFloatingButton extends StatelessWidget {
                     children: [
                       Icon(
                         CupertinoIcons.cart_fill,
-                        color: AppColorsPrimary.main,
+                        color: JPCupertinoColors.primary(context),
                         size: 24,
                       ),
                       if (cantidad > 0)
@@ -64,7 +64,7 @@ class CarritoFloatingButton extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: CupertinoColors.systemRed,
+                              color: JPCupertinoColors.systemRed(context),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             constraints: const BoxConstraints(minWidth: 20),
@@ -88,7 +88,7 @@ class CarritoFloatingButton extends StatelessWidget {
                   Text(
                     'Mi Pedido',
                     style: TextStyle(
-                      color: AppColorsPrimary.main,
+                      color: JPCupertinoColors.primary(context),
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       decoration: TextDecoration.none,

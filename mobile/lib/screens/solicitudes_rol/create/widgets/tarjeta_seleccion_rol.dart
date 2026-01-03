@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import '../../../../../models/auth/solicitud_cambio_rol.dart';
+import '../../../../../theme/jp_theme.dart';
 
 /// 🎴 TARJETA PARA SELECCIONAR ROL
 /// Diseño: iOS Native Style
@@ -21,8 +22,8 @@ class TarjetaSeleccionRol extends StatelessWidget {
   Widget build(BuildContext context) {
     // Definir color según el rol
     final color = rol == RolSolicitable.proveedor
-        ? CupertinoColors.systemBlue
-        : CupertinoColors.systemGreen;
+        ? JPCupertinoColors.systemBlue(context)
+        : JPCupertinoColors.success(context);
 
     return GestureDetector(
       onTap: onTap,
@@ -30,12 +31,10 @@ class TarjetaSeleccionRol extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
-          color: CupertinoColors.systemBackground.resolveFrom(context),
+          color: JPCupertinoColors.surface(context),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: seleccionado
-                ? color
-                : CupertinoColors.separator.resolveFrom(context),
+            color: seleccionado ? color : JPCupertinoColors.separator(context),
             width: seleccionado ? 2.5 : 1,
           ),
           boxShadow: seleccionado
@@ -48,7 +47,9 @@ class TarjetaSeleccionRol extends StatelessWidget {
                 ]
               : [
                   BoxShadow(
-                    color: CupertinoColors.systemGrey.withValues(alpha: 0.1),
+                    color: JPCupertinoColors.systemGrey(
+                      context,
+                    ).withValues(alpha: 0.1),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -82,7 +83,7 @@ class TarjetaSeleccionRol extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       color: seleccionado
                           ? color
-                          : CupertinoColors.label.resolveFrom(context),
+                          : JPCupertinoColors.label(context),
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -95,7 +96,7 @@ class TarjetaSeleccionRol extends StatelessWidget {
                       : CupertinoIcons.circle,
                   color: seleccionado
                       ? color
-                      : CupertinoColors.systemGrey3.resolveFrom(context),
+                      : JPCupertinoColors.systemGrey3(context),
                   size: 28,
                 ),
               ],
@@ -104,10 +105,7 @@ class TarjetaSeleccionRol extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Divider sutil
-            Container(
-              height: 0.5,
-              color: CupertinoColors.separator.resolveFrom(context),
-            ),
+            Container(height: 0.5, color: JPCupertinoColors.separator(context)),
 
             const SizedBox(height: 16),
 
@@ -116,7 +114,7 @@ class TarjetaSeleccionRol extends StatelessWidget {
               _getDescripcion(rol),
               style: TextStyle(
                 fontSize: 15,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
                 height: 1.4,
                 letterSpacing: -0.2,
               ),
@@ -164,7 +162,7 @@ class TarjetaSeleccionRol extends StatelessWidget {
           decoration: BoxDecoration(
             color: seleccionado
                 ? color.withValues(alpha: 0.1)
-                : CupertinoColors.tertiarySystemFill.resolveFrom(context),
+                : JPCupertinoColors.tertiarySystemFill(context),
             borderRadius: BorderRadius.circular(8),
             border: seleccionado
                 ? Border.all(color: color.withValues(alpha: 0.3), width: 1)
@@ -178,7 +176,7 @@ class TarjetaSeleccionRol extends StatelessWidget {
                 size: 16,
                 color: seleccionado
                     ? color
-                    : CupertinoColors.secondaryLabel.resolveFrom(context),
+                    : JPCupertinoColors.secondaryLabel(context),
               ),
               const SizedBox(width: 6),
               Text(
@@ -186,7 +184,7 @@ class TarjetaSeleccionRol extends StatelessWidget {
                 style: TextStyle(
                   color: seleccionado
                       ? color
-                      : CupertinoColors.secondaryLabel.resolveFrom(context),
+                      : JPCupertinoColors.secondaryLabel(context),
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   letterSpacing: -0.08,

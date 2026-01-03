@@ -98,21 +98,21 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
           children: [
             Icon(
               CupertinoIcons.delete,
-              color: JPCupertinoColors.systemRed(context),
+              color: JPCupertinoColors.error(context),
               size: 24,
             ),
-            const SizedBox(width: 8),
-            const Text('Eliminar dirección'),
+            SizedBox(width: 8),
+            Text('Eliminar dirección'),
           ],
         ),
         content: Text(
           '¿Estás seguro de eliminar esta dirección?\n\n"${dir.etiqueta.isNotEmpty ? dir.etiqueta : dir.direccion}"',
-          style: const TextStyle(fontSize: 14),
+          style: TextStyle(fontSize: 14),
         ),
         actions: [
           CupertinoDialogAction(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text('Cancelar'),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
@@ -120,7 +120,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
               Navigator.pop(context);
               _eliminarDireccion(dir);
             },
-            child: const Text('Eliminar'),
+            child: Text('Eliminar'),
           ),
         ],
       ),
@@ -133,7 +133,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
       backgroundColor: JPCupertinoColors.background(context),
       navigationBar: CupertinoNavigationBar(
         backgroundColor: JPCupertinoColors.surface(context),
-        middle: const Text('Mis Direcciones'),
+        middle: Text('Mis Direcciones'),
         border: Border(
           bottom: BorderSide(
             color: JPCupertinoColors.separator(context),
@@ -167,26 +167,26 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
               right: 16,
               child: SafeArea(
                 child: CupertinoButton(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 12,
                   ),
                   color: AppColorsPrimary.main,
                   borderRadius: BorderRadius.circular(24),
                   onPressed: _nuevaDireccion,
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
                         CupertinoIcons.location_fill,
-                        color: CupertinoColors.white,
+                        color: JPCupertinoColors.white,
                         size: 20,
                       ),
                       SizedBox(width: 8),
                       Text(
                         'Nueva dirección',
                         style: TextStyle(
-                          color: CupertinoColors.white,
+                          color: JPCupertinoColors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
@@ -205,16 +205,16 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
   Widget _buildError() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               CupertinoIcons.exclamationmark_triangle,
-              color: JPCupertinoColors.systemRed(context),
+              color: JPCupertinoColors.error(context),
               size: 64,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               _error!,
               style: TextStyle(
@@ -223,22 +223,22 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             CupertinoButton.filled(
               onPressed: _cargarDirecciones,
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     CupertinoIcons.refresh,
-                    color: CupertinoColors.white,
+                    color: JPCupertinoColors.white,
                     size: 18,
                   ),
                   SizedBox(width: 8),
                   Text(
                     'Reintentar',
                     style: TextStyle(
-                      color: CupertinoColors.white,
+                      color: JPCupertinoColors.white,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -254,12 +254,12 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
   Widget _buildEmpty() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: AppColorsPrimary.main.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
@@ -270,7 +270,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                 color: AppColorsPrimary.main,
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             Text(
               'Aún no tienes direcciones',
               style: TextStyle(
@@ -279,7 +279,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                 color: JPCupertinoColors.label(context),
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Text(
               'Agrega una dirección de entrega para\nrecibir tus pedidos más rápido',
               textAlign: TextAlign.center,
@@ -288,22 +288,22 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                 fontSize: 14,
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
             CupertinoButton.filled(
               onPressed: _nuevaDireccion,
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     CupertinoIcons.location_fill,
-                    color: CupertinoColors.white,
+                    color: JPCupertinoColors.white,
                     size: 18,
                   ),
                   SizedBox(width: 8),
                   Text(
                     'Agregar primera dirección',
                     style: TextStyle(
-                      color: CupertinoColors.white,
+                      color: JPCupertinoColors.white,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -322,11 +322,11 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: _cargarDirecciones),
         SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 80),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (_, index) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
+                padding: EdgeInsets.only(bottom: 12),
                 child: _buildDireccionCard(_direcciones[index]),
               ),
               childCount: _direcciones.length,
@@ -347,8 +347,8 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
       child: GestureDetector(
         onTap: () => _editarDireccion(dir),
         child: Container(
-          color: CupertinoColors.transparent,
-          padding: const EdgeInsets.all(16),
+          color: JPCupertinoColors.transparent,
+          padding: EdgeInsets.all(16),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -372,7 +372,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                   size: 24,
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
 
               // Contenido
               Expanded(
@@ -395,7 +395,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                         ),
                         if (dir.esPredeterminada)
                           Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 4,
                             ),
@@ -416,7 +416,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                           ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     if (dir.direccionCompleta.isNotEmpty &&
                         !_esPlaceholder(dir.direccionCompleta)) ...[
                       Text(
@@ -430,7 +430,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                       ),
                     ],
                     if (dir.ciudad != null && dir.ciudad!.isNotEmpty) ...[
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Row(
                         children: [
                           Icon(
@@ -438,7 +438,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                             size: 14,
                             color: JPCupertinoColors.secondaryLabel(context),
                           ),
-                          const SizedBox(width: 6),
+                          SizedBox(width: 6),
                           Text(
                             dir.ciudad!,
                             style: TextStyle(
@@ -451,7 +451,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                     ],
                     if (dir.telefonoContacto != null &&
                         dir.telefonoContacto!.isNotEmpty) ...[
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Row(
                         children: [
                           Icon(
@@ -459,7 +459,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                             size: 14,
                             color: JPCupertinoColors.secondaryLabel(context),
                           ),
-                          const SizedBox(width: 6),
+                          SizedBox(width: 6),
                           Text(
                             dir.telefonoContacto!,
                             style: TextStyle(
@@ -498,13 +498,13 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
       builder: (context) => Container(
         decoration: BoxDecoration(
           color: JPCupertinoColors.surface(context),
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Container(
                 width: 40,
                 height: 4,
@@ -513,15 +513,15 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
                   _editarDireccion(dir);
                 },
                 child: Container(
-                  color: CupertinoColors.transparent,
-                  padding: const EdgeInsets.symmetric(
+                  color: JPCupertinoColors.transparent,
+                  padding: EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 12,
                   ),
@@ -532,7 +532,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                         color: AppColorsPrimary.main,
                         size: 22,
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16),
                       Text(
                         'Editar dirección',
                         style: TextStyle(
@@ -546,7 +546,7 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
               ),
               Container(
                 height: 0.5,
-                margin: const EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.symmetric(horizontal: 16),
                 color: JPCupertinoColors.separator(context),
               ),
               GestureDetector(
@@ -555,8 +555,8 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                   _mostrarDialogoEliminar(dir);
                 },
                 child: Container(
-                  color: CupertinoColors.transparent,
-                  padding: const EdgeInsets.symmetric(
+                  color: JPCupertinoColors.transparent,
+                  padding: EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 12,
                   ),
@@ -564,22 +564,22 @@ class _PantallaListaDireccionesState extends State<PantallaListaDirecciones> {
                     children: [
                       Icon(
                         CupertinoIcons.delete,
-                        color: JPCupertinoColors.systemRed(context),
+                        color: JPCupertinoColors.error(context),
                         size: 22,
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16),
                       Text(
                         'Eliminar dirección',
                         style: TextStyle(
                           fontSize: 16,
-                          color: JPCupertinoColors.systemRed(context),
+                          color: JPCupertinoColors.error(context),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
             ],
           ),
         ),

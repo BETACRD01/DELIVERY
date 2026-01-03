@@ -122,15 +122,15 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
     showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
-        title: const Text('Cambiar Foto de Perfil'),
-        message: const Text('Elige una opción para actualizar tu foto'),
+        title: Text('Cambiar Foto de Perfil'),
+        message: Text('Elige una opción para actualizar tu foto'),
         actions: [
           CupertinoActionSheetAction(
             onPressed: () {
               Navigator.pop(context);
               _seleccionarDesdeGaleria();
             },
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(CupertinoIcons.photo, color: AppColorsPrimary.main),
@@ -144,7 +144,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
               Navigator.pop(context);
               _tomarFoto();
             },
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(CupertinoIcons.camera, color: AppColorsPrimary.main),
@@ -160,7 +160,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                 Navigator.pop(context);
                 _eliminarFoto();
               },
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -175,7 +175,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
         ],
         cancelButton: CupertinoActionSheetAction(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
+          child: Text('Cancelar'),
         ),
       ),
     );
@@ -265,17 +265,17 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
     final confirmar = await showCupertinoDialog<bool>(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: const Text('Eliminar foto'),
-        content: const Text('¿Estás seguro de eliminar tu foto de perfil?'),
+        title: Text('Eliminar foto'),
+        content: Text('¿Estás seguro de eliminar tu foto de perfil?'),
         actions: [
           CupertinoDialogAction(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancelar'),
+            child: Text('Cancelar'),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Eliminar'),
+            child: Text('Eliminar'),
           ),
         ],
       ),
@@ -320,34 +320,38 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
+            colorScheme: ColorScheme.light(
               primary: AppColorsPrimary.main,
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Color(0xFF1C1C1E),
+              onPrimary: JPCupertinoColors.white,
+              surface: JPCupertinoColors.white,
+              onSurface: JPCupertinoColors.label(context),
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 foregroundColor: AppColorsPrimary.main,
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.5,
                 ),
               ),
             ),
-            dialogTheme: const DialogThemeData(
-              backgroundColor: Colors.white,
+            dialogTheme: DialogThemeData(
+              backgroundColor: JPCupertinoColors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
             ),
-            datePickerTheme: const DatePickerThemeData(
-              backgroundColor: Colors.white,
+            datePickerTheme: DatePickerThemeData(
+              backgroundColor: JPCupertinoColors.white,
               headerBackgroundColor: AppColorsPrimary.main,
-              headerForegroundColor: Colors.white,
-              dayForegroundColor: WidgetStatePropertyAll(Color(0xFF1C1C1E)),
-              yearForegroundColor: WidgetStatePropertyAll(Color(0xFF1C1C1E)),
+              headerForegroundColor: JPCupertinoColors.white,
+              dayForegroundColor: WidgetStatePropertyAll(
+                JPCupertinoColors.label(context),
+              ),
+              yearForegroundColor: WidgetStatePropertyAll(
+                JPCupertinoColors.label(context),
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
@@ -453,16 +457,16 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
               key: _formKey,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 32),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildHeader(),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32),
                     _buildPersonalSection(),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
                     _buildContactSection(),
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40),
                     _buildBotonGuardar(),
                   ],
                 ),
@@ -482,12 +486,12 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
           fontSize: 17,
           fontWeight: FontWeight.w600,
           letterSpacing: -0.4,
-          color: CupertinoColors.label.resolveFrom(context),
+          color: JPCupertinoColors.label(context),
         ),
       ),
       centerTitle: true,
-      backgroundColor: Colors.transparent,
-      foregroundColor: CupertinoColors.label.resolveFrom(context),
+      backgroundColor: JPCupertinoColors.transparent,
+      foregroundColor: JPCupertinoColors.label(context),
       elevation: 0,
       flexibleSpace: ClipRect(
         child: BackdropFilter(
@@ -499,7 +503,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                   .withValues(alpha: 0.95),
               border: Border(
                 bottom: BorderSide(
-                  color: Colors.black.withValues(alpha: 0.1),
+                  color: JPCupertinoColors.black.withValues(alpha: 0.1),
                   width: 0.5,
                 ),
               ),
@@ -511,7 +515,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
         icon: Icon(
           Icons.arrow_back_ios_new,
           size: 20,
-          color: CupertinoColors.label.resolveFrom(context),
+          color: JPCupertinoColors.label(context),
         ),
         onPressed: () => Navigator.pop(context),
       ),
@@ -539,7 +543,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
+                    color: JPCupertinoColors.black.withValues(alpha: 0.1),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
@@ -556,7 +560,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                         context,
                       ),
                       border: Border.all(
-                        color: const Color(0xFFE5E5EA),
+                        color: JPCupertinoColors.systemGrey5(context),
                         width: 3,
                       ),
                       image: avatarImage != null
@@ -574,7 +578,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                               widget.perfil.usuarioNombre.isNotEmpty
                                   ? widget.perfil.usuarioNombre[0].toUpperCase()
                                   : '?',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 40,
                                 fontWeight: FontWeight.w700,
                                 color: AppColorsPrimary.main,
@@ -592,7 +596,10 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                       decoration: BoxDecoration(
                         color: AppColorsPrimary.main,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 3),
+                        border: Border.all(
+                          color: JPCupertinoColors.white,
+                          width: 3,
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: AppColorsPrimary.main.withValues(alpha: 0.3),
@@ -601,10 +608,10 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                           ),
                         ],
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.camera_alt,
                         size: 16,
-                        color: Colors.white,
+                        color: JPCupertinoColors.white,
                       ),
                     ),
                   ),
@@ -612,11 +619,11 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Text(
             'Toca la foto para cambiarla',
             style: TextStyle(
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               fontSize: 15,
               letterSpacing: -0.2,
             ),
@@ -635,14 +642,14 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: JPCupertinoColors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -655,25 +662,25 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                     color: AppColorsPrimary.main.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.person,
                     color: AppColorsPrimary.main,
                     size: 20,
                   ),
                 ),
-                const SizedBox(width: 12),
-                const Text(
+                SizedBox(width: 12),
+                Text(
                   'Datos Personales',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     letterSpacing: -0.3,
-                    color: Color(0xFF1C1C1E),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
@@ -684,7 +691,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                     validator: (v) => v!.isEmpty ? 'Requerido' : null,
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Expanded(
                   child: _buildIOSTextField(
                     controller: _apellidoCtrl,
@@ -695,7 +702,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             _buildIOSTextField(
               controller: _emailCtrl,
               label: 'Correo Electrónico',
@@ -707,23 +714,27 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                 return null;
               },
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: EdgeInsets.symmetric(horizontal: 4),
               child: Row(
                 children: [
                   Icon(
                     Icons.info_outline,
                     size: 14,
-                    color: const Color(0xFF8E8E93).withValues(alpha: 0.8),
+                    color: JPCupertinoColors.systemGrey(
+                      context,
+                    ).withValues(alpha: 0.8),
                   ),
-                  const SizedBox(width: 6),
+                  SizedBox(width: 6),
                   Expanded(
                     child: Text(
                       'Cambiar tu correo podría cerrar tu sesión en otros dispositivos',
                       style: TextStyle(
                         fontSize: 12,
-                        color: const Color(0xFF8E8E93).withValues(alpha: 0.8),
+                        color: JPCupertinoColors.systemGrey(
+                          context,
+                        ).withValues(alpha: 0.8),
                         height: 1.3,
                       ),
                     ),
@@ -746,14 +757,14 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: JPCupertinoColors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -763,30 +774,32 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF34C759).withValues(alpha: 0.1),
+                    color: JPCupertinoColors.systemGreen(
+                      context,
+                    ).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.contact_phone,
-                    color: Color(0xFF34C759),
+                    color: JPCupertinoColors.systemGreen(context),
                     size: 20,
                   ),
                 ),
-                const SizedBox(width: 12),
-                const Text(
+                SizedBox(width: 12),
+                Text(
                   'Contacto y Detalles',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     letterSpacing: -0.3,
-                    color: Color(0xFF1C1C1E),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             _buildPhoneField(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             _buildFechaField(),
           ],
         ),
@@ -806,13 +819,13 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 6),
+          padding: EdgeInsets.only(left: 4, bottom: 6),
           child: Text(
             label.toUpperCase(),
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               letterSpacing: 0.5,
             ),
           ),
@@ -824,23 +837,20 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
           validator: validator,
           style: TextStyle(
             fontSize: 16,
-            color: CupertinoColors.label.resolveFrom(context),
+            color: JPCupertinoColors.label(context),
             fontWeight: FontWeight.w500,
             letterSpacing: -0.3,
           ),
           decoration: InputDecoration(
             hintText: placeholder,
             hintStyle: TextStyle(
-              color: CupertinoColors.placeholderText.resolveFrom(context),
+              color: JPCupertinoColors.placeholderText(context),
               fontWeight: FontWeight.w400,
             ),
             filled: true,
             fillColor: CupertinoColors.tertiarySystemGroupedBackground
                 .resolveFrom(context),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -851,20 +861,26 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(
-                color: AppColorsPrimary.main,
-                width: 2,
-              ),
+              borderSide: BorderSide(color: AppColorsPrimary.main, width: 2),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Color(0xFFFF3B30), width: 2),
+              borderSide: BorderSide(
+                color: JPCupertinoColors.systemRed(context),
+                width: 2,
+              ),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Color(0xFFFF3B30), width: 2),
+              borderSide: BorderSide(
+                color: JPCupertinoColors.systemRed(context),
+                width: 2,
+              ),
             ),
-            errorStyle: const TextStyle(fontSize: 12, color: Color(0xFFFF3B30)),
+            errorStyle: TextStyle(
+              fontSize: 12,
+              color: JPCupertinoColors.systemRed(context),
+            ),
           ),
         ),
       ],
@@ -876,13 +892,13 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 6),
+          padding: EdgeInsets.only(left: 4, bottom: 6),
           child: Text(
             'TELÉFONO CELULAR',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               letterSpacing: 0.5,
             ),
           ),
@@ -894,16 +910,13 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
           decoration: InputDecoration(
             hintText: 'Número de celular',
             hintStyle: TextStyle(
-              color: CupertinoColors.placeholderText.resolveFrom(context),
+              color: JPCupertinoColors.placeholderText(context),
               fontWeight: FontWeight.w400,
             ),
             filled: true,
             fillColor: CupertinoColors.tertiarySystemGroupedBackground
                 .resolveFrom(context),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -914,20 +927,26 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(
-                color: AppColorsPrimary.main,
-                width: 2,
-              ),
+              borderSide: BorderSide(color: AppColorsPrimary.main, width: 2),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Color(0xFFFF3B30), width: 2),
+              borderSide: BorderSide(
+                color: JPCupertinoColors.systemRed(context),
+                width: 2,
+              ),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Color(0xFFFF3B30), width: 2),
+              borderSide: BorderSide(
+                color: JPCupertinoColors.systemRed(context),
+                width: 2,
+              ),
             ),
-            errorStyle: const TextStyle(fontSize: 12, color: Color(0xFFFF3B30)),
+            errorStyle: TextStyle(
+              fontSize: 12,
+              color: JPCupertinoColors.systemRed(context),
+            ),
           ),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           inputFormatters: [
@@ -966,13 +985,13 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 6),
+          padding: EdgeInsets.only(left: 4, bottom: 6),
           child: Text(
             'FECHA DE NACIMIENTO',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               letterSpacing: 0.5,
             ),
           ),
@@ -981,7 +1000,7 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
           onTap: _seleccionarFecha,
           borderRadius: BorderRadius.circular(12),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
               color: CupertinoColors.tertiarySystemGroupedBackground
                   .resolveFrom(context),
@@ -999,15 +1018,15 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                     fontWeight: FontWeight.w500,
                     letterSpacing: -0.3,
                     color: _fechaNacimiento != null
-                        ? CupertinoColors.label.resolveFrom(context)
-                        : CupertinoColors.placeholderText.resolveFrom(context),
+                        ? JPCupertinoColors.label(context)
+                        : JPCupertinoColors.placeholderText(context),
                   ),
                 ),
                 Row(
                   children: [
                     if (_fechaNacimiento != null) ...[
                       Container(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 10,
                           vertical: 4,
                         ),
@@ -1017,19 +1036,19 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
                         ),
                         child: Text(
                           '${_calcularEdad(_fechaNacimiento!)} años',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             color: AppColorsPrimary.main,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                     ],
-                    const Icon(
+                    Icon(
                       Icons.calendar_today,
                       size: 18,
-                      color: Color(0xFF8E8E93),
+                      color: JPCupertinoColors.systemGrey(context),
                     ),
                   ],
                 ),
@@ -1062,24 +1081,24 @@ class _PantallaEditarInformacionState extends State<PantallaEditarInformacion>
           onPressed: _guardando ? null : _guardarCambios,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColorsPrimary.main,
-            disabledBackgroundColor: const Color(0xFFE5E5EA),
+            disabledBackgroundColor: JPCupertinoColors.systemGrey5(context),
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
             ),
           ),
           child: _guardando
-              ? const SizedBox(
+              ? SizedBox(
                   width: 24,
                   height: 24,
                   child: CupertinoActivityIndicator(radius: 14),
                 )
-              : const Text(
+              : Text(
                   'Guardar Cambios',
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: JPCupertinoColors.white,
                     letterSpacing: -0.3,
                   ),
                 ),

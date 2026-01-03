@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../../../apis/admin/envios_admin_api.dart';
-
-import '../../../providers/core/theme_provider.dart';
-import '../../../theme/primary_colors.dart';
+import '../../../theme/jp_theme.dart';
 
 class PantallaConfigEnviosAdmin extends StatefulWidget {
   const PantallaConfigEnviosAdmin({super.key});
@@ -117,14 +113,14 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: CupertinoColors.systemGrey6,
+                  color: JPCupertinoColors.systemGrey6(context),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text(
+                child: Text(
                   '💡 Configura los parámetros de esta zona tarifaria.',
                   style: TextStyle(
                     fontSize: 12,
-                    color: CupertinoColors.systemGrey,
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
               ),
@@ -220,10 +216,10 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: CupertinoColors.label,
+            color: JPCupertinoColors.label(context),
           ),
         ),
         const SizedBox(height: 4),
@@ -237,9 +233,9 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
         const SizedBox(height: 2),
         Text(
           helpText,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 10,
-            color: CupertinoColors.systemGrey,
+            color: JPCupertinoColors.secondaryLabel(context),
           ),
         ),
         if (!isLast) const SizedBox(height: 12),
@@ -277,14 +273,14 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: CupertinoColors.systemGrey6,
+                      color: JPCupertinoColors.systemGrey6(context),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Text(
+                    child: Text(
                       '💡 Configura los parámetros de este centro de operaciones (Hub).',
                       style: TextStyle(
                         fontSize: 12,
-                        color: CupertinoColors.systemGrey,
+                        color: JPCupertinoColors.secondaryLabel(context),
                       ),
                     ),
                   ),
@@ -295,20 +291,20 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                     hint: 'Ej: Centro Comercial Plaza',
                     helpText: 'Nombre identificador del punto de operación',
                   ),
-                  const Text(
+                  Text(
                     'Ubicación en el Mapa',
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: CupertinoColors.label,
+                      color: JPCupertinoColors.label(context),
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Text(
+                  Text(
                     'Coordenadas GPS del centro del hub',
                     style: TextStyle(
                       fontSize: 10,
-                      color: CupertinoColors.systemGrey,
+                      color: JPCupertinoColors.secondaryLabel(context),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -357,13 +353,21 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: activo
-                          ? CupertinoColors.activeGreen.withValues(alpha: 0.1)
-                          : CupertinoColors.systemRed.withValues(alpha: 0.1),
+                          ? CupertinoColors.activeGreen
+                                .resolveFrom(context)
+                                .withValues(alpha: 0.1)
+                          : JPCupertinoColors.systemRed(
+                              context,
+                            ).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: activo
-                            ? CupertinoColors.activeGreen.withValues(alpha: 0.3)
-                            : CupertinoColors.systemRed.withValues(alpha: 0.3),
+                            ? CupertinoColors.activeGreen
+                                  .resolveFrom(context)
+                                  .withValues(alpha: 0.3)
+                            : JPCupertinoColors.systemRed(
+                                context,
+                              ).withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
@@ -374,12 +378,14 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                activo ? '✅ Hub Activo' : '❌ Hub Inactivo',
+                                activo ? 'Hub Activo' : 'Hub Inactivo',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: activo
-                                      ? CupertinoColors.activeGreen
-                                      : CupertinoColors.systemRed,
+                                      ? CupertinoColors.activeGreen.resolveFrom(
+                                          context,
+                                        )
+                                      : JPCupertinoColors.systemRed(context),
                                   fontSize: 13,
                                 ),
                               ),
@@ -388,9 +394,11 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                                 activo
                                     ? 'Recibe pedidos normalmente'
                                     : 'No recibirá pedidos nuevos',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 10,
-                                  color: CupertinoColors.systemGrey,
+                                  color: JPCupertinoColors.secondaryLabel(
+                                    context,
+                                  ),
                                 ),
                               ),
                             ],
@@ -441,7 +449,7 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(mensaje),
-        backgroundColor: AppColorsPrimary.main,
+        backgroundColor: JPCupertinoColors.activeGreen,
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -451,7 +459,7 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(mensaje),
-        backgroundColor: Colors.red,
+        backgroundColor: JPColors.error,
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -459,9 +467,8 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
-    final primaryColor = AppColorsPrimary.main;
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -472,7 +479,7 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
@@ -488,7 +495,7 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
           ? Center(
               child: Text(
                 _error!,
-                style: TextStyle(color: isDark ? Colors.white : Colors.black),
+                style: TextStyle(color: JPCupertinoColors.label(context)),
               ),
             )
           : RefreshIndicator(
@@ -497,14 +504,14 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  _buildSectionTitle('Configuración General', isDark),
-                  _buildConfigCard(isDark, primaryColor),
+                  _buildSectionTitle('Configuración General'),
+                  _buildConfigCard(),
                   const SizedBox(height: 24),
-                  _buildSectionTitle('Zonas Tarifarias', isDark),
-                  _buildZonasList(isDark, primaryColor),
+                  _buildSectionTitle('Zonas Tarifarias'),
+                  _buildZonasList(),
                   const SizedBox(height: 24),
-                  _buildSectionTitle('Hubs / Ciudades', isDark),
-                  _buildCiudadesList(isDark, primaryColor),
+                  _buildSectionTitle('Hubs / Ciudades'),
+                  _buildCiudadesList(),
                   const SizedBox(height: 32),
                 ],
               ),
@@ -512,13 +519,13 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
     );
   }
 
-  Widget _buildSectionTitle(String title, bool isDark) {
+  Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(left: 4, bottom: 8),
       child: Text(
         title.toUpperCase(),
         style: TextStyle(
-          color: isDark ? Colors.grey[400] : Colors.grey[600],
+          color: JPCupertinoColors.secondaryLabel(context),
           fontSize: 13,
           fontWeight: FontWeight.w500,
         ),
@@ -526,10 +533,11 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
     );
   }
 
-  Widget _buildConfigCard(bool isDark, Color primaryColor) {
-    final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
-    final hintColor = isDark ? Colors.grey[400] : Colors.grey[600];
+  Widget _buildConfigCard() {
+    final cardColor = JPCupertinoColors.surface(context);
+    final textColor = JPCupertinoColors.label(context);
+    final hintColor = JPCupertinoColors.secondaryLabel(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -679,10 +687,11 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
     );
   }
 
-  Widget _buildZonasList(bool isDark, Color primaryColor) {
-    final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
-    final hintColor = isDark ? Colors.grey[400] : Colors.grey[600];
+  Widget _buildZonasList() {
+    final cardColor = JPCupertinoColors.surface(context);
+    final textColor = JPCupertinoColors.label(context);
+    final hintColor = JPCupertinoColors.secondaryLabel(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -692,16 +701,22 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
-            color: Colors.orange.withValues(alpha: 0.1),
+            color: JPColors.dashboardAmber.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
+            border: Border.all(
+              color: JPColors.dashboardAmber.withValues(alpha: 0.3),
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Icon(CupertinoIcons.map, color: Colors.orange, size: 18),
+                  Icon(
+                    CupertinoIcons.map,
+                    color: JPColors.dashboardAmber,
+                    size: 18,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     '¿Cómo funcionan las zonas?',
@@ -781,25 +796,18 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                         spacing: 8,
                         runSpacing: 8,
                         children: [
-                          _buildZonaChip(
-                            '💰 Base',
-                            '\$${z['tarifa_base']}',
-                            isDark,
-                          ),
+                          _buildZonaChip('💰 Base', '\$${z['tarifa_base']}'),
                           _buildZonaChip(
                             '📏 Incluye',
                             '${z['km_incluidos']} km',
-                            isDark,
                           ),
                           _buildZonaChip(
                             '➕ Extra',
                             '\$${z['precio_km_extra']}/km',
-                            isDark,
                           ),
                           _buildZonaChip(
                             '🎯 Max',
                             '${z['max_distancia_km'] ?? '∞'} km',
-                            isDark,
                           ),
                         ],
                       ),
@@ -822,7 +830,7 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                     Divider(
                       height: 1,
                       indent: 16,
-                      color: isDark ? Colors.grey[800] : Colors.grey[200],
+                      color: JPCupertinoColors.separator(context),
                     ),
                 ],
               );
@@ -833,17 +841,17 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
     );
   }
 
-  Widget _buildZonaChip(String label, String value, bool isDark) {
+  Widget _buildZonaChip(String label, String value) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey[800] : Colors.grey[100],
+        color: JPCupertinoColors.systemGrey6(context),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         '$label: $value',
         style: TextStyle(
-          color: isDark ? Colors.grey[300] : Colors.grey[700],
+          color: JPCupertinoColors.secondaryLabel(context),
           fontSize: 11,
           fontWeight: FontWeight.w500,
         ),
@@ -851,10 +859,11 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
     );
   }
 
-  Widget _buildCiudadesList(bool isDark, Color primaryColor) {
-    final cardColor = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
-    final hintColor = isDark ? Colors.grey[400] : Colors.grey[600];
+  Widget _buildCiudadesList() {
+    final cardColor = JPCupertinoColors.surface(context);
+    final textColor = JPCupertinoColors.label(context);
+    final hintColor = JPCupertinoColors.secondaryLabel(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -864,9 +873,11 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
-            color: Colors.blue.withValues(alpha: 0.1),
+            color: JPColors.dashboardBlue.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.blue.withValues(alpha: 0.3)),
+            border: Border.all(
+              color: JPColors.dashboardBlue.withValues(alpha: 0.3),
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -875,7 +886,7 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                 children: [
                   Icon(
                     CupertinoIcons.building_2_fill,
-                    color: Colors.blue,
+                    color: JPColors.dashboardBlue,
                     size: 18,
                   ),
                   const SizedBox(width: 8),
@@ -926,13 +937,17 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: isActive
-                                ? Colors.green.withValues(alpha: 0.15)
-                                : Colors.grey.withValues(alpha: 0.15),
+                                ? JPColors.success.withValues(alpha: 0.15)
+                                : JPCupertinoColors.systemGrey(
+                                    context,
+                                  ).withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
                             CupertinoIcons.location_solid,
-                            color: isActive ? Colors.green : Colors.grey,
+                            color: isActive
+                                ? JPColors.success
+                                : JPCupertinoColors.systemGrey(context),
                             size: 18,
                           ),
                         ),
@@ -967,8 +982,8 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                           ),
                           decoration: BoxDecoration(
                             color: isActive
-                                ? Colors.green.withValues(alpha: 0.15)
-                                : Colors.red.withValues(alpha: 0.15),
+                                ? JPColors.success.withValues(alpha: 0.15)
+                                : JPColors.error.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
@@ -978,7 +993,9 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                                 width: 6,
                                 height: 6,
                                 decoration: BoxDecoration(
-                                  color: isActive ? Colors.green : Colors.red,
+                                  color: isActive
+                                      ? JPColors.success
+                                      : JPColors.error,
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -986,7 +1003,9 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                               Text(
                                 isActive ? 'ACTIVO' : 'INACTIVO',
                                 style: TextStyle(
-                                  color: isActive ? Colors.green : Colors.red,
+                                  color: isActive
+                                      ? JPColors.success
+                                      : JPColors.error,
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -1002,12 +1021,11 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                         spacing: 8,
                         runSpacing: 8,
                         children: [
-                          _buildCiudadChip('📍 Lat', '${c['lat']}', isDark),
-                          _buildCiudadChip('📍 Lng', '${c['lng']}', isDark),
+                          _buildCiudadChip('📍 Lat', '${c['lat']}'),
+                          _buildCiudadChip('📍 Lng', '${c['lng']}'),
                           _buildCiudadChip(
                             '📡 Radio',
                             '${c['radio_max_cobertura_km']} km',
-                            isDark,
                           ),
                         ],
                       ),
@@ -1030,7 +1048,7 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
                     Divider(
                       height: 1,
                       indent: 16,
-                      color: isDark ? Colors.grey[800] : Colors.grey[200],
+                      color: JPCupertinoColors.separator(context),
                     ),
                 ],
               );
@@ -1041,17 +1059,17 @@ class _PantallaConfigEnviosAdminState extends State<PantallaConfigEnviosAdmin> {
     );
   }
 
-  Widget _buildCiudadChip(String label, String value, bool isDark) {
+  Widget _buildCiudadChip(String label, String value) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey[800] : Colors.grey[100],
+        color: JPCupertinoColors.systemGrey6(context),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         '$label: $value',
         style: TextStyle(
-          color: isDark ? Colors.grey[300] : Colors.grey[700],
+          color: JPCupertinoColors.secondaryLabel(context),
           fontSize: 11,
           fontWeight: FontWeight.w500,
         ),

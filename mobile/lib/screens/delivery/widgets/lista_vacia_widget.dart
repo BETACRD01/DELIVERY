@@ -1,6 +1,7 @@
 // lib/screens/delivery/widgets/lista_vacia_widget.dart
 
 import 'package:flutter/cupertino.dart';
+import '../../../theme/jp_theme.dart';
 
 /// 📭 Widget reutilizable para mostrar estados vacíos
 /// Muestra ícono, mensaje y opcionalmente un botón de acción
@@ -33,7 +34,7 @@ class ListaVaciaWidget extends StatelessWidget {
             Icon(
               icono,
               size: tamanoIcono ?? 64,
-              color: colorIcono ?? CupertinoColors.systemGrey3,
+              color: colorIcono ?? JPCupertinoColors.systemGrey3(context),
             ),
             const SizedBox(height: 16),
             Text(
@@ -41,7 +42,7 @@ class ListaVaciaWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
                 letterSpacing: -0.5,
               ),
               textAlign: TextAlign.center,
@@ -51,7 +52,7 @@ class ListaVaciaWidget extends StatelessWidget {
               submensaje,
               style: TextStyle(
                 fontSize: 15,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
               ),
               textAlign: TextAlign.center,
             ),

@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 
-import '../../theme/primary_colors.dart';
 import '../../theme/jp_theme.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -205,15 +204,14 @@ class JPCupertinoButton extends StatelessWidget {
   BoxDecoration _getDecoration(BuildContext context) {
     switch (_variant) {
       case _ButtonVariant.filled:
-        final bgColor = backgroundColor ?? AppColorsPrimary.main;
+        final bgColor = backgroundColor ?? JPColors.primary;
         return BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(JPConstants.radiusButton),
         );
 
       case _ButtonVariant.outlined:
-        final lineColor =
-            borderColor ?? foregroundColor ?? AppColorsPrimary.main;
+        final lineColor = borderColor ?? foregroundColor ?? JPColors.primary;
         return BoxDecoration(
           border: Border.all(color: lineColor, width: 1.5),
           borderRadius: BorderRadius.circular(JPConstants.radiusButton),
@@ -238,10 +236,10 @@ class JPCupertinoButton extends StatelessWidget {
         return CupertinoColors.white;
 
       case _ButtonVariant.outlined:
-        return AppColorsPrimary.main;
+        return JPColors.primary;
 
       case _ButtonVariant.text:
-        return AppColorsPrimary.main;
+        return JPColors.primary;
 
       case _ButtonVariant.destructive:
         return CupertinoColors.white;

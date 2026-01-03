@@ -3,29 +3,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../theme/jp_theme.dart';
 
 /// 🧰 Pantalla de Ayuda y Soporte para Repartidor
 /// Diseño nativo iOS (Cupertino)
 class PantallaAyudaSoporteRepartidor extends StatelessWidget {
   const PantallaAyudaSoporteRepartidor({super.key});
 
-  // Colores iOS
-  static const Color _accent = Color(0xFF0A84FF);
-  static const Color _success = Color(0xFF34C759);
-  static const Color _surface = CupertinoColors.systemGroupedBackground;
-  static const Color _cardBg = CupertinoColors.white;
-  static const Color _cardBorder = Color(0xFFE5E5EA);
-
   @override
   Widget build(BuildContext context) {
+    // Colores dinámicos del tema
+    final backgroundColor = JPCupertinoColors.background(context);
+    final navBarColor = JPCupertinoColors.surface(
+      context,
+    ).withValues(alpha: 0.9);
+
     return Material(
       type: MaterialType.transparency,
       child: CupertinoPageScaffold(
-        backgroundColor: _surface,
+        backgroundColor: backgroundColor,
         navigationBar: CupertinoNavigationBar(
-          backgroundColor: CupertinoColors.systemBackground.withValues(
-            alpha: 0.9,
-          ),
+          backgroundColor: navBarColor,
           border: null,
           middle: const Text(
             'Ayuda y Soporte',
@@ -55,18 +53,20 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
+    final primaryColor = JPCupertinoColors.systemBlue(context);
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [_accent, _accent.withValues(alpha: 0.8)],
+          colors: [primaryColor, primaryColor.withValues(alpha: 0.8)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: _accent.withValues(alpha: 0.3),
+            color: primaryColor.withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -113,23 +113,31 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
   }
 
   Widget _buildSeccionContacto(BuildContext context) {
+    final cardBg = JPCupertinoColors.secondarySurface(context);
+    final cardBorder = JPCupertinoColors.separator(context);
+    final successColor = JPCupertinoColors.success(context);
+    final accentColor = JPCupertinoColors.systemBlue(context);
+    final whatsappColor = const Color(
+      0xFF25D366,
+    ); // WhatsApp brand color usually stays explicit
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionHeader('CONTACTO DIRECTO'),
+        _buildSectionHeader(context, 'CONTACTO DIRECTO'),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: _cardBg,
+            color: cardBg,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: _cardBorder),
+            border: Border.all(color: cardBorder),
           ),
           child: Column(
             children: [
               _buildContactTile(
                 context,
                 icon: CupertinoIcons.phone_fill,
-                iconColor: _success,
+                iconColor: successColor,
                 title: 'Línea de Soporte',
                 subtitle: '+593 98 765 4321',
                 onTap: () => _llamar('+593987654321'),
@@ -137,12 +145,12 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
               Container(
                 height: 0.5,
                 margin: const EdgeInsets.only(left: 54),
-                color: _cardBorder,
+                color: cardBorder,
               ),
               _buildContactTile(
                 context,
                 icon: CupertinoIcons.bubble_left_fill,
-                iconColor: const Color(0xFF25D366),
+                iconColor: whatsappColor,
                 title: 'WhatsApp',
                 subtitle: 'Escríbenos por WhatsApp',
                 onTap: () => _abrirWhatsApp('+593987654321'),
@@ -150,12 +158,12 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
               Container(
                 height: 0.5,
                 margin: const EdgeInsets.only(left: 54),
-                color: _cardBorder,
+                color: cardBorder,
               ),
               _buildContactTile(
                 context,
                 icon: CupertinoIcons.mail_solid,
-                iconColor: _accent,
+                iconColor: accentColor,
                 title: 'Correo de Soporte',
                 subtitle: 'soporte@deliberapp.com',
                 onTap: () => _enviarCorreo('soporte@deliberapp.com'),
@@ -198,10 +206,10 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: CupertinoColors.label,
+                      color: JPCupertinoColors.label(context),
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -209,9 +217,7 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
                     subtitle,
                     style: TextStyle(
                       fontSize: 13,
-                      color: CupertinoColors.secondaryLabel.resolveFrom(
-                        context,
-                      ),
+                      color: JPCupertinoColors.secondaryLabel(context),
                     ),
                   ),
                 ],
@@ -220,7 +226,7 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
             Icon(
               CupertinoIcons.chevron_forward,
               size: 16,
-              color: CupertinoColors.systemGrey3.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey3(context),
             ),
           ],
         ),
@@ -229,6 +235,9 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
   }
 
   Widget _buildSeccionFAQ(BuildContext context) {
+    final cardBg = JPCupertinoColors.secondarySurface(context);
+    final cardBorder = JPCupertinoColors.separator(context);
+
     final faqs = [
       {
         'pregunta': '¿Cómo acepto un pedido?',
@@ -255,13 +264,13 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionHeader('PREGUNTAS FRECUENTES'),
+        _buildSectionHeader(context, 'PREGUNTAS FRECUENTES'),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: _cardBg,
+            color: cardBg,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: _cardBorder),
+            border: Border.all(color: cardBorder),
           ),
           child: Column(
             children: faqs.asMap().entries.map((entry) {
@@ -273,7 +282,7 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
                     Container(
                       height: 0.5,
                       margin: const EdgeInsets.only(left: 16),
-                      color: _cardBorder,
+                      color: cardBorder,
                     ),
                 ],
               );
@@ -292,20 +301,20 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         title: Text(
           faq['pregunta']!,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
-            color: CupertinoColors.label,
+            color: JPCupertinoColors.label(context),
           ),
         ),
-        iconColor: CupertinoColors.systemGrey,
-        collapsedIconColor: CupertinoColors.systemGrey,
+        iconColor: JPCupertinoColors.systemGrey(context),
+        collapsedIconColor: JPCupertinoColors.systemGrey(context),
         children: [
           Text(
             faq['respuesta']!,
             style: TextStyle(
               fontSize: 14,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               height: 1.4,
             ),
           ),
@@ -315,6 +324,8 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
   }
 
   Widget _buildBotonSoporte(BuildContext context) {
+    final successColor = JPCupertinoColors.success(context);
+
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () => _abrirWhatsApp('+593987654321'),
@@ -323,12 +334,12 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [_success, _success.withValues(alpha: 0.85)],
+            colors: [successColor, successColor.withValues(alpha: 0.85)],
           ),
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
             BoxShadow(
-              color: _success.withValues(alpha: 0.3),
+              color: successColor.withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -357,15 +368,15 @@ class PantallaAyudaSoporteRepartidor extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSectionHeader(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.only(left: 4),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w500,
-          color: CupertinoColors.systemGrey,
+          color: JPCupertinoColors.systemGrey(context),
           letterSpacing: -0.08,
         ),
       ),

@@ -1,9 +1,8 @@
 // lib/screens/supplier/screens/pantalla_configuracion_proveedor.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../controllers/supplier/supplier_controller.dart';
 import '../../../../theme/primary_colors.dart';
 
@@ -27,20 +26,20 @@ class _PantallaConfiguracionProveedorState
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground,
+      backgroundColor: JPCupertinoColors.background(context),
       navigationBar: CupertinoNavigationBar(
         middle: const Text('Configuración'),
-        backgroundColor: CupertinoColors.systemBackground
-            .resolveFrom(context)
-            .withValues(alpha: 0.9),
+        backgroundColor: JPCupertinoColors.surface(
+          context,
+        ).withValues(alpha: 0.9),
         border: null,
       ),
       child: SafeArea(
         child: DefaultTextStyle(
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: '.SF Pro Text',
             fontSize: 17,
-            color: CupertinoColors.label,
+            color: JPCupertinoColors.label(context),
             decoration: TextDecoration.none,
           ),
           child: ListView(
@@ -74,13 +73,13 @@ class _PantallaConfiguracionProveedorState
                           ? CupertinoIcons.checkmark_seal_fill
                           : CupertinoIcons.clock_fill,
                       iconBgColor: controller.verificado
-                          ? CupertinoColors.activeGreen
-                          : CupertinoColors.activeOrange,
+                          ? JPCupertinoColors.success(context)
+                          : JPCupertinoColors.warning(context),
                       label: 'Estado',
                       value: controller.verificado ? 'Verificado' : 'Pendiente',
                       valueColor: controller.verificado
-                          ? CupertinoColors.activeGreen
-                          : CupertinoColors.activeOrange,
+                          ? JPCupertinoColors.success(context)
+                          : JPCupertinoColors.warning(context),
                     ),
                   ]);
                 },
@@ -138,7 +137,7 @@ class _PantallaConfiguracionProveedorState
                 child: Text(
                   'Versión 1.0.0',
                   style: TextStyle(
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                     fontSize: 12,
                   ),
                 ),
@@ -159,7 +158,7 @@ class _PantallaConfiguracionProveedorState
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w500,
-          color: CupertinoColors.systemGrey.resolveFrom(context),
+          color: JPCupertinoColors.systemGrey(context),
           letterSpacing: -0.08,
         ),
       ),
@@ -169,7 +168,7 @@ class _PantallaConfiguracionProveedorState
   Widget _buildSettingsCard(List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(children: children),
@@ -181,7 +180,7 @@ class _PantallaConfiguracionProveedorState
       padding: const EdgeInsets.only(left: 60),
       child: Container(
         height: 0.5,
-        color: CupertinoColors.separator.resolveFrom(context),
+        color: JPCupertinoColors.separator(context),
       ),
     );
   }
@@ -204,7 +203,7 @@ class _PantallaConfiguracionProveedorState
               color: iconBgColor,
               borderRadius: BorderRadius.circular(7),
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: JPCupertinoColors.white, size: 18),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -215,7 +214,7 @@ class _PantallaConfiguracionProveedorState
                   label,
                   style: TextStyle(
                     fontSize: 12,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -225,9 +224,7 @@ class _PantallaConfiguracionProveedorState
                   value,
                   style: TextStyle(
                     fontSize: 16,
-                    color:
-                        valueColor ??
-                        CupertinoColors.label.resolveFrom(context),
+                    color: valueColor ?? JPCupertinoColors.label(context),
                     fontWeight: FontWeight.w400,
                   ),
                   maxLines: 2,
@@ -260,7 +257,7 @@ class _PantallaConfiguracionProveedorState
               color: iconBgColor,
               borderRadius: BorderRadius.circular(7),
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: JPCupertinoColors.white, size: 18),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -269,9 +266,9 @@ class _PantallaConfiguracionProveedorState
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
-                    color: CupertinoColors.label,
+                    color: JPCupertinoColors.label(context),
                     fontWeight: FontWeight.w400,
                   ),
                   maxLines: 1,
@@ -281,7 +278,7 @@ class _PantallaConfiguracionProveedorState
                   subtitle,
                   style: TextStyle(
                     fontSize: 12,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

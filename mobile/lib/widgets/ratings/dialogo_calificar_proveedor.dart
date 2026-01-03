@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/pedidos/pedido_service.dart';
+import '../../theme/jp_theme.dart';
 import 'star_rating_input.dart';
 
 /// Diálogo para calificar al proveedor después de que el pedido fue finalizado
@@ -114,7 +115,7 @@ class _DialogoCalificarProveedorState extends State<DialogoCalificarProveedor> {
           children: [
             Icon(
               CupertinoIcons.checkmark_circle_fill,
-              color: Color(0xFF38A169),
+              color: JPColors.success,
               size: 24,
             ),
             SizedBox(width: 8),
@@ -173,24 +174,27 @@ class _DialogoCalificarProveedorState extends State<DialogoCalificarProveedor> {
                                           radius: 12,
                                         ),
                                     errorWidget: (context, url, error) =>
-                                        const CircleAvatar(
+                                        CircleAvatar(
                                           radius: 25,
-                                          backgroundColor: Color(0xFFFFE0B2),
-                                          child: Icon(
+                                          backgroundColor: JPColors.warning
+                                              .withValues(alpha: 0.2),
+                                          child: const Icon(
                                             Icons.store,
-                                            color: Colors.orange,
+                                            color: JPColors.warning,
                                             size: 24,
                                           ),
                                         ),
                                   ),
                                 )
                               else
-                                const CircleAvatar(
+                                CircleAvatar(
                                   radius: 25,
-                                  backgroundColor: Color(0xFFFFE0B2),
-                                  child: Icon(
+                                  backgroundColor: JPColors.warning.withValues(
+                                    alpha: 0.2,
+                                  ),
+                                  child: const Icon(
                                     Icons.store,
-                                    color: Colors.orange,
+                                    color: JPColors.warning,
                                     size: 24,
                                   ),
                                 ),
@@ -351,7 +355,7 @@ class _DialogoCalificarProveedorState extends State<DialogoCalificarProveedor> {
           top: false,
           child: CupertinoButton(
             color: _estrellas > 0
-                ? const Color(0xFFFF7B00)
+                ? JPColors.warning
                 : CupertinoColors.systemGrey,
             onPressed: (_enviando || _estrellas == 0)
                 ? null

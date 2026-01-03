@@ -1,6 +1,7 @@
 // lib/widgets/cards/base_card.dart
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../theme/jp_theme.dart';
 
 /// Card base reutilizable con diseño consistente
 class BaseCard extends StatelessWidget {
@@ -33,14 +34,16 @@ class BaseCard extends StatelessWidget {
       padding: padding ?? const EdgeInsets.all(16),
       margin: margin,
       decoration: BoxDecoration(
-        color: color ?? Colors.white,
+        color: color ?? JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(borderRadius),
-        border: border ?? Border.all(color: Colors.grey.shade200),
-        boxShadow: boxShadow ??
+        border:
+            border ?? Border.all(color: JPCupertinoColors.separator(context)),
+        boxShadow:
+            boxShadow ??
             (elevation > 0
                 ? [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
+                      color: CupertinoColors.black.withValues(alpha: 0.05),
                       blurRadius: elevation * 2,
                       offset: Offset(0, elevation),
                     ),
@@ -96,14 +99,10 @@ class IconTitleCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: (iconColor ?? Colors.blue).withValues(alpha: 0.1),
+              color: (iconColor ?? JPColors.primary).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(
-              icon,
-              color: iconColor ?? Colors.blue,
-              size: 22,
-            ),
+            child: Icon(icon, color: iconColor ?? JPColors.primary, size: 22),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -123,7 +122,7 @@ class IconTitleCard extends StatelessWidget {
                     subtitle!,
                     style: TextStyle(
                       fontSize: 13,
-                      color: Colors.grey.shade600,
+                      color: JPCupertinoColors.secondaryLabel(context),
                     ),
                   ),
                 ],

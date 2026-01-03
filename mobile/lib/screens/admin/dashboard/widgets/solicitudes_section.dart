@@ -2,13 +2,11 @@
 import 'package:flutter/cupertino.dart'; // Added Cupertino
 import 'package:flutter/material.dart';
 import '../../../../controllers/admin/dashboard_controller.dart';
-import '../constants/dashboard_colors.dart';
+import '../../../../theme/jp_theme.dart';
 import '../../../../config/routing/rutas.dart';
 import '../../../../models/auth/solicitud_cambio_rol.dart';
 import 'tarjeta_solicitud.dart';
 import 'detalle_solicitud_modal.dart';
-import 'package:provider/provider.dart';
-import '../../../../providers/core/theme_provider.dart';
 
 class SolicitudesSection extends StatelessWidget {
   final DashboardController controller;
@@ -55,11 +53,9 @@ class SolicitudesSection extends StatelessWidget {
   }
 
   Widget _buildTarjetaResumen(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Material(
@@ -77,12 +73,12 @@ class SolicitudesSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: DashboardColors.naranja.withValues(alpha: 0.1),
+                    color: JPColors.warning.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
                     CupertinoIcons.exclamationmark_circle_fill,
-                    color: DashboardColors.naranja,
+                    color: JPColors.warning,
                     size: 24,
                   ),
                 ),
@@ -96,7 +92,7 @@ class SolicitudesSection extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: JPCupertinoColors.label(context),
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -104,7 +100,7 @@ class SolicitudesSection extends StatelessWidget {
                         'Pendientes de revisión',
                         style: TextStyle(
                           fontSize: 14,
-                          color: isDark ? Colors.grey[400] : Colors.grey[600],
+                          color: JPCupertinoColors.secondaryLabel(context),
                         ),
                       ),
                     ],
@@ -112,7 +108,7 @@ class SolicitudesSection extends StatelessWidget {
                 ),
                 Icon(
                   CupertinoIcons.chevron_forward,
-                  color: isDark ? Colors.grey[600] : Colors.grey[400],
+                  color: JPCupertinoColors.secondaryLabel(context),
                   size: 20,
                 ),
               ],
@@ -138,7 +134,7 @@ class SolicitudesSection extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('✓ Solicitud aceptada exitosamente'),
-              backgroundColor: DashboardColors.verde,
+              backgroundColor: JPColors.success,
             ),
           );
         }
@@ -149,7 +145,7 @@ class SolicitudesSection extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('✓ Solicitud rechazada'),
-              backgroundColor: DashboardColors.naranja,
+              backgroundColor: JPColors.warning,
             ),
           );
         }

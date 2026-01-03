@@ -186,7 +186,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
               height: MediaQuery.of(context).size.height * 0.7,
               decoration: BoxDecoration(
                 color: JPCupertinoColors.surface(context),
-                borderRadius: const BorderRadius.vertical(
+                borderRadius: BorderRadius.vertical(
                   top: Radius.circular(20),
                 ),
               ),
@@ -199,7 +199,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                       Container(
                         width: 40,
                         height: 4,
-                        margin: const EdgeInsets.symmetric(vertical: 12),
+                        margin: EdgeInsets.symmetric(vertical: 12),
                         decoration: BoxDecoration(
                           color: JPCupertinoColors.systemGrey4(context),
                           borderRadius: BorderRadius.circular(2),
@@ -207,7 +207,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                       ),
                       // Título
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
                           'Mis direcciones guardadas',
                           style: TextStyle(
@@ -217,13 +217,13 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       // Lista de direcciones
                       Expanded(
                         child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: EdgeInsets.symmetric(horizontal: 16),
                           itemCount: _direccionesGuardadas.length,
-                          separatorBuilder: (_, _) => const SizedBox(height: 8),
+                          separatorBuilder: (_, _) => SizedBox(height: 8),
                           itemBuilder: (context, index) {
                             final direccion = _direccionesGuardadas[index];
                             final nombreAmigable = _nombreDireccionVisible(
@@ -253,7 +253,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                                     width: isSelected ? 2 : 0.5,
                                   ),
                                 ),
-                                padding: const EdgeInsets.all(12),
+                                padding: EdgeInsets.all(12),
                                 child: Row(
                                   children: [
                                     Icon(
@@ -267,7 +267,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                                             ),
                                       size: 24,
                                     ),
-                                    const SizedBox(width: 12),
+                                    SizedBox(width: 12),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
@@ -289,7 +289,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                                               !_esPlaceholder(
                                                 direccion.etiqueta,
                                               )) ...[
-                                            const SizedBox(height: 4),
+                                            SizedBox(height: 4),
                                             Row(
                                               children: [
                                                 Icon(
@@ -300,7 +300,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                                                         context,
                                                       ),
                                                 ),
-                                                const SizedBox(width: 4),
+                                                SizedBox(width: 4),
                                                 Flexible(
                                                   child: Text(
                                                     direccion.etiqueta,
@@ -320,10 +320,10 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                                             ),
                                           ],
                                           if (direccion.esPredeterminada) ...[
-                                            const SizedBox(height: 4),
+                                            SizedBox(height: 4),
                                             Container(
                                               padding:
-                                                  const EdgeInsets.symmetric(
+                                                  EdgeInsets.symmetric(
                                                     horizontal: 6,
                                                     vertical: 2,
                                                   ),
@@ -353,10 +353,10 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                           },
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       // Agregar nueva
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
                         child: CupertinoButton(
                           padding: EdgeInsets.zero,
                           onPressed: () async {
@@ -378,7 +378,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                                 CupertinoIcons.add_circled,
                                 color: AppColorsPrimary.main,
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               Text(
                                 'Agregar nueva dirección',
                                 style: TextStyle(
@@ -390,15 +390,15 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       // Botones
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Row(
                           children: [
                             Expanded(
                               child: CupertinoButton(
-                                padding: const EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                   vertical: 14,
                                 ),
                                 color: JPCupertinoColors.systemGrey5(context),
@@ -412,10 +412,10 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12),
                             Expanded(
                               child: CupertinoButton(
-                                padding: const EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                   vertical: 14,
                                 ),
                                 color: seleccionTemporal == null
@@ -431,10 +431,10 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                                           carritoProvider,
                                         );
                                       },
-                                child: const Text(
+                                child: Text(
                                   'Seleccionar',
                                   style: TextStyle(
-                                    color: CupertinoColors.white,
+                                    color: JPCupertinoColors.white,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -509,9 +509,9 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
         ),
         Expanded(
           child: ListView.separated(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 120),
             itemCount: carritoProvider.items.length,
-            separatorBuilder: (_, _) => const SizedBox(height: 12),
+            separatorBuilder: (_, _) => SizedBox(height: 12),
             itemBuilder: (context, index) {
               final item = carritoProvider.items[index];
               return ItemCarritoCard(
@@ -531,14 +531,14 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: const Text('Limpiar Carrito'),
-        content: const Text(
+        title: Text('Limpiar Carrito'),
+        content: Text(
           '¿Estás seguro de que quieres eliminar todos los productos del carrito?',
         ),
         actions: [
           CupertinoDialogAction(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text('Cancelar'),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
@@ -549,7 +549,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
                 ToastService().showSuccess(context, 'Carrito limpiado');
               }
             },
-            child: const Text('Limpiar'),
+            child: Text('Limpiar'),
           ),
         ],
       ),
@@ -618,7 +618,7 @@ class _PantallaCarritoState extends State<PantallaCarrito> {
               height: MediaQuery.of(context).size.height * 0.85,
               decoration: BoxDecoration(
                 color: JPCupertinoColors.background(context),
-                borderRadius: const BorderRadius.vertical(
+                borderRadius: BorderRadius.vertical(
                   top: Radius.circular(20),
                 ),
               ),

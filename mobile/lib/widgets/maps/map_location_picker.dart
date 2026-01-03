@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../theme/primary_colors.dart';
 import '../../theme/jp_theme.dart';
 
 /// Selector de ubicación en mapa interactivo - Diseño Profesional
@@ -334,16 +333,14 @@ class _MapLocationPickerState extends State<MapLocationPicker>
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
                                       colors: [
-                                        AppColorsPrimary.main,
-                                        AppColorsPrimary.main.withValues(
-                                          alpha: 0.8,
-                                        ),
+                                        JPColors.primary,
+                                        JPColors.primary.withValues(alpha: 0.8),
                                       ],
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColorsPrimary.main.withValues(
+                                        color: JPColors.primary.withValues(
                                           alpha: 0.3,
                                         ),
                                         blurRadius: 8,
@@ -433,8 +430,8 @@ class _MapLocationPickerState extends State<MapLocationPicker>
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [
-                                  AppColorsPrimary.main,
-                                  AppColorsPrimary.main.withValues(alpha: 0.8),
+                                  JPColors.primary,
+                                  JPColors.primary.withValues(alpha: 0.8),
                                 ],
                               ),
                               shape: BoxShape.circle,
@@ -444,7 +441,7 @@ class _MapLocationPickerState extends State<MapLocationPicker>
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColorsPrimary.main.withValues(
+                                  color: JPColors.primary.withValues(
                                     alpha: 0.4,
                                   ),
                                   blurRadius: 15,
@@ -470,7 +467,7 @@ class _MapLocationPickerState extends State<MapLocationPicker>
                           CustomPaint(
                             size: const Size(16, 12),
                             painter: _PinPointerPainter(
-                              color: AppColorsPrimary.main,
+                              color: JPColors.primary,
                             ),
                           ),
                         ],
@@ -556,14 +553,14 @@ class _MapLocationPickerState extends State<MapLocationPicker>
                                 width: 48,
                                 height: 48,
                                 decoration: BoxDecoration(
-                                  color: AppColorsPrimary.main.withValues(
+                                  color: JPColors.primary.withValues(
                                     alpha: 0.1,
                                   ),
                                   borderRadius: BorderRadius.circular(14),
                                 ),
                                 child: Icon(
                                   CupertinoIcons.map_pin_ellipse,
-                                  color: AppColorsPrimary.main,
+                                  color: JPColors.primary,
                                   size: 24,
                                 ),
                               ),
@@ -635,7 +632,7 @@ class _MapLocationPickerState extends State<MapLocationPicker>
                               onPressed: _isLoadingAddress
                                   ? null
                                   : _confirmarUbicacion,
-                              color: AppColorsPrimary.main,
+                              color: JPColors.primary,
                               child: _isLoadingAddress
                                   ? const CupertinoActivityIndicator(
                                       color: CupertinoColors.white,

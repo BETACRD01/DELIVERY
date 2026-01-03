@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import '../../theme/jp_theme.dart';
 
 /// Widget interactivo para seleccionar una calificación de 1-5 estrellas
 ///
@@ -35,7 +36,10 @@ class StarRatingInput extends StatefulWidget {
     this.size = 32.0,
     this.activeColor,
     this.inactiveColor,
-  }) : assert(initialValue >= 0 && initialValue <= 5, 'Initial value must be between 0 and 5');
+  }) : assert(
+         initialValue >= 0 && initialValue <= 5,
+         'Initial value must be between 0 and 5',
+       );
 
   @override
   State<StarRatingInput> createState() => _StarRatingInputState();
@@ -74,7 +78,7 @@ class _StarRatingInputState extends State<StarRatingInput> {
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = widget.activeColor ?? const Color(0xFFFFB800); // Amber
+    final activeColor = widget.activeColor ?? JPColors.warning; // Amber
     final inactiveColor = widget.inactiveColor ?? CupertinoColors.systemGrey4;
 
     return Row(

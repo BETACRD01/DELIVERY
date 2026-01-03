@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-
 import '../../../controllers/supplier/supplier_controller.dart';
 import '../../../theme/jp_theme.dart';
 import '../profile/perfil_proveedor_panel.dart';

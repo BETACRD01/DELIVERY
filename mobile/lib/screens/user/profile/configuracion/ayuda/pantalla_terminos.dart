@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile/theme/jp_theme.dart';
 import 'package:flutter/material.dart';
 
 /// 📄 PANTALLA DE TÉRMINOS Y CONDICIONES
@@ -18,17 +19,17 @@ class PantallaTerminos extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
-            color: CupertinoColors.label.resolveFrom(context),
+            color: JPCupertinoColors.label(context),
           ),
         ),
-        backgroundColor: CupertinoColors.systemBackground.resolveFrom(context),
-        foregroundColor: CupertinoColors.label.resolveFrom(context),
+        backgroundColor: JPCupertinoColors.surface(context),
+        foregroundColor: JPCupertinoColors.label(context),
         elevation: 0,
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
           child: Container(
-            color: CupertinoColors.separator.resolveFrom(context),
+            color: JPCupertinoColors.separator(context),
             height: 0.5,
           ),
         ),
@@ -36,13 +37,13 @@ class PantallaTerminos extends StatelessWidget {
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
             size: 20,
-            color: CupertinoColors.label.resolveFrom(context),
+            color: JPCupertinoColors.label(context),
           ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24),
         physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,12 +52,12 @@ class PantallaTerminos extends StatelessWidget {
             Text(
               'Última actualización: 20 Noviembre 2024',
               style: TextStyle(
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // ─── CONTENIDO LEGAL ───
             _buildSection(
@@ -104,9 +105,9 @@ class PantallaTerminos extends StatelessWidget {
               'JP Express no será responsable por daños indirectos, incidentales, especiales, consecuentes o punitivos, incluyendo sin limitación, pérdida de beneficios, datos, uso, fondo de comercio, u otras pérdidas intangibles.',
             ),
 
-            const SizedBox(height: 20),
-            Divider(color: CupertinoColors.separator.resolveFrom(context)),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
+            Divider(color: JPCupertinoColors.separator(context)),
+            SizedBox(height: 20),
 
             // Pie de página
             Center(
@@ -114,12 +115,12 @@ class PantallaTerminos extends StatelessWidget {
                 'JP Express S.A.\nQuito, Ecuador',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: CupertinoColors.tertiaryLabel.resolveFrom(context),
+                  color: JPCupertinoColors.tertiaryLabel(context),
                   fontSize: 12,
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            SizedBox(height: 40),
           ],
         ),
       ),
@@ -129,7 +130,7 @@ class PantallaTerminos extends StatelessWidget {
   // Helper para secciones de texto
   Widget _buildSection(BuildContext context, String title, String content) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 24),
+      padding: EdgeInsets.only(bottom: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -138,15 +139,15 @@ class PantallaTerminos extends StatelessWidget {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             content,
             style: TextStyle(
               fontSize: 14,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               height: 1.6, // Altura de línea para mejor lectura
             ),
             textAlign: TextAlign.justify,

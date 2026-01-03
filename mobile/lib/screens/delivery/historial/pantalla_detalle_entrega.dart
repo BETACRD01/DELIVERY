@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/models/orders/entrega_historial.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../theme/jp_theme.dart';
 
 /// Pantalla de detalle completo de una entrega del historial
 class PantallaDetalleEntrega extends StatelessWidget {
@@ -11,20 +12,16 @@ class PantallaDetalleEntrega extends StatelessWidget {
 
   const PantallaDetalleEntrega({super.key, required this.entrega});
 
-  static const Color _accent = Color(0xFF0CB7F2);
-  static const Color _success = Color(0xFF34C759);
-
   @override
   Widget build(BuildContext context) {
-    final surface = CupertinoColors.systemGroupedBackground.resolveFrom(
-      context,
-    );
-    final cardBg = CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
-      context,
-    );
-    final cardBorder = CupertinoColors.separator.resolveFrom(context);
-    final textPrimary = CupertinoColors.label.resolveFrom(context);
-    final textSecondary = CupertinoColors.secondaryLabel.resolveFrom(context);
+    final surface = JPCupertinoColors.background(context);
+    final cardBg = JPCupertinoColors.secondarySurface(context);
+    final cardBorder = JPCupertinoColors.separator(context);
+    final textPrimary = JPCupertinoColors.label(context);
+    final textSecondary = JPCupertinoColors.secondaryLabel(context);
+
+    final accent = JPCupertinoColors.systemBlue(context);
+    final success = JPCupertinoColors.success(context);
 
     return Material(
       type: MaterialType.transparency,
@@ -43,7 +40,13 @@ class PantallaDetalleEntrega extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Tarjeta de estado
-                _buildEstadoCard(context, cardBg, cardBorder, textPrimary),
+                _buildEstadoCard(
+                  context,
+                  cardBg,
+                  cardBorder,
+                  textPrimary,
+                  accent,
+                ),
                 const SizedBox(height: 20),
 
                 // Información del cliente
@@ -63,6 +66,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
                           : entrega.clienteNombre,
                       textPrimary,
                       textSecondary,
+                      accent,
                     ),
                     _buildDivider(cardBorder),
                     _buildInfoRow(
@@ -72,6 +76,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
                       entrega.clienteDireccion,
                       textPrimary,
                       textSecondary,
+                      accent,
                     ),
                     if (entrega.clienteTelefono != null &&
                         entrega.clienteTelefono!.isNotEmpty) ...[
@@ -84,6 +89,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
                         textPrimary,
                         textSecondary,
                         onTap: () => _llamarTelefono(entrega.clienteTelefono!),
+                        accent: accent,
                       ),
                     ],
                   ],
@@ -105,6 +111,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
                       '#${entrega.id}',
                       textPrimary,
                       textSecondary,
+                      accent,
                     ),
                     _buildDivider(cardBorder),
                     _buildInfoRow(
@@ -114,6 +121,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
                       entrega.fechaFormateada,
                       textPrimary,
                       textSecondary,
+                      accent,
                     ),
                     _buildDivider(cardBorder),
                     _buildInfoRow(
@@ -123,6 +131,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
                       _formatearMetodoPago(entrega.metodoPago),
                       textPrimary,
                       textSecondary,
+                      accent,
                     ),
                   ],
                 ),
@@ -152,7 +161,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
                       textPrimary,
                       textSecondary,
                       isTotal: true,
-                      color: _success,
+                      color: success,
                     ),
                   ],
                 ),
@@ -171,6 +180,8 @@ class PantallaDetalleEntrega extends StatelessWidget {
                       entrega,
                       textPrimary,
                       textSecondary,
+                      success,
+                      accent,
                     ),
                   ],
                 ),
@@ -188,20 +199,21 @@ class PantallaDetalleEntrega extends StatelessWidget {
     Color cardBg,
     Color cardBorder,
     Color textPrimary,
+    Color accent,
   ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [_accent, _accent.withValues(alpha: 0.8)],
+          colors: [accent, accent.withValues(alpha: 0.8)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: _accent.withValues(alpha: 0.3),
+            color: accent.withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -285,6 +297,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
     String value,
     Color textPrimary,
     Color textSecondary,
+    Color accent,
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -293,10 +306,10 @@ class PantallaDetalleEntrega extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: _accent.withValues(alpha: 0.1),
+              color: accent.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, color: _accent, size: 18),
+            child: Icon(icon, color: accent, size: 18),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -332,6 +345,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
     Color textPrimary,
     Color textSecondary, {
     required VoidCallback onTap,
+    required Color accent,
   }) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
@@ -343,10 +357,10 @@ class PantallaDetalleEntrega extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: _accent.withValues(alpha: 0.1),
+                color: accent.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(icon, color: _accent, size: 18),
+              child: Icon(icon, color: accent, size: 18),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -363,13 +377,13 @@ class PantallaDetalleEntrega extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: _accent,
+                      color: accent,
                     ),
                   ),
                 ],
               ),
             ),
-            Icon(CupertinoIcons.phone_arrow_up_right, color: _accent, size: 18),
+            Icon(CupertinoIcons.phone_arrow_up_right, color: accent, size: 18),
           ],
         ),
       ),
@@ -416,6 +430,8 @@ class PantallaDetalleEntrega extends StatelessWidget {
     EntregaHistorial entrega,
     Color textPrimary,
     Color textSecondary,
+    Color success,
+    Color accent,
   ) {
     final tiene = entrega.tieneComprobante;
 
@@ -426,14 +442,13 @@ class PantallaDetalleEntrega extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: (tiene ? _success : CupertinoColors.systemGrey).withValues(
-                alpha: 0.1,
-              ),
+              color: (tiene ? success : JPCupertinoColors.systemGrey(context))
+                  .withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
               tiene ? CupertinoIcons.doc_text_fill : CupertinoIcons.doc_text,
-              color: tiene ? _success : CupertinoColors.systemGrey,
+              color: tiene ? success : JPCupertinoColors.systemGrey(context),
               size: 18,
             ),
           ),
@@ -452,7 +467,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
-                    color: tiene ? _success : textPrimary,
+                    color: tiene ? success : textPrimary,
                   ),
                 ),
               ],
@@ -469,7 +484,7 @@ class PantallaDetalleEntrega extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: _accent,
+                  color: accent,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text(

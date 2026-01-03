@@ -12,6 +12,7 @@ import 'package:mobile/services/core/api/http_client.dart';
 import '../../config/network/api_config.dart';
 import '../../services/auth/auth_service.dart';
 import 'dart:developer' as developer;
+import '../../theme/jp_theme.dart';
 
 class MapaPedidosScreen extends StatefulWidget {
   const MapaPedidosScreen({super.key});
@@ -253,7 +254,7 @@ class _MapaPedidosScreenState extends State<MapaPedidosScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent, // Para efecto visual
+      backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -266,8 +267,9 @@ class _MapaPedidosScreenState extends State<MapaPedidosScreen> {
     final esEncargo = pedido.tipo.toLowerCase() == 'directo';
     // No tengo acceso a _accent aquí si es local a la clase o archivo.
     // Usaremos Colors.blue para pedido normal si no encuentro _accent.
-    const colorRegular = Color(0xFF0CB7F2); // Celeste corporativo
-    final themeColor = esEncargo ? Colors.deepOrange : colorRegular;
+    // Usaremos JPColors.primary para pedido normal
+    const colorRegular = JPColors.primary; // Celeste corporativo
+    final themeColor = esEncargo ? JPColors.accent : colorRegular;
     final icono = esEncargo
         ? CupertinoIcons.paperplane_fill
         : Icons.delivery_dining;
@@ -300,7 +302,9 @@ class _MapaPedidosScreenState extends State<MapaPedidosScreen> {
                 height: 5,
                 margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withValues(alpha: 0.3),
+                  color: CupertinoColors.systemGrey
+                      .resolveFrom(context)
+                      .withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(2.5),
                 ),
               ),
@@ -387,8 +391,10 @@ class _MapaPedidosScreenState extends State<MapaPedidosScreen> {
                       _rechazarPedido(pedido.id);
                     },
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.red,
-                      side: BorderSide(color: Colors.red.shade200),
+                      foregroundColor: JPColors.error,
+                      side: BorderSide(
+                        color: JPColors.error.withValues(alpha: 0.5),
+                      ),
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -496,7 +502,7 @@ class _MapaPedidosScreenState extends State<MapaPedidosScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('✅ Pedido aceptado correctamente'),
-          backgroundColor: Colors.green,
+          backgroundColor: JPColors.success,
         ),
       );
 
@@ -516,7 +522,7 @@ class _MapaPedidosScreenState extends State<MapaPedidosScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Pedido rechazado'),
-          backgroundColor: Colors.orange,
+          backgroundColor: JPColors.warning,
         ),
       );
 
@@ -576,7 +582,7 @@ class _MapaPedidosScreenState extends State<MapaPedidosScreen> {
   void _mostrarError(String mensaje) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(mensaje), backgroundColor: Colors.red),
+      SnackBar(content: Text(mensaje), backgroundColor: JPColors.error),
     );
   }
 

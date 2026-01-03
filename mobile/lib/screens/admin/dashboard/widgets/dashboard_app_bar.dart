@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../../providers/core/theme_provider.dart';
-import '../../../../theme/primary_colors.dart';
+import '../../../../theme/jp_theme.dart';
 
 class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TabController tabController;
@@ -23,11 +21,9 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final backgroundColor = isDark
-        ? const Color(0xFF000000)
-        : const Color(0xFFF2F2F7);
-    final primaryColor = AppColorsPrimary.main;
+    final backgroundColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
+    final textColor = JPCupertinoColors.label(context);
 
     return AppBar(
       backgroundColor: backgroundColor,
@@ -37,14 +33,14 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         'Panel de Admin',
         style: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: textColor,
           fontSize: 28,
           fontWeight: FontWeight.bold,
           letterSpacing: -0.5,
         ),
       ),
       actions: [
-        _buildNotificationButton(context, isDark),
+        _buildNotificationButton(context, textColor),
         IconButton(
           icon: Icon(CupertinoIcons.refresh, color: primaryColor),
           onPressed: onRefresh,
@@ -60,8 +56,8 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: TabBar(
             controller: tabController,
             isScrollable: true,
-            labelColor: isDark ? Colors.white : Colors.black,
-            unselectedLabelColor: Colors.grey,
+            labelColor: textColor,
+            unselectedLabelColor: JPCupertinoColors.secondaryLabel(context),
             indicatorColor: primaryColor,
             indicatorSize: TabBarIndicatorSize.label,
             dividerColor: Colors.transparent,
@@ -79,15 +75,12 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _buildNotificationButton(BuildContext context, bool isDark) {
+  Widget _buildNotificationButton(BuildContext context, Color color) {
     return Stack(
       alignment: Alignment.center,
       children: [
         IconButton(
-          icon: Icon(
-            CupertinoIcons.bell,
-            color: isDark ? Colors.white : Colors.black,
-          ),
+          icon: Icon(CupertinoIcons.bell, color: color),
           onPressed: () {
             if (solicitudesPendientesCount > 0) {
               onSolicitudesTap();

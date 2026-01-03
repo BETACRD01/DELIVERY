@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mobile/models/orders/entrega_historial.dart';
 import 'package:mobile/services/repartidor/repartidor_service.dart';
 import 'package:mobile/screens/delivery/historial/pantalla_detalle_entrega.dart';
+import '../../../theme/jp_theme.dart';
 
 /// Pantalla dedicada al historial de entregas vinculada al backend.
 class PantallaHistorialRepartidor extends StatefulWidget {
@@ -17,19 +18,15 @@ class PantallaHistorialRepartidor extends StatefulWidget {
 
 class _PantallaHistorialRepartidorState
     extends State<PantallaHistorialRepartidor> {
-  static const Color _accent = Color(0xFF0CB7F2); // Celeste corporativo
-  static const Color _success = Color(0xFF34C759);
-  static const Color _errorColor = Color(0xFFFF3B30);
-
   // Dynamic Colors
-  Color get _surface =>
-      CupertinoColors.systemGroupedBackground.resolveFrom(context);
-  Color get _cardBg =>
-      CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context);
-  Color get _cardBorder => CupertinoColors.separator.resolveFrom(context);
-  Color get _textPrimary => CupertinoColors.label.resolveFrom(context);
-  Color get _textSecondary =>
-      CupertinoColors.secondaryLabel.resolveFrom(context);
+  Color get _surface => JPCupertinoColors.background(context);
+  Color get _cardBg => JPCupertinoColors.secondarySurface(context);
+  Color get _cardBorder => JPCupertinoColors.separator(context);
+  Color get _textPrimary => JPCupertinoColors.label(context);
+  Color get _textSecondary => JPCupertinoColors.secondaryLabel(context);
+  Color get _accent => JPCupertinoColors.systemBlue(context);
+  Color get _success => JPCupertinoColors.success(context);
+  Color get _errorColor => JPCupertinoColors.error(context);
 
   final RepartidorService _service = RepartidorService();
   final ScrollController _scrollController = ScrollController();
@@ -147,7 +144,7 @@ class _PantallaHistorialRepartidorState
   Widget _buildResumen() {
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.white,
+        color: JPCupertinoColors.secondarySurface(context),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -177,7 +174,7 @@ class _PantallaHistorialRepartidorState
             'Visibles',
             '${_entregasFiltradas.length}',
             CupertinoIcons.eye_fill,
-            CupertinoColors.systemGrey,
+            JPCupertinoColors.systemGrey(context),
           ),
         ],
       ),
@@ -224,7 +221,7 @@ class _PantallaHistorialRepartidorState
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   CupertinoIcons.exclamationmark_circle,
                   size: 64,
                   color: _errorColor,
@@ -355,7 +352,7 @@ class _PantallaHistorialRepartidorState
                           : CupertinoIcons.doc_text,
                       color: entrega.tieneComprobante
                           ? _success
-                          : CupertinoColors.systemGrey,
+                          : JPCupertinoColors.systemGrey(context),
                       size: 16,
                     ),
                     const SizedBox(width: 8),
@@ -366,7 +363,7 @@ class _PantallaHistorialRepartidorState
                       style: TextStyle(
                         color: entrega.tieneComprobante
                             ? _success
-                            : CupertinoColors.systemGrey,
+                            : JPCupertinoColors.systemGrey(context),
                         fontWeight: FontWeight.w500,
                         fontSize: 13,
                       ),
@@ -377,7 +374,7 @@ class _PantallaHistorialRepartidorState
                       children: [
                         Text(
                           'Ganancia: \$${entrega.comisionRepartidor.toStringAsFixed(2)}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: _success,
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
@@ -427,7 +424,7 @@ class _PantallaHistorialRepartidorState
           ),
           child: Text(
             '#${entrega.id}',
-            style: const TextStyle(
+            style: TextStyle(
               color: _accent,
               fontWeight: FontWeight.bold,
               fontSize: 13,
@@ -450,7 +447,7 @@ class _PantallaHistorialRepartidorState
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icono, size: 16, color: CupertinoColors.systemGrey),
+        Icon(icono, size: 16, color: JPCupertinoColors.systemGrey(context)),
         const SizedBox(width: 10),
         Expanded(
           child: RichText(

@@ -18,12 +18,12 @@ class CarritoBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         boxShadow: [
           BoxShadow(
-            color: CupertinoColors.black.withValues(alpha: 0.1),
+            color: JPCupertinoColors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, -5),
           ),
@@ -54,12 +54,12 @@ class CarritoBottomBar extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
               child: CupertinoButton.filled(
                 onPressed: loading ? null : onContinuar,
-                child: const Text(
+                child: Text(
                   'Continuar al Pago',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),

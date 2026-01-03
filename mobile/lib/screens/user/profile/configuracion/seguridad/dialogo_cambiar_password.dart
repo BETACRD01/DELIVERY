@@ -60,12 +60,12 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+      backgroundColor: JPCupertinoColors.transparent,
+      insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
       child: Container(
         constraints: const BoxConstraints(maxWidth: 400, maxHeight: 650),
         decoration: BoxDecoration(
-          color: CupertinoColors.systemBackground.resolveFrom(context),
+          color: JPCupertinoColors.surface(context),
           borderRadius: BorderRadius.circular(14),
         ),
         child: Column(
@@ -73,7 +73,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
           children: [
             // Header con estilo iOS
             Container(
-              padding: const EdgeInsets.only(
+              padding: EdgeInsets.only(
                 top: 24,
                 left: 20,
                 right: 20,
@@ -82,7 +82,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: CupertinoColors.separator.resolveFrom(context),
+                    color: JPCupertinoColors.separator(context),
                     width: 0.5,
                   ),
                 ),
@@ -94,17 +94,17 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                       width: 64,
                       height: 64,
                       decoration: BoxDecoration(
-                        color: JPColors.primary.withValues(alpha: 0.15),
+                        color: JPCupertinoColors.primary(context).withValues(alpha: 0.15),
                         shape: BoxShape.circle,
                       ),
-                    child: const Icon(
+                    child: Icon(
                       CupertinoIcons.lock_circle,
-                      color: JPColors.primary,
+                      color: JPCupertinoColors.primary(context),
                       size: 32,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  const Text(
+                  SizedBox(height: 16),
+                  Text(
                     'Cambiar Contraseña',
                     style: TextStyle(
                       fontSize: 20,
@@ -113,7 +113,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                       letterSpacing: -0.5,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6),
                   Text(
                     'Ingresa tu nueva contraseña',
                     style: TextStyle(
@@ -132,7 +132,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
             // Contenido con form
             Flexible(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -151,7 +151,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                           letterSpacing: -0.08,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Container(
                         decoration: BoxDecoration(
                           color: CupertinoColors.tertiarySystemFill.resolveFrom(
@@ -162,7 +162,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                         child: TextFormField(
                           controller: _passwordNuevaController,
                           obscureText: _obscurePasswordNueva,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w400,
                           ),
@@ -196,7 +196,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                               ),
                             ),
                             border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
+                            contentPadding: EdgeInsets.symmetric(
                               horizontal: 16,
                               vertical: 12,
                             ),
@@ -212,7 +212,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                           },
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
 
                       // Confirmar Contraseña - Estilo iOS
                       Text(
@@ -226,7 +226,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                           letterSpacing: -0.08,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Container(
                         decoration: BoxDecoration(
                           color: CupertinoColors.tertiarySystemFill.resolveFrom(
@@ -237,7 +237,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                         child: TextFormField(
                           controller: _passwordConfirmacionController,
                           obscureText: _obscurePasswordConfirmacion,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w400,
                           ),
@@ -271,7 +271,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                               ),
                             ),
                             border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
+                            contentPadding: EdgeInsets.symmetric(
                               horizontal: 16,
                               vertical: 12,
                             ),
@@ -287,11 +287,11 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                           },
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
 
                       // Info Box - Estilo iOS
                       Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: AppColorsPrimary.main.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(10),
@@ -299,12 +299,12 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(
+                            Icon(
                               CupertinoIcons.info_circle_fill,
                               color: AppColorsPrimary.main,
                               size: 20,
                             ),
-                            const SizedBox(width: 10),
+                            SizedBox(width: 10),
                             Expanded(
                               child: Text(
                                 'Tu contraseña debe tener al menos 5 caracteres.',
@@ -329,7 +329,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: CupertinoColors.separator.resolveFrom(context),
+                    color: JPCupertinoColors.separator(context),
                     width: 0.5,
                   ),
                 ),
@@ -338,7 +338,7 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                 children: [
                   Expanded(
                     child: CupertinoButton(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(vertical: 16),
                       onPressed: _isLoading
                           ? null
                           : () => Navigator.of(context).pop(),
@@ -357,15 +357,15 @@ class _DialogoCambiarPasswordState extends State<DialogoCambiarPassword> {
                   Container(
                     width: 0.5,
                     height: 44,
-                    color: CupertinoColors.separator.resolveFrom(context),
+                    color: JPCupertinoColors.separator(context),
                   ),
                   Expanded(
                     child: CupertinoButton(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(vertical: 16),
                       onPressed: _isLoading ? null : _cambiarPassword,
                       child: _isLoading
                           ? const CupertinoActivityIndicator()
-                          : const Text(
+                          : Text(
                               'Cambiar',
                               style: TextStyle(
                                 fontSize: 17,

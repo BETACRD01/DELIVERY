@@ -148,7 +148,9 @@ class _PantallaNuevaPasswordState extends State<PantallaNuevaPassword> {
       backgroundColor: JPCupertinoColors.background(context),
       navigationBar: !_exitoso
           ? CupertinoNavigationBar(
-              backgroundColor: JPCupertinoColors.surface(context).withValues(alpha: 0.95),
+              backgroundColor: JPCupertinoColors.surface(
+                context,
+              ).withValues(alpha: 0.95),
               border: Border(
                 bottom: BorderSide(
                   color: JPCupertinoColors.separator(context),
@@ -264,11 +266,7 @@ class _PantallaNuevaPasswordState extends State<PantallaNuevaPassword> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           child: Row(
             children: [
-              Icon(
-                CupertinoIcons.lock,
-                color: AppColorsPrimary.main,
-                size: 22,
-              ),
+              Icon(CupertinoIcons.lock, color: AppColorsPrimary.main, size: 22),
               const SizedBox(width: 12),
               Expanded(
                 child: CupertinoTextField(
@@ -287,9 +285,12 @@ class _PantallaNuevaPasswordState extends State<PantallaNuevaPassword> {
                   decoration: const BoxDecoration(),
                   suffix: CupertinoButton(
                     padding: EdgeInsets.zero,
-                    onPressed: () => setState(() => _passwordVisible = !_passwordVisible),
+                    onPressed: () =>
+                        setState(() => _passwordVisible = !_passwordVisible),
                     child: Icon(
-                      _passwordVisible ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
+                      _passwordVisible
+                          ? CupertinoIcons.eye_slash
+                          : CupertinoIcons.eye,
                       color: JPCupertinoColors.secondaryLabel(context),
                       size: 22,
                     ),
@@ -315,11 +316,7 @@ class _PantallaNuevaPasswordState extends State<PantallaNuevaPassword> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           child: Row(
             children: [
-              Icon(
-                CupertinoIcons.lock,
-                color: AppColorsPrimary.main,
-                size: 22,
-              ),
+              Icon(CupertinoIcons.lock, color: AppColorsPrimary.main, size: 22),
               const SizedBox(width: 12),
               Expanded(
                 child: CupertinoTextField(
@@ -338,9 +335,13 @@ class _PantallaNuevaPasswordState extends State<PantallaNuevaPassword> {
                   decoration: const BoxDecoration(),
                   suffix: CupertinoButton(
                     padding: EdgeInsets.zero,
-                    onPressed: () => setState(() => _confirmPasswordVisible = !_confirmPasswordVisible),
+                    onPressed: () => setState(
+                      () => _confirmPasswordVisible = !_confirmPasswordVisible,
+                    ),
                     child: Icon(
-                      _confirmPasswordVisible ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
+                      _confirmPasswordVisible
+                          ? CupertinoIcons.eye_slash
+                          : CupertinoIcons.eye,
                       color: JPCupertinoColors.secondaryLabel(context),
                       size: 22,
                     ),
@@ -390,10 +391,14 @@ class _PantallaNuevaPasswordState extends State<PantallaNuevaPassword> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: JPCupertinoColors.systemRed(context).withValues(alpha: 0.1),
+              color: JPCupertinoColors.systemRed(
+                context,
+              ).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: JPCupertinoColors.systemRed(context).withValues(alpha: 0.3),
+                color: JPCupertinoColors.systemRed(
+                  context,
+                ).withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -444,20 +449,20 @@ class _PantallaNuevaPasswordState extends State<PantallaNuevaPassword> {
           ),
           child: CupertinoButton(
             onPressed: _loading ? null : _cambiarPassword,
-            color: CupertinoColors.transparent,
+            color: JPCupertinoColors.transparent,
             borderRadius: BorderRadius.circular(14),
             padding: EdgeInsets.zero,
             child: _loading
-                ? const CupertinoActivityIndicator(
-                    color: CupertinoColors.white,
+                ? CupertinoActivityIndicator(
+                    color: JPCupertinoColors.white,
                     radius: 12,
                   )
-                : const Text(
+                : Text(
                     'Cambiar Contraseña',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: CupertinoColors.white,
+                      color: JPCupertinoColors.white,
                       letterSpacing: 0.2,
                     ),
                   ),
@@ -562,9 +567,7 @@ class _PantallaNuevaPasswordState extends State<PantallaNuevaPassword> {
         Text(
           'Redirigiendo al login...',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: JPCupertinoColors.secondaryLabel(context),
-          ),
+          style: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
         ),
       ],
     );

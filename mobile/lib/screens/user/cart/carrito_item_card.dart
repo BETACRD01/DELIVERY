@@ -66,20 +66,20 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
               GestureDetector(
                 onTap: () => setState(() => _isExpanded = !_isExpanded),
                 child: Container(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Row(
                     children: [
                       _buildPromocionImage(promocion),
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 8,
                                 vertical: 4,
                               ),
@@ -90,16 +90,16 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     CupertinoIcons.tag_fill,
                                     size: 12,
-                                    color: CupertinoColors.white,
+                                    color: JPCupertinoColors.white,
                                   ),
-                                  const SizedBox(width: 4),
+                                  SizedBox(width: 4),
                                   Text(
                                     promocion.descuento,
-                                    style: const TextStyle(
-                                      color: CupertinoColors.white,
+                                    style: TextStyle(
+                                      color: JPCupertinoColors.white,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 11,
                                     ),
@@ -107,7 +107,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8),
                             Text(
                               promocion.titulo,
                               style: TextStyle(
@@ -118,7 +118,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Text(
                               '${productosIncluidos.length} productos incluidos',
                               style: TextStyle(
@@ -128,7 +128,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8),
                             Row(
                               children: [
                                 Text(
@@ -141,11 +141,11 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 12),
+                            SizedBox(height: 12),
                             Row(
                               children: [
                                 _buildQuantityControls(),
-                                const Spacer(),
+                                Spacer(),
                                 Text(
                                   '\$${widget.item.subtotal.toStringAsFixed(2)}',
                                   style: TextStyle(
@@ -190,17 +190,17 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
             Container(
               decoration: BoxDecoration(
                 color: JPCupertinoColors.systemGrey6(context),
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16),
                 ),
               ),
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 4,
                       vertical: 8,
                     ),
@@ -226,8 +226,8 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
 
   Widget _buildProductoIncluido(ProductoModel producto) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(8),
+      margin: EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(8),
@@ -265,7 +265,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                     ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,7 +280,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: 2),
                 Text(
                   '\$${producto.precio.toStringAsFixed(2)}',
                   style: TextStyle(
@@ -298,7 +298,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
             child: Icon(
               CupertinoIcons.minus_circle,
               size: 24,
-              color: JPCupertinoColors.systemRed(context),
+              color: JPCupertinoColors.error(context),
             ),
           ),
         ],
@@ -310,14 +310,14 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: const Text('Eliminar producto'),
+        title: Text('Eliminar producto'),
         content: Text(
           '¿Deseas eliminar "${producto.nombre}" de esta promoción?\n\nNota: La promoción completa permanecerá en el carrito.',
         ),
         actions: [
           CupertinoDialogAction(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text('Cancelar'),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
@@ -328,7 +328,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                 '${producto.nombre} eliminado',
               );
             },
-            child: const Text('Eliminar'),
+            child: Text('Eliminar'),
           ),
         ],
       ),
@@ -380,11 +380,11 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16),
             child: Row(
               children: [
                 _buildImage(),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -399,9 +399,9 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       _buildProveedorBadge(),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Row(
                         children: [
                           Text(
@@ -412,7 +412,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           Text(
                             'c/u',
                             style: TextStyle(
@@ -422,11 +422,11 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       Row(
                         children: [
                           _buildQuantityControls(),
-                          const Spacer(),
+                          Spacer(),
                           Text(
                             '\$${widget.item.subtotal.toStringAsFixed(2)}',
                             style: TextStyle(
@@ -502,7 +502,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
     final logo = widget.item.producto?.proveedorLogoUrl;
     final nombre = widget.item.producto?.proveedorNombre;
     if ((logo == null || logo.isEmpty) && (nombre == null || nombre.isEmpty)) {
-      return const SizedBox.shrink();
+      return SizedBox.shrink();
     }
 
     return Row(
@@ -523,7 +523,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
               : null,
         ),
         if (nombre != null && nombre.isNotEmpty) ...[
-          const SizedBox(width: 6),
+          SizedBox(width: 6),
           Expanded(
             child: Text(
               nombre,
@@ -552,7 +552,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
         mainAxisSize: MainAxisSize.min,
         children: [
           CupertinoButton(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8),
             minimumSize: Size.zero,
             onPressed: widget.onDecrement,
             child: Icon(
@@ -564,7 +564,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.symmetric(horizontal: 12),
             child: Text(
               '${widget.item.cantidad}',
               style: TextStyle(
@@ -575,7 +575,7 @@ class _ItemCarritoCardState extends State<ItemCarritoCard> {
             ),
           ),
           CupertinoButton(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8),
             minimumSize: Size.zero,
             onPressed: widget.onIncrement,
             child: Icon(

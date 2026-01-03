@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile/theme/jp_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../config/network/api_config.dart';
 import '../../../controllers/supplier/supplier_controller.dart';
 import '../../../models/products/producto_model.dart';
@@ -26,7 +26,7 @@ class _PantallaProductosProveedorState
     return Material(
       type: MaterialType.transparency,
       child: Container(
-        color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
+        color: JPCupertinoColors.background(context),
         child: SafeArea(
           child: Consumer<SupplierController>(
             builder: (context, controller, child) {
@@ -42,9 +42,7 @@ class _PantallaProductosProveedorState
                         'Cargando...',
                         style: TextStyle(
                           fontSize: 14,
-                          color: CupertinoColors.secondaryLabel.resolveFrom(
-                            context,
-                          ),
+                          color: JPCupertinoColors.secondaryLabel(context),
                         ),
                       ),
                     ],
@@ -105,7 +103,7 @@ class _PantallaProductosProveedorState
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
             ),
           ),
           CupertinoButton(
@@ -117,8 +115,8 @@ class _PantallaProductosProveedorState
                 color: AppColorsPrimary.main,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(
-                CupertinoIcons.add,
+              child: Icon(
+            CupertinoIcons.add,
                 color: Colors.white,
                 size: 20,
               ),
@@ -141,7 +139,7 @@ class _PantallaProductosProveedorState
 
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(esPrimero ? radio : 0),
           topRight: Radius.circular(esPrimero ? radio : 0),
@@ -157,7 +155,7 @@ class _PantallaProductosProveedorState
               padding: const EdgeInsets.only(left: 76),
               child: Container(
                 height: 0.5,
-                color: CupertinoColors.separator.resolveFrom(context),
+                color: JPCupertinoColors.separator(context),
               ),
             ),
         ],
@@ -188,7 +186,7 @@ class _PantallaProductosProveedorState
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: CupertinoColors.label.resolveFrom(context),
+                            color: JPCupertinoColors.label(context),
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -201,9 +199,7 @@ class _PantallaProductosProveedorState
                             'Stock: ${producto.stock}',
                             style: TextStyle(
                               fontSize: 13,
-                              color: CupertinoColors.secondaryLabel.resolveFrom(
-                                context,
-                              ),
+                              color: JPCupertinoColors.secondaryLabel(context),
                             ),
                           ),
                         ),
@@ -217,9 +213,7 @@ class _PantallaProductosProveedorState
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
-                          color: CupertinoColors.secondaryLabel.resolveFrom(
-                            context,
-                          ),
+                          color: JPCupertinoColors.secondaryLabel(context),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -232,7 +226,7 @@ class _PantallaProductosProveedorState
             Icon(
               CupertinoIcons.chevron_forward,
               size: 16,
-              color: CupertinoColors.systemGrey3.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey3(context),
             ),
           ],
         ),
@@ -246,7 +240,7 @@ class _PantallaProductosProveedorState
       child: Container(
         width: 52,
         height: 52,
-        color: CupertinoColors.systemGrey5.resolveFrom(context),
+        color: JPCupertinoColors.systemGrey5(context),
         child: imagenUrl != null && imagenUrl.isNotEmpty
             ? Image.network(
                 imagenUrl.startsWith('http')
@@ -255,13 +249,13 @@ class _PantallaProductosProveedorState
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) => Icon(
                   CupertinoIcons.photo,
-                  color: CupertinoColors.systemGrey.resolveFrom(context),
+                  color: JPCupertinoColors.systemGrey(context),
                   size: 24,
                 ),
               )
             : Icon(
                 CupertinoIcons.photo,
-                color: CupertinoColors.systemGrey.resolveFrom(context),
+                color: JPCupertinoColors.systemGrey(context),
                 size: 24,
               ),
       ),
@@ -273,16 +267,16 @@ class _PantallaProductosProveedorState
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: disponible
-            ? CupertinoColors.activeGreen.withValues(alpha: 0.15)
-            : CupertinoColors.systemRed.withValues(alpha: 0.15),
+            ? JPCupertinoColors.success(context).withValues(alpha: 0.15)
+            : JPCupertinoColors.error(context).withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
         disponible ? 'Disponible' : 'No disponible',
         style: TextStyle(
           color: disponible
-              ? CupertinoColors.activeGreen
-              : CupertinoColors.systemRed,
+              ? JPCupertinoColors.success(context)
+              : JPCupertinoColors.error(context),
           fontSize: 11,
           fontWeight: FontWeight.w500,
         ),
@@ -315,7 +309,7 @@ class _PantallaProductosProveedorState
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
             const SizedBox(height: 8),
@@ -324,13 +318,13 @@ class _PantallaProductosProveedorState
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
               ),
             ),
             const SizedBox(height: 24),
             CupertinoButton.filled(
               onPressed: () => _mostrarFormularioProducto(),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(CupertinoIcons.add, size: 18),
@@ -355,13 +349,13 @@ class _PantallaProductosProveedorState
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: CupertinoColors.activeOrange.withValues(alpha: 0.1),
+                color: JPCupertinoColors.warning(context).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                CupertinoIcons.exclamationmark_triangle_fill,
+              child: Icon(
+            CupertinoIcons.exclamationmark_triangle_fill,
                 size: 48,
-                color: CupertinoColors.activeOrange,
+                color: JPCupertinoColors.warning(context),
               ),
             ),
             const SizedBox(height: 24),
@@ -370,7 +364,7 @@ class _PantallaProductosProveedorState
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
             const SizedBox(height: 8),
@@ -379,7 +373,7 @@ class _PantallaProductosProveedorState
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
                 height: 1.4,
               ),
             ),

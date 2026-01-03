@@ -3,14 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../apis/admin/rifas_admin_api.dart';
 import '../../../config/network/api_config.dart';
-import '../../../providers/core/theme_provider.dart';
-import '../../../theme/primary_colors.dart';
-import '../dashboard/constants/dashboard_colors.dart';
+import '../../../theme/jp_theme.dart';
 
 class PantallaRifaDetalle extends StatefulWidget {
   final String rifaId;
@@ -410,7 +407,7 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(mensaje),
-        backgroundColor: AppColorsPrimary.main,
+        backgroundColor: JPColors.success,
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -420,7 +417,7 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(mensaje),
-        backgroundColor: Colors.red,
+        backgroundColor: JPColors.error,
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -446,13 +443,13 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
   Color _colorEstado(String estado) {
     switch (estado) {
       case 'activa':
-        return DashboardColors.verde;
+        return JPColors.success;
       case 'finalizada':
-        return DashboardColors.azul;
+        return JPCupertinoColors.systemBlue(context);
       case 'cancelada':
-        return DashboardColors.rojo;
+        return JPColors.error;
       default:
-        return Colors.grey;
+        return JPCupertinoColors.systemGrey(context);
     }
   }
 
@@ -481,9 +478,8 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
-    final primaryColor = AppColorsPrimary.main;
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     if (_cargando) {
       return Scaffold(
@@ -499,17 +495,13 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.error_outline,
-                size: 48,
-                color: DashboardColors.rojo,
-              ),
+              const Icon(Icons.error_outline, size: 48, color: JPColors.error),
               const SizedBox(height: 16),
               Text(
                 _error!,
                 style: TextStyle(
                   fontSize: 16,
-                  color: isDark ? Colors.white : Colors.black,
+                  color: JPCupertinoColors.label(context),
                 ),
               ),
               const SizedBox(height: 16),
@@ -543,7 +535,7 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
@@ -599,14 +591,14 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: _buildHeroSection(isDark, primaryColor),
+              child: _buildHeroSection(primaryColor),
             ),
           ),
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                _buildInfoSection(isDark),
+                _buildInfoSection(),
                 const SizedBox(height: 16),
                 _buildPremios(context),
                 const SizedBox(height: 16),
@@ -621,7 +613,7 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
     );
   }
 
-  Widget _buildHeroSection(bool isDark, Color primaryColor) {
+  Widget _buildHeroSection(Color primaryColor) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -632,15 +624,12 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
     );
   }
 
-  Widget _buildInfoSection(bool isDark) {
-    return _editando
-        ? _buildFormularioEdicion(isDark)
-        : _buildInformacionBasica(isDark);
+  Widget _buildInfoSection() {
+    return _editando ? _buildFormularioEdicion() : _buildInformacionBasica();
   }
 
-  Widget _buildFormularioEdicion(bool isDark) {
+  Widget _buildFormularioEdicion() {
     return _buildCardSection(
-      isDark,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -721,10 +710,10 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
     );
   }
 
-  Widget _buildCardSection(bool isDark, {required Widget child}) {
+  Widget _buildCardSection({required Widget child}) {
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(16),
       ),
       child: child,
@@ -812,10 +801,9 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
     );
   }
 
-  Widget _buildInformacionBasica(bool isDark) {
-    final textColor = isDark ? Colors.white : Colors.black;
+  Widget _buildInformacionBasica() {
+    final textColor = JPCupertinoColors.label(context);
     return _buildCardSection(
-      isDark,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -834,7 +822,7 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
               _rifa!['descripcion'] ?? 'Sin descripción',
               style: TextStyle(
                 fontSize: 15,
-                color: isDark ? Colors.grey[400] : Colors.grey[600],
+                color: JPCupertinoColors.secondaryLabel(context),
               ),
             ),
             const SizedBox(height: 16),
@@ -842,19 +830,16 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
               Icons.checklist,
               'Pedidos mínimos',
               '${_rifa!['pedidos_minimos'] ?? 3}',
-              isDark,
             ),
             _buildInfoRow(
               Icons.calendar_today,
               'Fecha inicio',
               _formatFecha(_rifa!['fecha_inicio']),
-              isDark,
             ),
             _buildInfoRow(
               Icons.event,
               'Fecha fin',
               _formatFecha(_rifa!['fecha_fin']),
-              isDark,
             ),
           ],
         ),
@@ -862,24 +847,24 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String label, String value, bool isDark) {
+  Widget _buildInfoRow(IconData icon, String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: AppColorsPrimary.main),
+          Icon(icon, size: 18, color: JPCupertinoColors.primary(context)),
           const SizedBox(width: 8),
           Text(
             '$label: ',
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              color: isDark ? Colors.grey[400] : Colors.grey[700],
+              color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
           Expanded(
             child: Text(
               value,
-              style: TextStyle(color: isDark ? Colors.white : Colors.black),
+              style: TextStyle(color: JPCupertinoColors.label(context)),
             ),
           ),
         ],
@@ -896,8 +881,6 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
     final premios = _rifa!['premios'] as List<dynamic>? ?? [];
     if (premios.isEmpty) return const SizedBox.shrink();
 
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -908,16 +891,16 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[600],
+              color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
         ),
-        ...premios.map((p) => _buildPremioCard(p, isDark)),
+        ...premios.map((p) => _buildPremioCard(p)),
       ],
     );
   }
 
-  Widget _buildPremioCard(dynamic premio, bool isDark) {
+  Widget _buildPremioCard(dynamic premio) {
     final descripcion = premio['descripcion'] ?? 'Sin descripción';
     final posicion = premio['posicion'] ?? 0;
     final imagenUrl = _resolveImageUrl(
@@ -929,7 +912,7 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+          color: JPCupertinoColors.surface(context),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -938,14 +921,16 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: AppColorsPrimary.main.withValues(alpha: 0.1),
+                color: JPCupertinoColors.primary(
+                  context,
+                ).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               alignment: Alignment.center,
               child: Text(
                 '$posicion°',
                 style: TextStyle(
-                  color: AppColorsPrimary.main,
+                  color: JPCupertinoColors.primary(context),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -960,7 +945,7 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: isDark ? Colors.white : Colors.black,
+                      color: JPCupertinoColors.label(context),
                     ),
                   ),
                   if (imagenUrl != null) ...[
@@ -988,7 +973,6 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
   }
 
   Widget _buildEstadisticas(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
     // Mock stats or use real values if available in _rifa
     final totalPedidos = _rifa!['total_pedidos'] ?? 0;
     // final totalParticipantes = _rifa!['total_participantes'] ?? 0; // If available
@@ -1005,19 +989,18 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[600],
+              color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
         ),
         _buildCardSection(
-          isDark,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildStatItem('Pedidos', totalPedidos.toString(), isDark),
-                // _buildStatItem('Participantes', totalParticipantes.toString(), isDark),
+                _buildStatItem('Pedidos', totalPedidos.toString()),
+                // _buildStatItem('Participantes', totalParticipantes.toString()),
               ],
             ),
           ),
@@ -1026,7 +1009,7 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
     );
   }
 
-  Widget _buildStatItem(String label, String value, bool isDark) {
+  Widget _buildStatItem(String label, String value) {
     return Column(
       children: [
         Text(
@@ -1034,13 +1017,13 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: AppColorsPrimary.main,
+            color: JPCupertinoColors.primary(context),
           ),
         ),
         Text(
           label,
           style: TextStyle(
-            color: isDark ? Colors.grey[400] : Colors.grey[600],
+            color: JPCupertinoColors.secondaryLabel(context),
             fontSize: 13,
           ),
         ),
@@ -1050,8 +1033,6 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
 
   Widget _buildParticipantes(BuildContext context) {
     if (_participantes.isEmpty) return const SizedBox.shrink();
-
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1063,12 +1044,11 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[600],
+              color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
         ),
         _buildCardSection(
-          isDark,
           child: ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -1079,17 +1059,28 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
             separatorBuilder: (c, i) => Divider(
               height: 1,
               indent: 16,
-              color: isDark ? Colors.grey[800] : Colors.grey[200],
+              color: JPCupertinoColors.separator(context),
             ),
             itemBuilder: (context, index) {
               final p = _participantes[index];
               final user = p['usuario'] ?? {};
               return ListTile(
-                title: Text('${user['first_name']} ${user['last_name']}'),
-                subtitle: Text('Pedidos: ${p['cantidad_pedidos'] ?? 1}'),
+                title: Text(
+                  '${user['first_name']} ${user['last_name']}',
+                  style: TextStyle(color: JPCupertinoColors.label(context)),
+                ),
+                subtitle: Text(
+                  'Pedidos: ${p['cantidad_pedidos'] ?? 1}',
+                  style: TextStyle(
+                    color: JPCupertinoColors.secondaryLabel(context),
+                  ),
+                ),
                 trailing: Text(
                   _formatFecha(p['fecha_registro']),
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: JPCupertinoColors.tertiaryLabel(context),
+                  ),
                 ),
                 onTap: () => _mostrarContactoGanador(p['usuario'] ?? {}),
               );
@@ -1102,7 +1093,9 @@ class _PantallaRifaDetalleState extends State<PantallaRifaDetalle> {
             child: Center(
               child: Text(
                 '+ ${_participantes.length - 5} más',
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(
+                  color: JPCupertinoColors.secondaryLabel(context),
+                ),
               ),
             ),
           ),

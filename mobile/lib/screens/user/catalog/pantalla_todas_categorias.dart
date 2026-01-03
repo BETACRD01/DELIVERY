@@ -135,7 +135,7 @@ class _PantallaTodasCategoriasState extends State<PantallaTodasCategorias> {
 
   Widget _buildShimmerGrid() {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -153,7 +153,7 @@ class _PantallaTodasCategoriasState extends State<PantallaTodasCategorias> {
 
   Widget _buildGridContent() {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -173,16 +173,16 @@ class _PantallaTodasCategoriasState extends State<PantallaTodasCategorias> {
   Widget _buildEstadoError() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               CupertinoIcons.exclamationmark_triangle,
               size: 64,
-              color: JPCupertinoColors.systemRed(context),
+              color: JPCupertinoColors.error(context),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               _error,
               style: TextStyle(
@@ -191,10 +191,10 @@ class _PantallaTodasCategoriasState extends State<PantallaTodasCategorias> {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             CupertinoButton.filled(
               onPressed: _cargarCategorias,
-              child: const Text('Reintentar'),
+              child: Text('Reintentar'),
             ),
           ],
         ),
@@ -212,7 +212,7 @@ class _PantallaTodasCategoriasState extends State<PantallaTodasCategorias> {
             size: 64,
             color: JPCupertinoColors.systemGrey3(context),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Text(
             'No se encontraron categorías',
             style: TextStyle(
@@ -288,11 +288,11 @@ class _CategoriaCard extends StatelessWidget {
                       ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Nombre
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: EdgeInsets.symmetric(horizontal: 12),
               child: Text(
                 categoria.nombre,
                 style: TextStyle(
@@ -305,12 +305,12 @@ class _CategoriaCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
 
             // Total productos
             if (categoria.totalProductos != null)
               Container(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: 12,
                   vertical: 4,
                 ),
@@ -362,7 +362,7 @@ class _ShimmerCategoryCard extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             // Nombre placeholder
             Container(
               width: 80,
@@ -372,7 +372,7 @@ class _ShimmerCategoryCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             // Badge placeholder
             Container(
               width: 60,

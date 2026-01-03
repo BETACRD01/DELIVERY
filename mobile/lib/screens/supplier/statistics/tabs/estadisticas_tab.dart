@@ -1,9 +1,9 @@
 // lib/screens/supplier/tabs/estadisticas_tab.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../controllers/supplier/supplier_controller.dart';
 import '../../../../theme/primary_colors.dart';
 
@@ -16,7 +16,7 @@ class EstadisticasTab extends StatelessWidget {
     return Material(
       type: MaterialType.transparency,
       child: Container(
-        color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
+        color: JPCupertinoColors.background(context),
         child: SafeArea(
           child: Consumer<SupplierController>(
             builder: (context, controller, child) {
@@ -120,12 +120,12 @@ class EstadisticasTab extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: JPCupertinoColors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(
+            child: Icon(
               CupertinoIcons.graph_square_fill,
-              color: Colors.white,
+              color: JPCupertinoColors.white,
               size: 28,
             ),
           ),
@@ -134,10 +134,10 @@ class EstadisticasTab extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Tu Rendimiento',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: JPCupertinoColors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
@@ -146,7 +146,7 @@ class EstadisticasTab extends StatelessWidget {
                 Text(
                   'Actualizado hace un momento',
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.8),
+                    color: JPCupertinoColors.white.withValues(alpha: 0.8),
                     fontSize: 12,
                   ),
                 ),
@@ -166,7 +166,7 @@ class EstadisticasTab extends StatelessWidget {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w500,
-          color: CupertinoColors.systemGrey.resolveFrom(context),
+          color: JPCupertinoColors.systemGrey(context),
           letterSpacing: -0.08,
         ),
       ),
@@ -182,7 +182,7 @@ class EstadisticasTab extends StatelessWidget {
             valor: '\$${controller.ventasHoy.toStringAsFixed(2)}',
             etiqueta: 'Hoy',
             icon: CupertinoIcons.today,
-            iconBgColor: CupertinoColors.activeGreen,
+            iconBgColor: JPCupertinoColors.success(context),
           ),
         ),
         const SizedBox(width: 12),
@@ -209,7 +209,7 @@ class EstadisticasTab extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -222,7 +222,7 @@ class EstadisticasTab extends StatelessWidget {
               color: iconBgColor,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, color: Colors.white, size: 20),
+            child: Icon(icon, color: JPCupertinoColors.white, size: 20),
           ),
           const SizedBox(height: 14),
           FittedBox(
@@ -233,7 +233,7 @@ class EstadisticasTab extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
           ),
@@ -242,7 +242,7 @@ class EstadisticasTab extends StatelessWidget {
             etiqueta,
             style: TextStyle(
               fontSize: 13,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
         ],
@@ -254,7 +254,7 @@ class EstadisticasTab extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(children: children),
@@ -266,7 +266,7 @@ class EstadisticasTab extends StatelessWidget {
       padding: const EdgeInsets.only(left: 60),
       child: Container(
         height: 0.5,
-        color: CupertinoColors.separator.resolveFrom(context),
+        color: JPCupertinoColors.separator(context),
       ),
     );
   }
@@ -290,7 +290,7 @@ class EstadisticasTab extends StatelessWidget {
               color: iconBgColor,
               borderRadius: BorderRadius.circular(7),
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: JPCupertinoColors.white, size: 18),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -301,7 +301,7 @@ class EstadisticasTab extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: 12,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -310,14 +310,14 @@ class EstadisticasTab extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
                 Text(
                   subtitle,
                   style: TextStyle(
                     fontSize: 12,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
               ],
@@ -346,15 +346,15 @@ class EstadisticasTab extends StatelessWidget {
               color: iconBgColor,
               borderRadius: BorderRadius.circular(7),
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: JPCupertinoColors.white, size: 18),
           ),
           const SizedBox(width: 14),
           Expanded(
             child: Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
-                color: CupertinoColors.label,
+                color: JPCupertinoColors.label(context),
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -363,7 +363,7 @@ class EstadisticasTab extends StatelessWidget {
             value,
             style: TextStyle(
               fontSize: 14,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
         ],
@@ -381,13 +381,15 @@ class EstadisticasTab extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: CupertinoColors.activeOrange.withValues(alpha: 0.1),
+                color: JPCupertinoColors.warning(
+                  context,
+                ).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 CupertinoIcons.graph_square,
                 size: 48,
-                color: CupertinoColors.activeOrange,
+                color: JPCupertinoColors.warning(context),
               ),
             ),
             const SizedBox(height: 24),
@@ -396,7 +398,7 @@ class EstadisticasTab extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
             const SizedBox(height: 8),
@@ -405,7 +407,7 @@ class EstadisticasTab extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
                 height: 1.4,
               ),
             ),

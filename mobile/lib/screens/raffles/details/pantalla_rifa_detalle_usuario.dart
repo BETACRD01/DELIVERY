@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
 import '../../../config/network/api_config.dart';
 import '../../../services/usuarios/usuarios_service.dart';
+import '../../../theme/jp_theme.dart';
 
 class PantallaRifaDetalleUsuario extends StatefulWidget {
   final String rifaId;
@@ -86,7 +87,7 @@ class _PantallaRifaDetalleUsuarioState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F7),
+      backgroundColor: JPCupertinoColors.background(context),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text(
@@ -99,18 +100,20 @@ class _PantallaRifaDetalleUsuarioState
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
-        foregroundColor: const Color(0xFF1C1C1E),
+        backgroundColor: JPCupertinoColors.transparent,
+        foregroundColor: JPCupertinoColors.label(context),
         elevation: 0,
         flexibleSpace: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.95),
+                color: JPCupertinoColors.surface(
+                  context,
+                ).withValues(alpha: 0.95),
                 border: Border(
                   bottom: BorderSide(
-                    color: Colors.black.withValues(alpha: 0.1),
+                    color: JPCupertinoColors.black.withValues(alpha: 0.1),
                     width: 0.5,
                   ),
                 ),
@@ -135,16 +138,18 @@ class _PantallaRifaDetalleUsuarioState
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
+              Icon(
                 Icons.error_outline,
                 size: 42,
-                color: Color(0xFFFF3B30),
+                color: JPCupertinoColors.error(context),
               ),
               const SizedBox(height: 12),
               Text(
                 _error!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Color(0xFF8E8E93)),
+                style: TextStyle(
+                  color: JPCupertinoColors.secondaryLabel(context),
+                ),
               ),
               const SizedBox(height: 20),
               CupertinoButton.filled(
@@ -222,11 +227,11 @@ class _PantallaRifaDetalleUsuarioState
                   titulo,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                     letterSpacing: -0.4,
-                    color: Color(0xFF1C1C1E),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
                 if (descripcion.isNotEmpty) ...[

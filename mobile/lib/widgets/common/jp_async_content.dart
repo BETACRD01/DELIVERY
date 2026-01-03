@@ -4,8 +4,6 @@
 
 import 'package:flutter/cupertino.dart';
 
-import '../../theme/primary_colors.dart';
-import '../../theme/secondary_colors.dart';
 import '../../theme/jp_theme.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -129,7 +127,7 @@ class JPAsyncContent<T> extends StatelessWidget {
             Icon(
               CupertinoIcons.exclamationmark_triangle,
               size: 56,
-              color: AppColorsSupport.error,
+              color: JPColors.error,
             ),
             const SizedBox(height: 16),
             Text(
@@ -137,7 +135,7 @@ class JPAsyncContent<T> extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: AppColorsSupport.textPrimary,
+                color: JPColors.textPrimary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -146,10 +144,7 @@ class JPAsyncContent<T> extends StatelessWidget {
               state.errorMessage ??
                   errorMessage ??
                   'Ocurrió un error inesperado',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColorsSupport.textSecondary,
-              ),
+              style: TextStyle(fontSize: 14, color: JPColors.textSecondary),
               textAlign: TextAlign.center,
             ),
             if (onRetry != null) ...[
@@ -239,7 +234,7 @@ class JPAsyncSliver<T> extends StatelessWidget {
             Icon(
               CupertinoIcons.exclamationmark_triangle,
               size: 56,
-              color: AppColorsSupport.error,
+              color: JPColors.error,
             ),
             const SizedBox(height: 16),
             Text(
@@ -247,7 +242,7 @@ class JPAsyncSliver<T> extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: AppColorsSupport.textPrimary,
+                color: JPColors.textPrimary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -315,7 +310,7 @@ class JPLoadingOverlay extends StatelessWidget {
                     children: [
                       CupertinoActivityIndicator(
                         radius: 16,
-                        color: AppColorsPrimary.main,
+                        color: JPColors.primary,
                       ),
                       if (message != null) ...[
                         const SizedBox(height: 16),
@@ -323,7 +318,7 @@ class JPLoadingOverlay extends StatelessWidget {
                           message!,
                           style: TextStyle(
                             fontSize: 15,
-                            color: AppColorsSupport.textPrimary,
+                            color: JPColors.textPrimary,
                           ),
                         ),
                       ],

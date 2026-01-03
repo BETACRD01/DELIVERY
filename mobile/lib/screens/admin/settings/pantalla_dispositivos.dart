@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import '../../../../apis/auth/dispositivos_api.dart';
-import '../../../../providers/core/theme_provider.dart';
-import '../../../../theme/primary_colors.dart';
+import '../../../../theme/jp_theme.dart';
 
 class PantallaDispositivosConectados extends StatefulWidget {
   const PantallaDispositivosConectados({super.key});
@@ -100,7 +98,7 @@ class _PantallaDispositivosConectadosState
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(mensaje),
-        backgroundColor: AppColorsPrimary.main,
+        backgroundColor: JPColors.success,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
@@ -144,8 +142,8 @@ class _PantallaDispositivosConectadosState
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-    final bgColor = isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7);
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -156,16 +154,16 @@ class _PantallaDispositivosConectadosState
         centerTitle: true,
         elevation: 0,
         titleTextStyle: TextStyle(
-          color: isDark ? Colors.white : Colors.black,
+          color: JPCupertinoColors.label(context),
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),
-        iconTheme: IconThemeData(color: AppColorsPrimary.main),
+        iconTheme: IconThemeData(color: primaryColor),
       ),
       body: _cargando
           ? const Center(child: CupertinoActivityIndicator())
           : _dispositivos.isEmpty
-          ? _buildEmptyState(isDark)
+          ? _buildEmptyState()
           : ListView(
               padding: const EdgeInsets.only(top: 20),
               children: [
@@ -173,7 +171,7 @@ class _PantallaDispositivosConectadosState
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+                    color: JPCupertinoColors.surface(context),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -182,18 +180,21 @@ class _PantallaDispositivosConectadosState
                       final isLast = index == _dispositivos.length - 1;
                       return Column(
                         children: [
-                          _buildDeviceRow(disp, isDark, isLast),
-                          if (!isLast) _buildDivider(isDark),
+                          _buildDeviceRow(disp, isLast),
+                          if (!isLast) _buildDivider(),
                         ],
                       );
                     }),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Text(
                     'Si cierras una sesión, tendrás que volver a iniciar sesión en ese dispositivo.',
-                    style: TextStyle(color: Colors.grey, fontSize: 13),
+                    style: TextStyle(
+                      color: JPCupertinoColors.secondaryLabel(context),
+                      fontSize: 13,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -210,22 +211,22 @@ class _PantallaDispositivosConectadosState
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: Colors.grey[500],
+          color: JPCupertinoColors.secondaryLabel(context),
         ),
       ),
     );
   }
 
-  Widget _buildDivider(bool isDark) {
+  Widget _buildDivider() {
     return Divider(
       height: 1,
       thickness: 1,
       indent: 56,
-      color: isDark ? Colors.grey[800] : Colors.grey[200],
+      color: JPCupertinoColors.separator(context),
     );
   }
 
-  Widget _buildDeviceRow(Map<String, dynamic> disp, bool isDark, bool isLast) {
+  Widget _buildDeviceRow(Map<String, dynamic> disp, bool isLast) {
     final ua = disp['user_agent'] as String? ?? '';
     final deviceName = _getDeviceName(ua);
     final isCurrent = disp['actual'] == true; // Backend should provide this
@@ -238,7 +239,9 @@ class _PantallaDispositivosConectadosState
             width: 30,
             height: 30,
             decoration: BoxDecoration(
-              color: isCurrent ? Colors.green : Colors.grey,
+              color: isCurrent
+                  ? JPColors.success
+                  : JPCupertinoColors.systemGrey(context),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Icon(_getDeviceIcon(ua), color: Colors.white, size: 18),
@@ -253,13 +256,16 @@ class _PantallaDispositivosConectadosState
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: isDark ? Colors.white : Colors.black,
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   '${disp['ip'] ?? 'IP Desconocida'} • ${_formatearFecha(disp['creado'])}',
-                  style: TextStyle(fontSize: 13, color: Colors.grey[500]),
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: JPCupertinoColors.secondaryLabel(context),
+                  ),
                 ),
               ],
             ),
@@ -270,7 +276,7 @@ class _PantallaDispositivosConectadosState
               onPressed: () => _cerrarSesion(disp['id'], deviceName),
               child: const Icon(
                 CupertinoIcons.minus_circle_fill,
-                color: Colors.red,
+                color: JPColors.error,
                 size: 22,
               ),
             ),
@@ -279,7 +285,7 @@ class _PantallaDispositivosConectadosState
     );
   }
 
-  Widget _buildEmptyState(bool isDark) {
+  Widget _buildEmptyState() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -287,13 +293,13 @@ class _PantallaDispositivosConectadosState
           Icon(
             CupertinoIcons.device_phone_portrait,
             size: 64,
-            color: isDark ? Colors.grey[700] : Colors.grey[300],
+            color: JPCupertinoColors.tertiaryLabel(context),
           ),
           const SizedBox(height: 16),
           Text(
             'No hay sesiones activas',
             style: TextStyle(
-              color: isDark ? Colors.grey[500] : Colors.grey[600],
+              color: JPCupertinoColors.secondaryLabel(context),
               fontSize: 16,
             ),
           ),

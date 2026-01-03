@@ -40,9 +40,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground.resolveFrom(
-        context,
-      ),
+      backgroundColor: JPCupertinoColors.background(context),
       navigationBar: const CupertinoNavigationBar(
         middle: Text('Detalle del Encargo'),
       ),
@@ -65,32 +63,32 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
 
             return SafeArea(
               child: ListView(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 children: [
                   _buildHeaderStatus(pedido),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   _buildMapaInfo(pedido), // Placeholder visual o mapa estático
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   _buildDetalleEncargo(pedido),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   if (pedido.repartidor != null) ...[
                     _buildRepartidorCard(pedido),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     // Calificación
                     if (pedido.estado.toLowerCase() == 'entregado' &&
                         (pedido.puedeCalificarRepartidor ||
                             pedido.calificacionRepartidor == null)) ...[
                       _buildCalificacionRepartidorCTA(pedido),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                     ] else if (pedido.calificacionRepartidor != null) ...[
                       _buildCalificacionRepartidorResumen(pedido),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                     ],
                   ],
                   _buildDesgloseCostos(pedido),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   _buildAccionesCard(pedido),
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40),
                 ],
               ),
             );
@@ -104,7 +102,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
     Color colorEstado = _getColorEstado(pedido.estado);
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
@@ -126,12 +124,9 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: colorEstado.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
@@ -148,7 +143,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             'Creado hace: ${pedido.tiempoTranscurrido}',
             style: TextStyle(
@@ -164,7 +159,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
   Widget _buildMapaInfo(Pedido pedido) {
     // Si no tenemos mapa real aun, mostramos un visualizador de ruta bonito
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
@@ -174,7 +169,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
         children: [
           _buildPuntoRuta(
             icon: Icons.my_location,
-            color: CupertinoColors.systemGrey,
+            color: JPCupertinoColors.systemGrey(context),
             titulo: 'RETIRO',
             direccion: _limpiarDireccion(
               pedido.direccionOrigen ?? 'Ubicación origen',
@@ -182,7 +177,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
           ),
           Container(
             height: 30,
-            margin: const EdgeInsets.only(left: 11),
+            margin: EdgeInsets.only(left: 11),
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(
@@ -195,13 +190,13 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
           ),
           _buildPuntoRuta(
             icon: Icons.location_on,
-            color: CupertinoColors.activeBlue,
+            color: JPCupertinoColors.systemBlue(context),
             titulo: 'ENTREGA',
             direccion: _limpiarDireccion(pedido.direccionEntrega),
           ),
           if (pedido.datosEnvio != null &&
               pedido.datosEnvio!.distanciaKm != null) ...[
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 12),
               child: Divider(),
             ),
@@ -240,7 +235,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, color: color, size: 22),
-        const SizedBox(width: 12),
+        SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +249,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
                   letterSpacing: 0.5,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(
                 direccion,
                 style: TextStyle(
@@ -273,7 +268,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
     return Row(
       children: [
         Icon(icon, size: 16, color: JPCupertinoColors.secondaryLabel(context)),
-        const SizedBox(width: 6),
+        SizedBox(width: 6),
         Text(
           text,
           style: TextStyle(
@@ -287,7 +282,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
 
   Widget _buildDetalleEncargo(Pedido pedido) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
@@ -297,7 +292,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle('Información del Paquete'),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildInfoRow('Descripción', pedido.descripcion),
 
           // Aquí podriamos poner el tipo de paquete si viniera en el modelo,
@@ -305,7 +300,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
           if (pedido.instruccionesEntrega != null &&
               pedido.instruccionesEntrega!.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.only(top: 8.0),
+              padding: EdgeInsets.only(top: 8.0),
               child: _buildInfoRow(
                 'Instrucciones',
                 pedido.instruccionesEntrega!,
@@ -319,7 +314,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
   Widget _buildRepartidorCard(Pedido pedido) {
     final repartidor = pedido.repartidor!;
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
@@ -329,14 +324,14 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle('Repartidor Asignado'),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             children: [
               CircleAvatar(
                 radius: 24,
-                backgroundColor: CupertinoColors.activeGreen.withValues(
-                  alpha: 0.1,
-                ),
+                backgroundColor: JPCupertinoColors.success(
+                  context,
+                ).withValues(alpha: 0.1),
                 child: repartidor.fotoPerfil != null
                     ? ClipOval(
                         child: CachedNetworkImage(
@@ -345,15 +340,15 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
                           height: 48,
                           fit: BoxFit.cover,
                           errorWidget: (context, url, error) =>
-                              const Icon(Icons.person),
+                              Icon(Icons.person),
                         ),
                       )
-                    : const Icon(
+                    : Icon(
                         Icons.person,
-                        color: CupertinoColors.activeGreen,
+                        color: JPCupertinoColors.success(context),
                       ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -380,16 +375,16 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
               // Botones de acción (Llamar / Whatsapp)
               if (repartidor.telefono != null) ...[
                 IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     FontAwesomeIcons.whatsapp,
-                    color: Colors.green,
+                    color: JPCupertinoColors.success(context),
                   ),
                   onPressed: () => _abrirWhatsapp(repartidor.telefono!),
                 ),
                 IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     CupertinoIcons.phone_fill,
-                    color: Colors.blue,
+                    color: JPCupertinoColors.systemBlue(context),
                   ),
                   onPressed: () => _llamar(repartidor.telefono!),
                 ),
@@ -402,7 +397,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
   }
 
   Widget _buildDesgloseCostos(Pedido pedido) {
-    if (pedido.datosEnvio == null) return const SizedBox.shrink();
+    if (pedido.datosEnvio == null) return SizedBox.shrink();
     final envio = pedido.datosEnvio!;
 
     // Calcular total real incluyendo recargo nocturno
@@ -413,7 +408,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
     final totalCalculado = costoBase + recargoNocturno;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
@@ -423,16 +418,13 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionTitle('Resumen de Costos'),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildCostoRow('Tarifa Base', costoBase),
 
           if (envio.recargoNocturnoAplicado && recargoNocturno > 0)
             _buildCostoRow('Recargo Nocturno', recargoNocturno),
 
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8),
-            child: Divider(),
-          ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Divider()),
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -450,13 +442,13 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
                 style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 20,
-                  color: CupertinoColors.activeBlue.resolveFrom(context),
+                  color: JPCupertinoColors.systemBlue(context),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 4),
-          const SizedBox(height: 12),
+          SizedBox(height: 4),
+          SizedBox(height: 12),
           _buildInfoRow('Método de Pago', pedido.metodoPagoDisplay),
         ],
       ),
@@ -481,10 +473,10 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
         pedidoEnCurso &&
         pedido.pagoId != null;
 
-    if (!mostrarSubirComprobante) return const SizedBox.shrink();
+    if (!mostrarSubirComprobante) return SizedBox.shrink();
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
@@ -494,13 +486,13 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildSectionTitle('Acciones'),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           JPCupertinoButton.filled(
             text: 'Datos de Transferencia',
             icon: Icons.upload_file,
             onPressed: () => _abrirSubirComprobante(pedido),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             'Sube el comprobante de la transferencia para confirmar el pago al repartidor.',
             textAlign: TextAlign.center,
@@ -528,7 +520,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
 
   Widget _buildInfoRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
+      padding: EdgeInsets.only(bottom: 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -558,9 +550,9 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
   }
 
   Widget _buildCostoRow(String label, double? amount) {
-    if (amount == null) return const SizedBox.shrink();
+    if (amount == null) return SizedBox.shrink();
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: EdgeInsets.only(bottom: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -579,7 +571,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
 
   Widget _buildCalificacionRepartidorCTA(Pedido pedido) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
@@ -589,14 +581,16 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundColor: CupertinoColors.activeGreen.withValues(alpha: 0.1),
-            child: const Icon(
+            backgroundColor: JPCupertinoColors.success(
+              context,
+            ).withValues(alpha: 0.1),
+            child: Icon(
               Icons.star,
-              color: CupertinoColors.activeGreen,
+              color: JPCupertinoColors.success(context),
               size: 20,
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -620,7 +614,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
             ),
           ),
           CupertinoButton.filled(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             onPressed: () async {
               final result = await showCupertinoModalPopup<bool>(
                 context: context,
@@ -636,7 +630,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
                 await provider.cargarDetalle(widget.pedidoId);
               }
             },
-            child: const Text(
+            child: Text(
               'Calificar',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -648,7 +642,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
 
   Widget _buildCalificacionRepartidorResumen(Pedido pedido) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
@@ -656,12 +650,12 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
       ),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.check_circle,
-            color: CupertinoColors.activeGreen,
+            color: JPCupertinoColors.success(context),
             size: 20,
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Text(
             'Has calificado al repartidor: ',
             style: TextStyle(
@@ -684,16 +678,16 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
 
   Color _getColorEstado(String estado) {
     switch (estado.toLowerCase()) {
-      case 'pendiente':
-        return const Color(0xFFFF9500);
+      case 'pendiente': // Cambiado de asignado si aplica
+        return JPCupertinoColors.systemOrange(context);
       case 'en_ruta':
-        return const Color(0xFF34C759);
+        return JPCupertinoColors.systemGreen(context);
       case 'entregado':
-        return const Color(0xFF34C759);
+        return JPCupertinoColors.systemGreen(context);
       case 'cancelado':
-        return const Color(0xFFFF3B30);
+        return JPCupertinoColors.systemRed(context);
       default:
-        return const Color(0xFF8E8E93);
+        return JPCupertinoColors.systemGrey(context);
     }
   }
 
@@ -759,13 +753,13 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
         await showCupertinoDialog(
           context: context,
           builder: (ctx) => CupertinoAlertDialog(
-            title: const Text('Datos faltantes'),
+            title: Text('Datos faltantes'),
             content: Text(
               '$mensaje.\n\nPor favor, contacta al repartidor para que configure su cuenta bancaria o paga el pedido en efectivo si es posible.',
             ),
             actions: [
               CupertinoDialogAction(
-                child: const Text('Entendido'),
+                child: Text('Entendido'),
                 onPressed: () => Navigator.pop(ctx),
               ),
             ],
@@ -775,7 +769,7 @@ class _PantallaDetalleCourierState extends State<PantallaDetalleCourier> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(mensaje),
-            backgroundColor: CupertinoColors.systemOrange,
+            backgroundColor: JPCupertinoColors.systemOrange(context),
             duration: const Duration(seconds: 4),
           ),
         );

@@ -65,7 +65,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                   delegate: _SearchBarDelegate(
                     child: Container(
                       color: JPCupertinoColors.background(context),
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 10,
                       ),
@@ -148,7 +148,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
       autofocus: true,
       placeholder: 'Buscar productos o tiendas',
       prefix: Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: EdgeInsets.only(left: 10),
         child: Icon(
           CupertinoIcons.search,
           size: 20,
@@ -157,7 +157,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
       ),
       suffix: controller.controladorBusqueda.text.isNotEmpty
           ? CupertinoButton(
-              padding: const EdgeInsets.only(right: 8),
+              padding: EdgeInsets.only(right: 8),
               minimumSize: Size.zero,
               onPressed: controller.limpiarBusqueda,
               child: Icon(
@@ -167,7 +167,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
               ),
             )
           : null,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
         color: JPCupertinoColors.systemGrey6(context),
         borderRadius: BorderRadius.circular(10),
@@ -214,7 +214,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
 
   Widget _buildEstadoInicial(BusquedaController controller) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -245,16 +245,16 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             ...controller.historialBusqueda.take(10).map((query) {
               return Container(
-                margin: const EdgeInsets.only(bottom: 8),
+                margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                   color: JPCupertinoColors.surface(context),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: CupertinoButton(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 12,
                   ),
@@ -266,7 +266,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                         size: 20,
                         color: JPCupertinoColors.systemGrey(context),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           query,
@@ -291,7 +291,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                 ),
               );
             }),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
           ],
 
           // Sugerencias
@@ -303,7 +303,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                   size: 80,
                   color: JPCupertinoColors.systemGrey3(context),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Text(
                   'Busca tus productos favoritos',
                   style: TextStyle(
@@ -311,7 +311,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                     color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text(
                   'Escribe en el cuadro de búsqueda',
                   style: TextStyle(
@@ -337,7 +337,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             size: 80,
             color: JPCupertinoColors.systemGrey3(context),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Text(
             'No se encontraron resultados',
             style: TextStyle(
@@ -345,7 +345,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
               color: JPCupertinoColors.secondaryLabel(context),
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             'Intenta con otros términos',
             style: TextStyle(
@@ -361,16 +361,16 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
   Widget _buildEstadoError(String mensaje) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(32.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               CupertinoIcons.wifi_slash,
               size: 80,
-              color: JPCupertinoColors.systemRed(context),
+              color: JPCupertinoColors.error(context),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               'Fallo la conexión',
               style: TextStyle(
@@ -379,7 +379,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                 color: AppColorsSupport.textPrimary,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               mensaje,
               textAlign: TextAlign.center,
@@ -400,9 +400,9 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
         if (index == 0) {
           // Contador de resultados
           return Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 color: JPCupertinoColors.surface(context),
                 borderRadius: BorderRadius.circular(10),
@@ -422,7 +422,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
 
         final ProductoModel producto = controller.resultados[index - 1];
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
           child: _ProductoCard(producto: producto),
         );
       }, childCount: controller.resultados.length + 1),
@@ -436,7 +436,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
   ) {
     return Container(
       height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
@@ -470,11 +470,11 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
     VoidCallback onDelete,
   ) {
     return Container(
-      margin: const EdgeInsets.only(right: 8),
+      margin: EdgeInsets.only(right: 8),
       child: GestureDetector(
         onTap: onDelete,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
             color: AppColorsPrimary.main.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(16),
@@ -487,14 +487,14 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             children: [
               Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: AppColorsPrimary.main,
                 ),
               ),
-              const SizedBox(width: 6),
-              const Icon(
+              SizedBox(width: 6),
+              Icon(
                 CupertinoIcons.xmark,
                 size: 14,
                 color: AppColorsPrimary.main,
@@ -513,7 +513,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
     return GestureDetector(
       onTap: controller.limpiarFiltros,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           color: JPCupertinoColors.systemGrey6(context),
           borderRadius: BorderRadius.circular(16),
@@ -538,14 +538,14 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
         height: MediaQuery.of(context).size.height * 0.7,
         decoration: BoxDecoration(
           color: JPCupertinoColors.surface(context),
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: SafeArea(
           child: Column(
             children: [
               // Header
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -564,7 +564,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                         style: TextStyle(color: AppColorsPrimary.main),
                       ),
                     ),
-                    const Spacer(),
+                    Spacer(),
                     Text(
                       'Filtros',
                       style: TextStyle(
@@ -573,7 +573,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                         color: AppColorsSupport.textPrimary,
                       ),
                     ),
-                    const Spacer(),
+                    Spacer(),
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
@@ -598,12 +598,12 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                   child: Consumer<BusquedaController>(
                     builder: (context, ctrl, _) {
                       return ListView(
-                        padding: const EdgeInsets.all(16),
+                        padding: EdgeInsets.all(16),
                         children: [
                           _buildCategoriesFilter(ctrl),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24),
                           _buildPriceRangeFilter(ctrl),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24),
                           _buildRatingFilter(ctrl),
                         ],
                       );
@@ -630,7 +630,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             color: AppColorsSupport.textPrimary,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         Wrap(
           spacing: 8,
           runSpacing: 8,
@@ -659,7 +659,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: selected
               ? AppColorsPrimary.main
@@ -672,7 +672,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             fontSize: 14,
             fontWeight: FontWeight.w600,
             color: selected
-                ? CupertinoColors.white
+                ? JPCupertinoColors.white
                 : AppColorsSupport.textPrimary,
           ),
         ),
@@ -692,7 +692,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             color: AppColorsSupport.textPrimary,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         Row(
           children: [
             Expanded(
@@ -706,7 +706,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                       color: JPCupertinoColors.secondaryLabel(context),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   CupertinoSlider(
                     value: controller.precioMin,
                     min: 0,
@@ -727,7 +727,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                 ],
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -739,7 +739,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
                       color: JPCupertinoColors.secondaryLabel(context),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   CupertinoSlider(
                     value: controller.precioMax,
                     min: 0,
@@ -778,7 +778,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             color: AppColorsSupport.textPrimary,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         Wrap(
           spacing: 8,
           runSpacing: 8,
@@ -802,7 +802,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
-        title: const Text('Ordenar por', style: TextStyle(fontSize: 13)),
+        title: Text('Ordenar por', style: TextStyle(fontSize: 13)),
         actions: [
           CupertinoActionSheetAction(
             onPressed: () {
@@ -812,10 +812,10 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Relevancia'),
+                Text('Relevancia'),
                 if (controller.ordenamiento == 'relevancia')
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Icon(
                       CupertinoIcons.check_mark,
                       size: 18,
@@ -833,10 +833,10 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Precio: menor a mayor'),
+                Text('Precio: menor a mayor'),
                 if (controller.ordenamiento == 'precio_asc')
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Icon(
                       CupertinoIcons.check_mark,
                       size: 18,
@@ -854,10 +854,10 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Precio: mayor a menor'),
+                Text('Precio: mayor a menor'),
                 if (controller.ordenamiento == 'precio_desc')
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Icon(
                       CupertinoIcons.check_mark,
                       size: 18,
@@ -875,10 +875,10 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Mejor calificados'),
+                Text('Mejor calificados'),
                 if (controller.ordenamiento == 'rating')
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: 8),
                     child: Icon(
                       CupertinoIcons.check_mark,
                       size: 18,
@@ -892,7 +892,7 @@ class _PantallaBusquedaState extends State<PantallaBusqueda> {
         cancelButton: CupertinoActionSheetAction(
           isDefaultAction: true,
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
+          child: Text('Cancelar'),
         ),
       ),
     );
@@ -944,7 +944,7 @@ class _ProductoCard extends StatelessWidget {
         producto.precioAnterior! > producto.precio;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(14),
@@ -955,7 +955,7 @@ class _ProductoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         onPressed: () => Rutas.irAProductoDetalle(context, producto),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.all(12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -1002,7 +1002,7 @@ class _ProductoCard extends StatelessWidget {
                         ),
                       ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
 
               // Información del producto
               Expanded(
@@ -1020,9 +1020,9 @@ class _ProductoCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     _buildProveedorBadge(context),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Text(
                       producto.descripcion,
                       style: TextStyle(
@@ -1033,7 +1033,7 @@ class _ProductoCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
 
                     // Rating
                     if (producto.rating > 0)
@@ -1044,7 +1044,7 @@ class _ProductoCard extends StatelessWidget {
                             size: 16,
                             color: JPCupertinoColors.systemYellow(context),
                           ),
-                          const SizedBox(width: 4),
+                          SizedBox(width: 4),
                           Text(
                             producto.rating.toStringAsFixed(1),
                             style: TextStyle(
@@ -1055,7 +1055,7 @@ class _ProductoCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
 
                     // Precio y botón
                     Row(
@@ -1075,11 +1075,11 @@ class _ProductoCard extends StatelessWidget {
                                   decoration: TextDecoration.lineThrough,
                                 ),
                               ),
-                              const SizedBox(height: 2),
+                              SizedBox(height: 2),
                             ],
                             Text(
                               producto.precioFormateado,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
                                 color: AppColorsSupport.price,
@@ -1107,7 +1107,7 @@ class _ProductoCard extends StatelessWidget {
         producto.proveedorLogoUrl != null &&
         producto.proveedorLogoUrl!.isNotEmpty;
     final tieneNombre = (producto.proveedorNombre ?? '').isNotEmpty;
-    if (!tieneLogo && !tieneNombre) return const SizedBox.shrink();
+    if (!tieneLogo && !tieneNombre) return SizedBox.shrink();
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -1126,7 +1126,7 @@ class _ProductoCard extends StatelessWidget {
                 )
               : null,
         ),
-        const SizedBox(width: 6),
+        SizedBox(width: 6),
         if (tieneNombre)
           Flexible(
             child: Text(
@@ -1200,19 +1200,19 @@ class _AgregarAlCarritoButtonState extends State<_AgregarAlCarritoButton> {
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       color: widget.producto.disponible
           ? AppColorsPrimary.main
           : JPCupertinoColors.systemGrey4(context),
       borderRadius: BorderRadius.circular(10),
       onPressed: widget.producto.disponible ? _agregarAlCarrito : null,
       child: _loading
-          ? const SizedBox(
+          ? SizedBox(
               width: 16,
               height: 16,
               child: CupertinoActivityIndicator(
                 radius: 8,
-                color: CupertinoColors.white,
+                color: JPCupertinoColors.white,
               ),
             )
           : Row(
@@ -1222,17 +1222,17 @@ class _AgregarAlCarritoButtonState extends State<_AgregarAlCarritoButton> {
                   CupertinoIcons.cart_badge_plus,
                   size: 18,
                   color: widget.producto.disponible
-                      ? CupertinoColors.white
+                      ? JPCupertinoColors.white
                       : JPCupertinoColors.systemGrey(context),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6),
                 Text(
                   'Agregar',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: widget.producto.disponible
-                        ? CupertinoColors.white
+                        ? JPCupertinoColors.white
                         : JPCupertinoColors.systemGrey(context),
                   ),
                 ),

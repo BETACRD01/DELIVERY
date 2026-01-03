@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../../../../services/solicitudes/solicitudes_service.dart';
 import '../../../../../services/auth/auth_service.dart';
 import '../../../../../models/auth/solicitud_cambio_rol.dart';
+import '../../../../../theme/jp_theme.dart';
 
 /// 📝 FORMULARIO PARA SOLICITUD DE REPARTIDOR
 /// Diseño: iOS Native Style
@@ -155,17 +156,17 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
           width: 64,
           height: 64,
           decoration: BoxDecoration(
-            color: CupertinoColors.systemGreen.withValues(alpha: 0.15),
+            color: JPCupertinoColors.success(context).withValues(alpha: 0.15),
             shape: BoxShape.circle,
           ),
-          child: const Icon(
+          child: Icon(
             CupertinoIcons.car_fill,
-            color: CupertinoColors.systemGreen,
+            color: JPCupertinoColors.success(context),
             size: 32,
           ),
         ),
         const SizedBox(width: 16),
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -175,7 +176,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
                   letterSpacing: -0.5,
-                  color: CupertinoColors.label,
+                  color: JPCupertinoColors.label(context),
                 ),
               ),
               SizedBox(height: 2),
@@ -204,18 +205,18 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
       margin: const EdgeInsets.only(top: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemGreen.withValues(alpha: 0.1),
+        color: JPCupertinoColors.success(context).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: CupertinoColors.systemGreen.withValues(alpha: 0.3),
+          color: JPCupertinoColors.success(context).withValues(alpha: 0.3),
           width: 1,
         ),
       ),
-      child: const Row(
+      child: Row(
         children: [
           Icon(
             CupertinoIcons.check_mark_circled_solid,
-            color: CupertinoColors.systemGreen,
+            color: JPCupertinoColors.success(context),
             size: 24,
           ),
           SizedBox(width: 12),
@@ -225,7 +226,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 15,
-                color: CupertinoColors.systemGreen,
+                color: JPCupertinoColors.success(context),
               ),
             ),
           ),
@@ -242,7 +243,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: CupertinoColors.secondaryLabel.resolveFrom(context),
+          color: JPCupertinoColors.secondaryLabel(context),
           letterSpacing: -0.08,
         ),
       ),
@@ -252,7 +253,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
   Widget _buildGroupedCard(List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(children: children),
@@ -263,7 +264,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
     return Container(
       margin: const EdgeInsets.only(left: 44),
       height: 0.5,
-      color: CupertinoColors.separator.resolveFrom(context),
+      color: JPCupertinoColors.separator(context),
     );
   }
 
@@ -282,7 +283,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
           Icon(
             prefix,
             size: 22,
-            color: CupertinoColors.systemGrey.resolveFrom(context),
+            color: JPCupertinoColors.systemGrey(context),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -293,9 +294,9 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
               inputFormatters: inputFormatters,
               textCapitalization: textCapitalization,
               decoration: null,
-              style: const TextStyle(fontSize: 17, letterSpacing: -0.4),
+              style: TextStyle(fontSize: 17, letterSpacing: -0.4),
               placeholderStyle: TextStyle(
-                color: CupertinoColors.placeholderText.resolveFrom(context),
+                color: JPCupertinoColors.placeholderText(context),
                 fontSize: 17,
               ),
             ),
@@ -317,9 +318,9 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
         placeholder: placeholder,
         maxLines: maxLines,
         decoration: null,
-        style: const TextStyle(fontSize: 17, letterSpacing: -0.4),
+        style: TextStyle(fontSize: 17, letterSpacing: -0.4),
         placeholderStyle: TextStyle(
-          color: CupertinoColors.placeholderText.resolveFrom(context),
+          color: JPCupertinoColors.placeholderText(context),
           fontSize: 17,
         ),
       ),
@@ -331,13 +332,13 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
       onTap: _mostrarSelectorVehiculo,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         child: Row(
           children: [
             Icon(
               CupertinoIcons.car_detailed,
               size: 22,
-              color: CupertinoColors.systemGrey.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey(context),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -351,15 +352,15 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                   fontSize: 17,
                   letterSpacing: -0.4,
                   color: _tipoVehiculo != null
-                      ? CupertinoColors.label.resolveFrom(context)
-                      : CupertinoColors.placeholderText.resolveFrom(context),
+                      ? JPCupertinoColors.label(context)
+                      : JPCupertinoColors.placeholderText(context),
                 ),
               ),
             ),
             Icon(
               CupertinoIcons.chevron_right,
               size: 18,
-              color: CupertinoColors.systemGrey3.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey3(context),
             ),
           ],
         ),
@@ -375,7 +376,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
           Icon(
             CupertinoIcons.map_pin_ellipse,
             size: 22,
-            color: CupertinoColors.systemGrey.resolveFrom(context),
+            color: JPCupertinoColors.systemGrey(context),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -384,9 +385,9 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
               placeholder: 'Zona de Cobertura',
               textCapitalization: TextCapitalization.words,
               decoration: null,
-              style: const TextStyle(fontSize: 17, letterSpacing: -0.4),
+              style: TextStyle(fontSize: 17, letterSpacing: -0.4),
               placeholderStyle: TextStyle(
-                color: CupertinoColors.placeholderText.resolveFrom(context),
+                color: JPCupertinoColors.placeholderText(context),
                 fontSize: 17,
               ),
             ),
@@ -399,7 +400,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
             child: Icon(
               CupertinoIcons.question_circle,
               size: 22,
-              color: CupertinoColors.systemCyan,
+              color: JPCupertinoColors.info(context),
             ),
           ),
         ],
@@ -411,7 +412,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => Material(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         child: SafeArea(
           child: Container(
             padding: const EdgeInsets.all(24),
@@ -434,25 +435,25 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                   width: 64,
                   height: 64,
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemCyan.withValues(alpha: 0.15),
+                    color: JPCupertinoColors.info(context).withValues(alpha: 0.15),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     CupertinoIcons.map_pin_ellipse,
-                    color: CupertinoColors.systemCyan,
+                    color: JPCupertinoColors.info(context),
                     size: 32,
                   ),
                 ),
                 const SizedBox(height: 16),
 
                 // Título
-                const Text(
+                Text(
                   '¿Qué es la Zona de Cobertura?',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     letterSpacing: -0.5,
-                    color: CupertinoColors.label,
+                    color: JPCupertinoColors.label(context),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -463,7 +464,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                   'Son las áreas o sectores de la ciudad donde puedes hacer entregas. Sepáralas con comas.',
                   style: TextStyle(
                     fontSize: 15,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -474,7 +475,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey6.resolveFrom(context),
+                    color: JPCupertinoColors.systemGrey6(context),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
@@ -491,27 +492,27 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
+                      Text(
                         '• Centro, Malecón, El Salado',
                         style: TextStyle(
                           fontSize: 15,
-                          color: CupertinoColors.label,
+                          color: JPCupertinoColors.label(context),
                         ),
                       ),
                       const SizedBox(height: 4),
-                      const Text(
+                      Text(
                         '• Runtún, Lligua, Ulba',
                         style: TextStyle(
                           fontSize: 15,
-                          color: CupertinoColors.label,
+                          color: JPCupertinoColors.label(context),
                         ),
                       ),
                       const SizedBox(height: 4),
-                      const Text(
+                      Text(
                         '• Río Verde, El Pailón, Machay',
                         style: TextStyle(
                           fontSize: 15,
-                          color: CupertinoColors.label,
+                          color: JPCupertinoColors.label(context),
                         ),
                       ),
                     ],
@@ -523,10 +524,10 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                 SizedBox(
                   width: double.infinity,
                   child: CupertinoButton(
-                    color: CupertinoColors.systemCyan,
+                    color: JPCupertinoColors.info(context),
                     borderRadius: BorderRadius.circular(12),
                     onPressed: () => Navigator.pop(context),
-                    child: const Text(
+                    child: Text(
                       'Entendido',
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
@@ -549,25 +550,25 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             gradient: !_isLoading
-                ? const LinearGradient(
-                    colors: [CupertinoColors.systemGreen, Color(0xFF34C759)],
+                ? LinearGradient(
+                    colors: [JPCupertinoColors.success(context), Color(0xFF34C759)],
                   )
                 : null,
             color: _isLoading
-                ? CupertinoColors.systemGrey5.resolveFrom(context)
+                ? JPCupertinoColors.systemGrey5(context)
                 : null,
           ),
           child: CupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: _isLoading ? null : _enviarSolicitud,
             child: _isLoading
-                ? const CupertinoActivityIndicator(color: CupertinoColors.white)
-                : const Text(
+                ? CupertinoActivityIndicator(color: JPCupertinoColors.white)
+                : Text(
                     'Enviar Solicitud',
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
-                      color: CupertinoColors.white,
+                      color: JPCupertinoColors.white,
                       letterSpacing: -0.4,
                     ),
                   ),
@@ -582,7 +583,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
               fontSize: 17,
               color: _isLoading
                   ? CupertinoColors.systemGrey
-                  : CupertinoColors.systemBlue,
+                  : JPCupertinoColors.systemBlue(context),
             ),
           ),
         ),
@@ -598,7 +599,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => Material(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         child: SizedBox(
           height: 250,
           child: Column(
@@ -609,7 +610,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: CupertinoColors.separator.resolveFrom(context),
+                      color: JPCupertinoColors.separator(context),
                       width: 0.5,
                     ),
                   ),
@@ -620,9 +621,9 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancelar'),
+                      child: Text('Cancelar'),
                     ),
-                    const Text(
+                    Text(
                       'Tipo de Vehículo',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -632,7 +633,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                     CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Listo'),
+                      child: Text('Listo'),
                     ),
                   ],
                 ),
@@ -649,7 +650,7 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
                     return Center(
                       child: Text(
                         tipo.label,
-                        style: const TextStyle(fontSize: 17),
+                        style: TextStyle(fontSize: 17),
                       ),
                     );
                   }).toList(),
@@ -732,17 +733,17 @@ class _FormularioRepartidorState extends State<FormularioRepartidor> {
               ? CupertinoIcons.exclamationmark_circle
               : CupertinoIcons.check_mark_circled,
           color: isError
-              ? CupertinoColors.systemRed
-              : CupertinoColors.systemGreen,
+              ? JPCupertinoColors.error(context)
+              : JPCupertinoColors.success(context),
           size: 48,
         ),
         content: Padding(
           padding: const EdgeInsets.only(top: 8),
-          child: Text(mensaje, style: const TextStyle(fontSize: 15)),
+          child: Text(mensaje, style: TextStyle(fontSize: 15)),
         ),
         actions: [
           CupertinoDialogAction(
-            child: const Text('OK'),
+            child: Text('OK'),
             onPressed: () => Navigator.pop(context),
           ),
         ],

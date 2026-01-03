@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../models/social/resena_model.dart';
 import '../../../services/calificaciones/calificaciones_service.dart';
 import '../../../widgets/ratings/star_rating_display.dart';
+import '../../../theme/jp_theme.dart';
 
 /// Lista de calificaciones del usuario (recibidas/realizadas).
 /// Nota: requiere wiring con el backend para proveer entityType/entityId
@@ -130,9 +131,9 @@ class _PantallaMisCalificacionesState extends State<PantallaMisCalificaciones> {
         child: Text(
           mensaje,
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
-            color: CupertinoColors.systemGrey,
+            color: JPCupertinoColors.systemGrey(context),
           ),
         ),
       ),
@@ -150,11 +151,13 @@ class _ResenaTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: CupertinoColors.systemGrey.withValues(alpha: 0.12),
+            color: JPCupertinoColors.systemGrey(
+              context,
+            ).withValues(alpha: 0.12),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -172,9 +175,9 @@ class _ResenaTile extends StatelessWidget {
                 ),
                 child: Text(
                   resena.iniciales,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    color: CupertinoColors.white,
+                    color: JPCupertinoColors.white,
                   ),
                 ),
               ),
@@ -194,9 +197,9 @@ class _ResenaTile extends StatelessWidget {
                     ),
                     Text(
                       resena.tiempoTranscurrido,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: CupertinoColors.systemGrey,
+                        color: JPCupertinoColors.systemGrey(context),
                       ),
                     ),
                   ],

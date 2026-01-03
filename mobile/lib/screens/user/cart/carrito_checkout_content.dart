@@ -57,7 +57,7 @@ class CarritoCheckoutContent extends StatelessWidget {
         Container(
           width: 40,
           height: 4,
-          margin: const EdgeInsets.symmetric(vertical: 12),
+          margin: EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
             color: JPCupertinoColors.systemGrey4(context),
             borderRadius: BorderRadius.circular(2),
@@ -72,16 +72,16 @@ class CarritoCheckoutContent extends StatelessWidget {
             color: JPCupertinoColors.label(context),
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16),
 
         // Contenido scrollable
         Expanded(
           child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             children: [
               // Productos
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: JPCupertinoColors.surface(context),
                   borderRadius: BorderRadius.circular(12),
@@ -98,7 +98,7 @@ class CarritoCheckoutContent extends StatelessWidget {
                         color: JPCupertinoColors.label(context),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     SizedBox(
                       height: 160,
                       child: ListView.separated(
@@ -134,12 +134,12 @@ class CarritoCheckoutContent extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: 12),
                               Text(
                                 '\$${item.subtotal.toStringAsFixed(2)}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -152,13 +152,13 @@ class CarritoCheckoutContent extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
 
               // Botón de dirección
               Align(
                 alignment: Alignment.centerRight,
                 child: CupertinoButton(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 10,
                   ),
@@ -175,7 +175,7 @@ class CarritoCheckoutContent extends StatelessWidget {
                         size: 16,
                         color: AppColorsPrimary.main,
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Text(
                         tieneDirecciones
                             ? 'Elegir dirección'
@@ -190,7 +190,7 @@ class CarritoCheckoutContent extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
 
               // Dirección seleccionada
               if (direccionSeleccionada != null)
@@ -199,12 +199,12 @@ class CarritoCheckoutContent extends StatelessWidget {
                   direccionCompleta: direccionCompleta,
                   esPredeterminada: direccionSeleccionada!.esPredeterminada,
                 ),
-              if (direccionSeleccionada != null) const SizedBox(height: 12),
+              if (direccionSeleccionada != null) SizedBox(height: 12),
 
               // Instrucciones
               if (mostrarInstrucciones) ...[
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: JPCupertinoColors.surface(context),
                     borderRadius: BorderRadius.circular(12),
@@ -221,16 +221,16 @@ class CarritoCheckoutContent extends StatelessWidget {
                           color: JPCupertinoColors.label(context),
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       CupertinoTextField(
                         controller: instruccionesController,
                         placeholder: 'Ej: Tocar el timbre',
-                        style: const TextStyle(fontSize: 13),
+                        style: TextStyle(fontSize: 13),
                         placeholderStyle: TextStyle(
                           fontSize: 13,
                           color: JPCupertinoColors.systemGrey(context),
                         ),
-                        padding: const EdgeInsets.all(12),
+                        padding: EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: JPCupertinoColors.systemGrey6(context),
                           borderRadius: BorderRadius.circular(8),
@@ -241,12 +241,12 @@ class CarritoCheckoutContent extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
               ],
 
               // Método de pago
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: JPCupertinoColors.surface(context),
                   borderRadius: BorderRadius.circular(12),
@@ -263,7 +263,7 @@ class CarritoCheckoutContent extends StatelessWidget {
                         color: JPCupertinoColors.label(context),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     CupertinoSlidingSegmentedControl<String>(
                       groupValue: metodoPago,
                       children: const {
@@ -311,11 +311,11 @@ class CarritoCheckoutContent extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
 
               // Resumen
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: JPCupertinoColors.systemGrey6(context),
                   borderRadius: BorderRadius.circular(12),
@@ -346,19 +346,19 @@ class CarritoCheckoutContent extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
             ],
           ),
         ),
 
         // Boton confirmar
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           child: SizedBox(
             width: double.infinity,
             child: CupertinoButton.filled(
               onPressed: onConfirmar,
-              child: const Text(
+              child: Text(
                 'Confirmar pedido',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               ),

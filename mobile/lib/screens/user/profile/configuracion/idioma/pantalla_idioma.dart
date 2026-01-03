@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile/theme/jp_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui';
@@ -79,14 +80,14 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
           child: SafeArea(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 32),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildHeader(),
-                  const SizedBox(height: 28),
+                  SizedBox(height: 28),
                   _buildLanguageList(),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
                   _buildInfoCard(),
                 ],
               ),
@@ -105,12 +106,12 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
           fontSize: 17,
           fontWeight: FontWeight.w600,
           letterSpacing: -0.4,
-          color: CupertinoColors.label.resolveFrom(context),
+          color: JPCupertinoColors.label(context),
         ),
       ),
       centerTitle: true,
-      backgroundColor: Colors.transparent,
-      foregroundColor: CupertinoColors.label.resolveFrom(context),
+      backgroundColor: JPCupertinoColors.transparent,
+      foregroundColor: JPCupertinoColors.label(context),
       elevation: 0,
       flexibleSpace: ClipRect(
         child: BackdropFilter(
@@ -122,7 +123,7 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
                   .withValues(alpha: 0.95),
               border: Border(
                 bottom: BorderSide(
-                  color: CupertinoColors.separator.resolveFrom(context),
+                  color: JPCupertinoColors.separator(context),
                   width: 0.5,
                 ),
               ),
@@ -134,7 +135,7 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
         icon: Icon(
           Icons.arrow_back_ios_new,
           size: 20,
-          color: CupertinoColors.label.resolveFrom(context),
+          color: JPCupertinoColors.label(context),
         ),
         onPressed: () => Navigator.pop(context),
       ),
@@ -158,7 +159,7 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
                 child: Text('🌍', style: TextStyle(fontSize: 24)),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,10 +170,10 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
                       letterSpacing: -0.5,
-                      color: CupertinoColors.label.resolveFrom(context),
+                      color: JPCupertinoColors.label(context),
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2),
                   Text(
                     AppLocalizations.of(context).languageSubtitle,
                     style: TextStyle(
@@ -201,7 +202,7 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: CupertinoColors.black.withValues(alpha: 0.04),
+            color: JPCupertinoColors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -242,7 +243,7 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
     bool isLast = false,
   }) {
     return Material(
-      color: Colors.transparent,
+      color: JPCupertinoColors.transparent,
       child: InkWell(
         onTap: () {
           setState(() => _idiomaSeleccionado = code);
@@ -253,7 +254,7 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
           bottom: isLast ? const Radius.circular(16) : Radius.zero,
         ),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: Row(
             children: [
               Container(
@@ -265,10 +266,10 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Center(
-                  child: Text(flag, style: const TextStyle(fontSize: 32)),
+                  child: Text(flag, style: TextStyle(fontSize: 32)),
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Expanded(
                 child: Text(
                   label,
@@ -276,14 +277,14 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
                     fontSize: 17,
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                     letterSpacing: -0.3,
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
               ),
               if (isSelected)
                 Icon(
                   Icons.check_circle,
-                  color: CupertinoColors.systemGreen.resolveFrom(context),
+                  color: JPCupertinoColors.systemGreen(context),
                   size: 28,
                 ),
             ],
@@ -295,11 +296,11 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
 
   Widget _buildDivider() {
     return Padding(
-      padding: const EdgeInsets.only(left: 92),
+      padding: EdgeInsets.only(left: 92),
       child: Divider(
         height: 1,
         thickness: 0.5,
-        color: CupertinoColors.separator.resolveFrom(context),
+        color: JPCupertinoColors.separator(context),
       ),
     );
   }
@@ -307,7 +308,7 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
   Widget _buildInfoCard() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppColorsPrimary.main.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
@@ -324,13 +325,13 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
             color: AppColorsPrimary.main.withValues(alpha: 0.8),
             size: 20,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Text(
               'Los cambios se aplicarán inmediatamente en toda la aplicación.',
               style: TextStyle(
                 fontSize: 14,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
                 height: 1.4,
                 letterSpacing: -0.2,
               ),
@@ -347,13 +348,13 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
       SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.check_circle, color: Colors.white, size: 20),
-            const SizedBox(width: 12),
+            Icon(Icons.check_circle, color: JPCupertinoColors.white, size: 20),
+            SizedBox(width: 12),
             Expanded(
               child: Text(
                 AppLocalizations.of(context).languageChanged(codigo),
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: JPCupertinoColors.white,
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
@@ -365,7 +366,7 @@ class _PantallaIdiomaState extends State<PantallaIdioma>
         behavior: SnackBarBehavior.floating,
         duration: const Duration(milliseconds: 1500),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        margin: const EdgeInsets.all(16),
+        margin: EdgeInsets.all(16),
       ),
     );
   }

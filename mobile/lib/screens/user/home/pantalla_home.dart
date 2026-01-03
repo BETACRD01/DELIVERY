@@ -1,9 +1,9 @@
 // lib/screens/user/inicio/pantalla_home.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/theme/primary_colors.dart';
 
 import 'package:provider/provider.dart';
 
@@ -59,9 +59,7 @@ class _PantallaHomeState extends State<PantallaHome> {
     return ChangeNotifierProvider.value(
       value: _homeController,
       child: Scaffold(
-        backgroundColor: CupertinoColors.systemGroupedBackground.resolveFrom(
-          context,
-        ),
+        backgroundColor: JPCupertinoColors.background(context),
         floatingActionButton: const CarritoFloatingButton(),
         body: _HomeBody(
           onAgregarCarrito: _agregarProductoAlCarrito,
@@ -173,7 +171,7 @@ class _HomeBody extends StatelessWidget {
                 child: _SeccionProductos(
                   titulo: 'Ofertas del día',
                   icono: CupertinoIcons.flame_fill,
-                  iconoColor: CupertinoColors.systemRed,
+                  iconoColor: JPCupertinoColors.error(context),
                   productos: controller.productosEnOferta,
                   loading: controller.loading,
                   badgeType: _BadgeType.oferta,
@@ -189,7 +187,7 @@ class _HomeBody extends StatelessWidget {
                 child: _SeccionProductos(
                   titulo: 'Los más pedidos',
                   icono: CupertinoIcons.star_fill,
-                  iconoColor: CupertinoColors.systemOrange,
+                  iconoColor: JPCupertinoColors.systemOrange(context),
                   productos: controller.productosMasPopulares,
                   loading: controller.loading,
                   badgeType: _BadgeType.popular,
@@ -204,7 +202,7 @@ class _HomeBody extends StatelessWidget {
                 child: _SeccionProductos(
                   titulo: 'Recién llegados',
                   icono: CupertinoIcons.sparkles,
-                  iconoColor: CupertinoColors.systemGreen,
+                  iconoColor: JPCupertinoColors.systemGreen(context),
                   productos: controller.productosNovedades,
                   loading: controller.loading,
                   badgeType: _BadgeType.nuevo,
@@ -225,7 +223,7 @@ class _HomeBody extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: JPCupertinoColors.transparent,
       builder: (context) => DraggableScrollableSheet(
         initialChildSize: 0.92,
         minChildSize: 0.5,
@@ -233,10 +231,8 @@ class _HomeBody extends StatelessWidget {
         builder: (context, scrollController) {
           return Container(
             decoration: BoxDecoration(
-              color: CupertinoColors.systemBackground.resolveFrom(context),
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(20),
-              ),
+              color: JPCupertinoColors.surface(context),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
             child: const PantallaBusqueda(),
           );
@@ -269,7 +265,7 @@ class _SeccionCategorias extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+          padding: EdgeInsets.fromLTRB(20, 8, 20, 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -278,18 +274,18 @@ class _SeccionCategorias extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: CupertinoColors.label.resolveFrom(context),
+                  color: JPCupertinoColors.label(context),
                   letterSpacing: -0.5,
                 ),
               ),
               GestureDetector(
                 onTap: onVerTodo,
-                child: const Text(
+                child: Text(
                   'Ver todo',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: AppColorsPrimary.main,
+                    color: JPCupertinoColors.primary(context),
                   ),
                 ),
               ),
@@ -302,9 +298,9 @@ class _SeccionCategorias extends StatelessWidget {
               ? _buildLoading(context)
               : ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   itemCount: categorias.length,
-                  separatorBuilder: (_, _) => const SizedBox(width: 12),
+                  separatorBuilder: (_, _) => SizedBox(width: 12),
                   itemBuilder: (context, index) {
                     final cat = categorias[index];
                     return _CategoriaChip(
@@ -343,7 +339,7 @@ class _CategoriaChip extends StatelessWidget {
     final imagen = categoria.imagenUrl?.toString();
 
     // Determine color based on category data if available or default
-    final Color baseColor = AppColorsPrimary.light;
+    final Color baseColor = JPColors.primaryLight;
 
     return GestureDetector(
       onTap: onTap,
@@ -356,17 +352,16 @@ class _CategoriaChip extends StatelessWidget {
               height: 64,
               decoration: BoxDecoration(
                 color: (imagen != null && imagen.isNotEmpty)
-                    ? CupertinoColors.secondarySystemGroupedBackground
-                          .resolveFrom(context)
+                    ? JPCupertinoColors.secondaryBackground(context)
                     : baseColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20), // Squaricle
                 border: Border.all(
-                  color: CupertinoColors.systemGrey4.resolveFrom(context),
+                  color: JPCupertinoColors.systemGrey4(context),
                   width: 0.5,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: JPCupertinoColors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -377,7 +372,7 @@ class _CategoriaChip extends StatelessWidget {
                 child: _buildContent(context, imagen, icono, baseColor),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               nombre,
               maxLines: 1,
@@ -386,7 +381,7 @@ class _CategoriaChip extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
                 letterSpacing: -0.2,
               ),
             ),
@@ -419,12 +414,12 @@ class _CategoriaChip extends StatelessWidget {
     Color baseColor,
   ) {
     if (icono != null && icono.isNotEmpty) {
-      return Center(child: Text(icono, style: const TextStyle(fontSize: 28)));
+      return Center(child: Text(icono, style: TextStyle(fontSize: 28)));
     }
     return Center(
       child: Icon(
         Icons.category_outlined, // Default icon
-        color: AppColorsPrimary.main,
+        color: JPCupertinoColors.primary(context),
         size: 30,
       ),
     );
@@ -444,19 +439,19 @@ class _SeccionPromociones extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (promociones.isEmpty && !loading) return const SizedBox.shrink();
+    if (promociones.isEmpty && !loading) return SizedBox.shrink();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+          padding: EdgeInsets.fromLTRB(20, 20, 20, 12),
           child: Text(
             'Promociones',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
               letterSpacing: -0.5,
             ),
           ),
@@ -468,9 +463,9 @@ class _SeccionPromociones extends StatelessWidget {
               ? _buildLoading(context)
               : ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   itemCount: promociones.length,
-                  separatorBuilder: (_, _) => const SizedBox(width: 12),
+                  separatorBuilder: (_, _) => SizedBox(width: 12),
                   itemBuilder: (context, index) {
                     final promo = promociones[index];
                     return _PromoCard(
@@ -509,13 +504,11 @@ class _PromoCard extends StatelessWidget {
       child: Container(
         width: 280,
         decoration: BoxDecoration(
-          color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
-            context,
-          ),
+          color: JPCupertinoColors.secondaryBackground(context),
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
+              color: JPCupertinoColors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -529,7 +522,7 @@ class _PromoCard extends StatelessWidget {
             // Content
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -538,12 +531,12 @@ class _PromoCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.label.resolveFrom(context),
+                        color: JPCupertinoColors.label(context),
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Text(
                       promo.descripcion,
                       style: TextStyle(
@@ -555,12 +548,12 @@ class _PromoCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const Spacer(),
+                    Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         _buildChip(),
-                        const Spacer(),
+                        Spacer(),
                         Text(
                           promo.descuento,
                           style: TextStyle(
@@ -572,14 +565,12 @@ class _PromoCard extends StatelessWidget {
                       ],
                     ),
                     if (promo.textoTiempoRestante.isNotEmpty) ...[
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4),
                       Text(
                         promo.textoTiempoRestante,
                         style: TextStyle(
                           fontSize: 12,
-                          color: CupertinoColors.secondaryLabel.resolveFrom(
-                            context,
-                          ),
+                          color: JPCupertinoColors.secondaryLabel(context),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -597,7 +588,7 @@ class _PromoCard extends StatelessWidget {
 
   Widget _buildBanner(BuildContext context) {
     return ClipRRect(
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       child: Container(
         height: 120,
         width: double.infinity,
@@ -626,7 +617,7 @@ class _PromoCard extends StatelessWidget {
 
   Widget _buildChip() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: promo.color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
@@ -683,17 +674,17 @@ class _SeccionProductos extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 24, 20, 14),
+          padding: EdgeInsets.fromLTRB(20, 24, 20, 14),
           child: Row(
             children: [
               Icon(icono, color: iconoColor, size: 20),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 titulo,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: CupertinoColors.label.resolveFrom(context),
+                  color: JPCupertinoColors.label(context),
                 ),
               ),
             ],
@@ -705,9 +696,9 @@ class _SeccionProductos extends StatelessWidget {
               ? _buildLoading(context)
               : ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   itemCount: productos.length,
-                  separatorBuilder: (_, _) => const SizedBox(width: 14),
+                  separatorBuilder: (_, _) => SizedBox(width: 14),
                   itemBuilder: (context, index) {
                     final producto = productos[index];
                     final nombre = (producto is ProductoModel)

@@ -107,6 +107,15 @@ class SecondaryColors {
   /// Gris claro dashboard
   static const Color grayLightDashboard = Color(0xFFF3F4F6);
 
+  /// Azul dashboard
+  static const Color blueDashboard = Color(0xFF1E88E5);
+
+  /// Amber dashboard
+  static const Color amberDashboard = Color(0xFFF59E0B);
+
+  /// Violet dashboard
+  static const Color violetDashboard = Color(0xFF8B5CF6);
+
   // ══════════════════════════════════════════════════════════════════════════
   // ALIASES (compatibilidad con código existente)
   // ══════════════════════════════════════════════════════════════════════════

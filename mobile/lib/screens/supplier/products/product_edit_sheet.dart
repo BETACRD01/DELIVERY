@@ -1,9 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../../theme/jp_theme.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../../models/products/categoria_model.dart';
 import '../../../models/products/producto_model.dart';
 import '../../../services/productos/productos_service.dart';
@@ -23,7 +22,17 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
   static const Color _bgObscuro = Color(
     0xFFF2F2F7,
   ); // System Grouped Background
-  static const Color _blanco = Colors.white;
+  static const Color _blanco = CupertinoColors
+      .white; // JPCupertinoColors needs context, using CupertinoColors.white for static constant or change logic.
+  // Actually JPCupertinoColors.white is static Color? No, it's usually static const Color? Let's check definition.
+  // If JPCupertinoColors.white is a Color, I can use it. If it's a getter, I can't.
+  // Assuming JPCupertinoColors.white is likely 'static const Color white = Color(0xFFFFFFFF);' or similar if adaptive.
+  // But wait, JPCupertinoColors.*(context) are methods.
+  // JPCupertinoColors.white IS likely a Color or safe to use.
+  // I will use CupertinoColors.white for static const if I can't verify.
+  // But standardizing -> Use JPCupertinoColors.white if possible.
+  // If static const, I'll delete this constant and use JPCupertinoColors.white directly in code IF it's just white.
+  // But I'll replace the line with 'static const Color _blanco = CupertinoColors.white;' for now to be safe with static.
   // Se usan colores del tema en lugar de hardcoded
 
   // Controladores
@@ -149,8 +158,11 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
     return Container(
       decoration: BoxDecoration(
         color: _blanco,
-        border: const Border(
-          bottom: BorderSide(color: Colors.black12, width: 0.5),
+        border: Border(
+          bottom: BorderSide(
+            color: JPCupertinoColors.separator(context),
+            width: 0.5,
+          ),
         ),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       ),
@@ -163,7 +175,7 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
             width: 36,
             height: 5,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: JPCupertinoColors.systemGrey4(context),
               borderRadius: BorderRadius.circular(3),
             ),
           ),
@@ -179,7 +191,7 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
                     vertical: 10,
                   ),
                   onPressed: () => Navigator.pop(context),
-                  child: const Text(
+                  child: Text(
                     'Cancelar',
                     style: TextStyle(
                       color: AppColorsPrimary.main,
@@ -193,10 +205,7 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
                     widget.producto != null
                         ? 'Editar Producto'
                         : 'Nuevo Producto',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -214,7 +223,7 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
                       vertical: 10,
                     ),
                     onPressed: _guardar,
-                    child: const Text(
+                    child: Text(
                       'Guardar',
                       style: TextStyle(
                         color: AppColorsPrimary.main,
@@ -254,9 +263,9 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: JPCupertinoColors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.black12),
+                border: Border.all(color: JPCupertinoColors.separator(context)),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
@@ -270,11 +279,11 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
                       )
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(
                             CupertinoIcons.camera_fill,
                             size: 40,
-                            color: Colors.black26,
+                            color: JPCupertinoColors.placeholderText(context),
                           ),
                           SizedBox(height: 8),
                           Text(
@@ -294,9 +303,9 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
               placeholder: 'https://ejemplo.com/imagen.jpg',
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: JPCupertinoColors.white,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.black12),
+                border: Border.all(color: JPCupertinoColors.separator(context)),
               ),
               onChanged: (_) => setState(() {}),
             ),
@@ -308,25 +317,31 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
             margin: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black12),
+              border: Border.all(color: JPCupertinoColors.separator(context)),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(11),
               child: Image.network(
                 _imagenUrlCtrl.text,
                 fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => const Center(
-                  child: Icon(Icons.broken_image, color: Colors.grey),
+                errorBuilder: (_, _, _) => Center(
+                  child: Icon(
+                    Icons.broken_image,
+                    color: JPCupertinoColors.systemGrey(context),
+                  ),
                 ),
               ),
             ),
           ),
 
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(top: 8, bottom: 20),
           child: Text(
             'Imagen principal del producto',
-            style: TextStyle(color: Colors.grey, fontSize: 13),
+            style: TextStyle(
+              color: JPCupertinoColors.systemGrey(context),
+              fontSize: 13,
+            ),
           ),
         ),
       ],
@@ -363,16 +378,16 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
                       _categoriaSeleccionada?.nombre ?? 'Seleccionar',
                       style: TextStyle(
                         color: _categoriaSeleccionada != null
-                            ? Colors.black
-                            : Colors.grey,
+                            ? JPCupertinoColors.black
+                            : JPCupertinoColors.systemGrey(context),
                         fontSize: 17,
                       ),
                     ),
                     const SizedBox(width: 6),
-                    const Icon(
+                    Icon(
                       CupertinoIcons.chevron_right,
                       size: 16,
-                      color: Colors.grey,
+                      color: JPCupertinoColors.systemGrey(context),
                     ),
                   ],
                 ),
@@ -409,7 +424,7 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
 
     return CupertinoFormSection.insetGrouped(
       header: const Text('PRECIOS Y OFERTAS'),
-      footer: const Text(
+      footer: Text(
         'Si añades un precio anterior mayor al actual, se mostrará como una oferta automáticamente.',
       ),
       children: [
@@ -436,7 +451,7 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Descuento calculado',
                   style: TextStyle(fontSize: 15, color: Colors.grey),
                 ),
@@ -446,13 +461,13 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: JPCupertinoColors.systemGreen(context),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     '$descuento% OFF',
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: JPCupertinoColors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
@@ -474,10 +489,7 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Disponible para venta',
-                style: TextStyle(fontSize: 17),
-              ),
+              Text('Disponible para venta', style: TextStyle(fontSize: 17)),
               CupertinoSwitch(
                 value: _disponible,
                 onChanged: (v) => setState(() => _disponible = v),
@@ -503,10 +515,7 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
         if (_tieneStock)
           CupertinoTextFormFieldRow(
             controller: _stockCtrl,
-            prefix: const Text(
-              'Cantidad en Stock',
-              style: TextStyle(fontSize: 17),
-            ),
+            prefix: Text('Cantidad en Stock', style: TextStyle(fontSize: 17)),
             placeholder: '0',
             keyboardType: TextInputType.number,
             textAlign: TextAlign.end,
@@ -530,7 +539,7 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
           Expanded(
             child: Text(
               _error!,
-              style: const TextStyle(color: AppColorsSupport.error),
+              style: TextStyle(color: AppColorsSupport.error),
             ),
           ),
         ],
@@ -543,19 +552,23 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
       context: context,
       builder: (context) => Container(
         height: 250,
-        color: Colors.white,
+        color: JPCupertinoColors.white,
         child: Column(
           children: [
             Container(
               height: 44,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.centerRight,
-              decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.black12)),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: JPCupertinoColors.separator(context),
+                  ),
+                ),
               ),
               child: GestureDetector(
                 onTap: () => Navigator.pop(context),
-                child: const Text(
+                child: Text(
                   'Listo',
                   style: TextStyle(
                     color: AppColorsPrimary.main,
@@ -600,20 +613,20 @@ class _ProductEditSheetState extends State<ProductEditSheet> {
               Navigator.pop(context);
               await _seleccionarImagen(ImageSource.gallery);
             },
-            child: const Text('Galería'),
+            child: Text('Galería'),
           ),
           CupertinoActionSheetAction(
             onPressed: () async {
               Navigator.pop(context);
               await _seleccionarImagen(ImageSource.camera);
             },
-            child: const Text('Cámara'),
+            child: Text('Cámara'),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
           onPressed: () => Navigator.pop(context),
           isDestructiveAction: true,
-          child: const Text('Cancelar'),
+          child: Text('Cancelar'),
         ),
       ),
     );

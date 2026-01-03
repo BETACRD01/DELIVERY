@@ -1,9 +1,9 @@
 // lib/screens/supplier/tabs/promociones_tab.dart
+import 'package:mobile/theme/jp_theme.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../controllers/supplier/supplier_controller.dart';
 import '../../../../models/products/promocion_model.dart';
 import '../../../../theme/primary_colors.dart';
@@ -22,7 +22,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
     return Material(
       type: MaterialType.transparency,
       child: Container(
-        color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
+        color: JPCupertinoColors.background(context),
         child: SafeArea(
           child: Consumer<SupplierController>(
             builder: (context, controller, _) {
@@ -38,9 +38,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
                         'Cargando...',
                         style: TextStyle(
                           fontSize: 14,
-                          color: CupertinoColors.secondaryLabel.resolveFrom(
-                            context,
-                          ),
+                          color: JPCupertinoColors.secondaryLabel(context),
                         ),
                       ),
                     ],
@@ -54,7 +52,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
                   icon: CupertinoIcons.checkmark_seal,
                   titulo: 'Verificación pendiente',
                   mensaje: 'Debes estar verificado para gestionar promociones.',
-                  color: CupertinoColors.activeOrange,
+                  color: JPCupertinoColors.warning(context),
                 );
               }
 
@@ -69,7 +67,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
                   titulo: 'Sin promociones',
                   mensaje:
                       'Crea tu primera promoción para destacar en el catálogo.',
-                  color: CupertinoColors.systemGrey,
+                  color: JPCupertinoColors.systemGrey(context),
                   showButton: true,
                 );
               }
@@ -118,7 +116,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: CupertinoColors.label.resolveFrom(context),
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -126,7 +124,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
                   'Destaca tus productos con ofertas especiales',
                   style: TextStyle(
                     fontSize: 14,
-                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                 ),
               ],
@@ -141,9 +139,9 @@ class _PromocionesTabState extends State<PromocionesTab> {
                 color: AppColorsPrimary.main,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(
+              child: Icon(
                 CupertinoIcons.add,
-                color: Colors.white,
+                color: JPCupertinoColors.white,
                 size: 20,
               ),
             ),
@@ -163,11 +161,11 @@ class _PromocionesTabState extends State<PromocionesTab> {
       onPressed: () => _mostrarOpcionesPromo(context, promo),
       child: Container(
         decoration: BoxDecoration(
-          color: CupertinoColors.systemBackground.resolveFrom(context),
+          color: JPCupertinoColors.surface(context),
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
+              color: JPCupertinoColors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -192,7 +190,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            color: CupertinoColors.label.resolveFrom(context),
+                            color: JPCupertinoColors.label(context),
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -206,9 +204,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
                     promo.descripcion,
                     style: TextStyle(
                       fontSize: 14,
-                      color: CupertinoColors.secondaryLabel.resolveFrom(
-                        context,
-                      ),
+                      color: JPCupertinoColors.secondaryLabel(context),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -224,9 +220,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
                             promo.textoTiempoRestante,
                             style: TextStyle(
                               fontSize: 12,
-                              color: CupertinoColors.secondaryLabel.resolveFrom(
-                                context,
-                              ),
+                              color: JPCupertinoColors.secondaryLabel(context),
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -284,8 +278,8 @@ class _PromocionesTabState extends State<PromocionesTab> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: activa
-            ? CupertinoColors.activeGreen.withValues(alpha: 0.15)
-            : CupertinoColors.systemGrey.withValues(alpha: 0.15),
+            ? JPCupertinoColors.success(context).withValues(alpha: 0.15)
+            : JPCupertinoColors.systemGrey(context).withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -294,8 +288,8 @@ class _PromocionesTabState extends State<PromocionesTab> {
           fontSize: 12,
           fontWeight: FontWeight.w500,
           color: activa
-              ? CupertinoColors.activeGreen
-              : CupertinoColors.systemGrey,
+              ? JPCupertinoColors.success(context)
+              : JPCupertinoColors.systemGrey(context),
         ),
       ),
     );
@@ -347,7 +341,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
             const SizedBox(height: 8),
@@ -356,14 +350,14 @@ class _PromocionesTabState extends State<PromocionesTab> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
               ),
             ),
             if (showButton) ...[
               const SizedBox(height: 24),
               CupertinoButton.filled(
                 onPressed: () => _abrirFormulario(context),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(CupertinoIcons.add, size: 18),
@@ -389,13 +383,13 @@ class _PromocionesTabState extends State<PromocionesTab> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: CupertinoColors.systemRed.withValues(alpha: 0.1),
+                color: JPCupertinoColors.error(context).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 CupertinoIcons.xmark_circle_fill,
                 size: 48,
-                color: CupertinoColors.systemRed,
+                color: JPCupertinoColors.error(context),
               ),
             ),
             const SizedBox(height: 24),
@@ -404,7 +398,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
             const SizedBox(height: 8),
@@ -413,13 +407,13 @@ class _PromocionesTabState extends State<PromocionesTab> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
               ),
             ),
             const SizedBox(height: 24),
             CupertinoButton.filled(
               onPressed: () => controller.refrescar(),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(CupertinoIcons.refresh, size: 18),
@@ -438,7 +432,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: JPCupertinoColors.transparent,
       builder: (_) => buildFormularioPromocion(promo: promo),
     );
   }
@@ -454,7 +448,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
               Navigator.pop(context);
               _abrirFormulario(context, promo: promo);
             },
-            child: const Text('Editar'),
+            child: Text('Editar'),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
@@ -471,12 +465,12 @@ class _PromocionesTabState extends State<PromocionesTab> {
               Navigator.pop(context);
               _confirmarEliminar(context, promo);
             },
-            child: const Text('Eliminar'),
+            child: Text('Eliminar'),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
+          child: Text('Cancelar'),
         ),
       ),
     );
@@ -493,7 +487,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
         content: Text('¿Estás seguro de eliminar "${promo.titulo}"?'),
         actions: [
           CupertinoDialogAction(
-            child: const Text('Cancelar'),
+            child: Text('Cancelar'),
             onPressed: () => Navigator.pop(ctx),
           ),
           CupertinoDialogAction(
@@ -510,7 +504,7 @@ class _PromocionesTabState extends State<PromocionesTab> {
                 ok,
               );
             },
-            child: const Text('Eliminar'),
+            child: Text('Eliminar'),
           ),
         ],
       ),
@@ -535,8 +529,8 @@ class _PromocionesTabState extends State<PromocionesTab> {
       SnackBar(
         content: Text(message),
         backgroundColor: success
-            ? CupertinoColors.activeGreen
-            : CupertinoColors.systemRed,
+            ? JPCupertinoColors.success(context)
+            : JPCupertinoColors.error(context),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),

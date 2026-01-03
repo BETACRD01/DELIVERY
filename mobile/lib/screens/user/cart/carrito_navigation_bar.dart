@@ -18,15 +18,15 @@ class CarritoNavigationBar extends StatelessWidget
   Widget build(BuildContext context) {
     return CupertinoNavigationBar(
       backgroundColor: JPCupertinoColors.surface(context),
-      middle: const Text('Mi Carrito'),
+      middle: Text('Mi Carrito'),
       trailing: estaVacio
-          ? const SizedBox.shrink()
+          ? SizedBox.shrink()
           : CupertinoButton(
               padding: EdgeInsets.zero,
               onPressed: onLimpiar,
               child: Icon(
                 CupertinoIcons.trash,
-                color: JPCupertinoColors.systemRed(context),
+                color: JPCupertinoColors.error(context),
               ),
             ),
       border: Border(

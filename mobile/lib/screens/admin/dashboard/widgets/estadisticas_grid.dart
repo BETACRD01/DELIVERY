@@ -1,11 +1,9 @@
 // lib/screens/admin/dashboard/widgets/estadisticas_grid.dart
 import 'package:flutter/material.dart';
 import '../../../../controllers/admin/dashboard_controller.dart';
-import '../constants/dashboard_colors.dart';
 import '../../../../config/routing/rutas.dart';
 
-import 'package:provider/provider.dart';
-import '../../../../providers/core/theme_provider.dart';
+import '../../../../theme/jp_theme.dart';
 
 class EstadisticasGrid extends StatelessWidget {
   final DashboardController controller;
@@ -14,8 +12,6 @@ class EstadisticasGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeProvider>(context).isDarkMode;
-
     return GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
@@ -29,18 +25,16 @@ class EstadisticasGrid extends StatelessWidget {
           'Usuarios',
           controller.totalUsuarios.toString(),
           Icons.people,
-          DashboardColors.azul,
+          JPColors.dashboardBlue,
           '+12 este mes',
-          isDark,
         ),
         _buildCardEstadistica(
           context,
           'Proveedores',
           controller.totalProveedores.toString(),
           Icons.store,
-          DashboardColors.verde,
+          JPColors.dashboardGreen,
           '${controller.proveedoresPendientes} pendientes',
-          isDark,
         ),
         InkWell(
           onTap: () {
@@ -53,9 +47,8 @@ class EstadisticasGrid extends StatelessWidget {
             'Solicitudes',
             controller.solicitudesPendientesCount.toString(),
             Icons.assignment,
-            DashboardColors.naranja,
+            JPColors.dashboardAmber,
             'Pendientes',
-            isDark,
           ),
         ),
         _buildCardEstadistica(
@@ -63,27 +56,24 @@ class EstadisticasGrid extends StatelessWidget {
           'Repartidores',
           controller.totalRepartidores.toString(),
           Icons.delivery_dining,
-          DashboardColors.naranja,
+          JPColors.dashboardAmber,
           '${controller.totalRepartidores - 2} activos',
-          isDark,
         ),
         _buildCardEstadistica(
           context,
           'Ventas',
           '\$${controller.ventasTotales.toStringAsFixed(0)}', // Removed cents for cleaner look
           Icons.attach_money,
-          DashboardColors.verde,
+          JPColors.dashboardGreen,
           '+8% vs mes anterior',
-          isDark,
         ),
         _buildCardEstadistica(
           context,
           'Pedidos',
           controller.pedidosActivos.toString(),
           Icons.shopping_cart,
-          DashboardColors.morado,
+          JPColors.dashboardViolet,
           'En proceso',
-          isDark,
         ),
       ],
     );
@@ -96,11 +86,10 @@ class EstadisticasGrid extends StatelessWidget {
     IconData icono,
     Color color,
     String subtitulo,
-    bool isDark,
   ) {
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
@@ -125,7 +114,7 @@ class EstadisticasGrid extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: isDark ? Colors.white : Colors.black,
+                    color: JPCupertinoColors.label(context),
                   ),
                 ),
               ],
@@ -138,7 +127,7 @@ class EstadisticasGrid extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    color: JPCupertinoColors.secondaryLabel(context),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -148,7 +137,7 @@ class EstadisticasGrid extends StatelessWidget {
                   subtitulo,
                   style: TextStyle(
                     fontSize: 11,
-                    color: isDark ? Colors.grey[600] : Colors.grey[500],
+                    color: JPCupertinoColors.tertiaryLabel(context),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

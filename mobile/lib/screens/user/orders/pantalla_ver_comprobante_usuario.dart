@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/theme/jp_theme.dart';
 import 'package:flutter/cupertino.dart';
 
 class PantallaVerComprobanteUsuario extends StatelessWidget {
@@ -12,11 +13,11 @@ class PantallaVerComprobanteUsuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: JPCupertinoColors.black,
       appBar: AppBar(
-        title: const Text('Comprobante'),
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
+        title: Text('Comprobante'),
+        backgroundColor: JPCupertinoColors.black,
+        foregroundColor: JPCupertinoColors.white,
       ),
       body: InteractiveViewer(
         minScale: 0.8,
@@ -32,10 +33,10 @@ class PantallaVerComprobanteUsuario extends StatelessWidget {
               );
             },
             errorBuilder: (context, error, stackTrace) {
-              return const Center(
+              return Center(
                 child: Text(
                   'No se pudo cargar el comprobante',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: JPCupertinoColors.white),
                 ),
               );
             },

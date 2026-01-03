@@ -118,17 +118,19 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
     final confirmar = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Eliminar foto'),
-        content: const Text('¿Estás seguro de eliminar tu foto de perfil?'),
+        title: Text('Eliminar foto'),
+        content: Text('¿Estás seguro de eliminar tu foto de perfil?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancelar'),
+            child: Text('Cancelar'),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(backgroundColor: JPColors.error),
-            child: const Text('Eliminar'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: JPCupertinoColors.error(context),
+            ),
+            child: Text('Eliminar'),
           ),
         ],
       ),
@@ -161,41 +163,44 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: JPColors.background,
+      backgroundColor: JPCupertinoColors.background(context),
       appBar: AppBar(
-        title: const Text('Cambiar Foto de Perfil'),
-        backgroundColor: Colors.white,
-        foregroundColor: JPColors.textPrimary,
+        title: Text('Cambiar Foto de Perfil'),
+        backgroundColor: JPCupertinoColors.white,
+        foregroundColor: JPCupertinoColors.label(context),
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
-          child: Container(color: Colors.grey.shade200, height: 1),
+          child: Container(
+            color: JPCupertinoColors.systemGrey5(context),
+            height: 1,
+          ),
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20),
         child: Column(
           children: [
             _buildHeaderCard(),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             if (_imagenSeleccionada == null) ...[
               _buildBotonOpcion(
                 icono: Icons.photo_library_rounded,
                 texto: 'Seleccionar de Galería',
                 onTap: _seleccionarDesdeGaleria,
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: 14),
               _buildBotonOpcion(
                 icono: Icons.camera_alt_rounded,
                 texto: 'Tomar Foto',
                 onTap: _tomarFoto,
               ),
               if (widget.fotoActual != null) ...[
-                const SizedBox(height: 14),
+                SizedBox(height: 14),
                 _buildBotonOpcion(
                   icono: Icons.delete_outline,
                   texto: 'Eliminar Foto Actual',
-                  color: JPColors.error,
+                  color: JPCupertinoColors.error(context),
                   onTap: _eliminarFoto,
                 ),
               ],
@@ -203,30 +208,30 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
               ElevatedButton.icon(
                 onPressed: _guardando ? null : _guardarCambios,
                 icon: _guardando
-                    ? const SizedBox(
+                    ? SizedBox(
                         width: 18,
                         height: 18,
                         child: CupertinoActivityIndicator(radius: 14),
                       )
-                    : const Icon(Icons.check_rounded),
+                    : Icon(Icons.check_rounded),
                 label: Text(_guardando ? 'Guardando...' : 'Guardar Cambios'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: JPColors.success,
+                  backgroundColor: JPCupertinoColors.success(context),
                   minimumSize: const Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               OutlinedButton.icon(
                 onPressed: _guardando
                     ? null
                     : () {
                         setState(() => _imagenSeleccionada = null);
                       },
-                icon: const Icon(Icons.refresh_rounded),
-                label: const Text('Cambiar selección'),
+                icon: Icon(Icons.refresh_rounded),
+                label: Text('Cambiar selección'),
                 style: OutlinedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(
@@ -244,13 +249,13 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
   Widget _buildHeaderCard() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 22, horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: JPCupertinoColors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: JPCupertinoColors.black.withValues(alpha: 0.05),
             blurRadius: 14,
             offset: const Offset(0, 6),
           ),
@@ -258,12 +263,15 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
       ),
       child: Column(
         children: [
-          const Text(
+          Text(
             'Elige desde galería o toma una foto nueva.',
-            style: TextStyle(color: JPColors.textSecondary, fontSize: 13),
+            style: TextStyle(
+              color: JPCupertinoColors.secondaryLabel(context),
+              fontSize: 13,
+            ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           _buildPreview(),
         ],
       ),
@@ -276,16 +284,19 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
       height: 160,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: JPColors.surface,
+        color: JPCupertinoColors.surface(context),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: JPCupertinoColors.black.withValues(alpha: 0.08),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
         ],
-        gradient: const LinearGradient(
-          colors: [Color(0xFFF8FAFC), Colors.white],
+        gradient: LinearGradient(
+          colors: [
+            JPCupertinoColors.systemGrey6(context),
+            JPCupertinoColors.white,
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -308,8 +319,12 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
 
   Widget _buildPlaceholder() {
     return Container(
-      color: JPColors.primary.withValues(alpha: 0.1),
-      child: const Icon(Icons.person, size: 80, color: JPColors.primary),
+      color: JPCupertinoColors.primary(context).withValues(alpha: 0.1),
+      child: Icon(
+        Icons.person,
+        size: 80,
+        color: JPCupertinoColors.primary(context),
+      ),
     );
   }
 
@@ -319,14 +334,14 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
     required VoidCallback onTap,
     Color? color,
   }) {
-    final baseColor = color ?? JPColors.primary;
+    final baseColor = color ?? JPCupertinoColors.primary(context);
     return InkWell(
       onTap: _guardando ? null : onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 14),
+        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: JPCupertinoColors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: baseColor.withValues(alpha: 0.5),
@@ -334,7 +349,7 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
+              color: JPCupertinoColors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -343,21 +358,23 @@ class _PantallaEditarFotoState extends State<PantallaEditarFoto> {
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: baseColor.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(icono, color: baseColor, size: 22),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: Text(
                 texto,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
-                  color: color != null ? baseColor : JPColors.textPrimary,
+                  color: color != null
+                      ? baseColor
+                      : JPCupertinoColors.label(context),
                 ),
               ),
             ),

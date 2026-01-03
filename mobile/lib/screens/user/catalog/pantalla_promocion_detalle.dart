@@ -149,7 +149,7 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
 
     if (promocion == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Error')),
+        appBar: AppBar(title: Text('Error')),
         body: const Center(child: Text('Promoción no encontrada')),
       );
     }
@@ -169,14 +169,14 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                   children: [
                     _buildHeader(promocion),
                     if (promocion.fechaFin != null) ...[
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       _buildContador(),
                     ],
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     _buildProductosIncluidos(),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     // _buildTerminos(), // Removed inline terms
-                    const SizedBox(height: 100),
+                    SizedBox(height: 100),
                   ],
                 ),
               ),
@@ -200,19 +200,23 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
     return SliverAppBar(
       expandedHeight: 240, // Reduced height
       pinned: true,
-      backgroundColor: CupertinoColors.systemBackground.resolveFrom(context),
-      foregroundColor: CupertinoColors.label.resolveFrom(context),
+      backgroundColor: JPCupertinoColors.surface(context),
+      foregroundColor: JPCupertinoColors.label(context),
       elevation: 0,
       actions: [
         // Terms & Conditions Info Button
         Container(
-          margin: const EdgeInsets.only(right: 16),
+          margin: EdgeInsets.only(right: 16),
           decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: 0.3),
+            color: JPCupertinoColors.black.withValues(alpha: 0.3),
             shape: BoxShape.circle,
           ),
           child: IconButton(
-            icon: const Icon(Icons.info_outline, color: Colors.white, size: 24),
+            icon: Icon(
+              Icons.info_outline,
+              color: JPCupertinoColors.white,
+              size: 24,
+            ),
             onPressed: () => _mostrarDialogoTerminos(context),
             tooltip: 'Términos y Condiciones',
           ),
@@ -261,9 +265,9 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withValues(alpha: 0.3),
-                    Colors.transparent,
-                    Colors.black.withValues(alpha: 0.1),
+                    JPCupertinoColors.black.withValues(alpha: 0.3),
+                    JPCupertinoColors.transparent,
+                    JPCupertinoColors.black.withValues(alpha: 0.1),
                   ],
                   stops: const [0.0, 0.4, 1.0],
                 ),
@@ -275,16 +279,13 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
               bottom: 16,
               left: 16,
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: CupertinoColors.white,
+                  color: JPCupertinoColors.white,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
+                      color: JPCupertinoColors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -294,7 +295,7 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(CupertinoIcons.tag_fill, color: promoColor, size: 18),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Text(
                       promocion.descuento,
                       style: TextStyle(
@@ -316,21 +317,20 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
 
   Widget _buildHeader(PromocionModel promocion) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
+      padding: EdgeInsets.fromLTRB(16, 20, 16, 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: promocion.esVigente
-                      ? JPColors.success.withValues(alpha: 0.1)
-                      : JPColors.error.withValues(alpha: 0.1),
+                      ? JPCupertinoColors.success(
+                          context,
+                        ).withValues(alpha: 0.1)
+                      : JPCupertinoColors.error(context).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -340,16 +340,16 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                       promocion.esVigente ? Icons.check_circle : Icons.cancel,
                       size: 14,
                       color: promocion.esVigente
-                          ? JPColors.success
-                          : JPColors.error,
+                          ? JPCupertinoColors.success(context)
+                          : JPCupertinoColors.error(context),
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4),
                     Text(
                       promocion.esVigente ? 'ACTIVA' : 'EXPIRADA',
                       style: TextStyle(
                         color: promocion.esVigente
-                            ? JPColors.success
-                            : JPColors.error,
+                            ? JPCupertinoColors.success(context)
+                            : JPCupertinoColors.error(context),
                         fontWeight: FontWeight.bold,
                         fontSize: 11,
                       ),
@@ -357,11 +357,11 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                   ],
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               // Could put something else here if needed
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
 
           // Título
           Text(
@@ -369,19 +369,19 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
               height: 1.1,
               letterSpacing: -0.5,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
 
           // Subtítulo
           Text(
             promocion.descripcion,
             style: TextStyle(
               fontSize: 15,
-              color: CupertinoColors.secondaryLabel.resolveFrom(context),
+              color: JPCupertinoColors.secondaryLabel(context),
               height: 1.4,
             ),
           ),
@@ -396,15 +396,15 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
     final minutos = _tiempoRestante.inMinutes.remainder(60);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: CupertinoColors.systemBackground.resolveFrom(context),
+          color: JPCupertinoColors.surface(context),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
+              color: JPCupertinoColors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -412,8 +412,12 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
         ),
         child: Row(
           children: [
-            const Icon(Icons.timer_outlined, color: JPColors.primary, size: 20),
-            const SizedBox(width: 10),
+            Icon(
+              Icons.timer_outlined,
+              color: JPCupertinoColors.primary(context),
+              size: 20,
+            ),
+            SizedBox(width: 10),
             Expanded(
               child: Text(
                 _tiempoRestante == Duration.zero
@@ -422,7 +426,7 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
-                  color: CupertinoColors.label.resolveFrom(context),
+                  color: JPCupertinoColors.label(context),
                 ),
               ),
             ),
@@ -439,17 +443,17 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             'Incluye:', // Shorter title
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.bold,
-              color: CupertinoColors.label.resolveFrom(context),
+              color: JPCupertinoColors.label(context),
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
 
         if (_loading)
           const Center(
@@ -460,22 +464,22 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
           )
         else if (_error.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               _error,
-              style: const TextStyle(
-                color: JPColors.textSecondary,
+              style: TextStyle(
+                color: JPCupertinoColors.secondaryLabel(context),
                 fontSize: 13,
               ),
             ),
           )
         else if (_productosIncluidos.isEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: CupertinoColors.systemBackground.resolveFrom(context),
+                color: JPCupertinoColors.surface(context),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -485,14 +489,14 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                     size: 24,
                     color: PrimaryColors.main,
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       'Promoción válida en todo el catálogo',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: CupertinoColors.label.resolveFrom(context),
+                        color: JPCupertinoColors.label(context),
                       ),
                     ),
                   ),
@@ -504,12 +508,12 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             itemCount: _productosIncluidos.length,
             itemBuilder: (context, index) {
               return Padding(
                 // Add tiny padding for separation
-                padding: const EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.only(bottom: 10),
                 child: _ProductoPromoCard(
                   producto: _productosIncluidos[index],
                   onTap: () => Rutas.irAProductoDetalle(
@@ -529,11 +533,11 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
     showCupertinoModalPopup(
       context: context,
       builder: (context) => Container(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: CupertinoColors.systemBackground.resolveFrom(context),
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          color: JPCupertinoColors.surface(context),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -547,29 +551,29 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: CupertinoColors.systemGrey6.resolveFrom(context),
+                color: JPCupertinoColors.systemGrey6(context),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 CupertinoIcons.doc_text,
                 size: 32,
-                color: Colors.grey,
+                color: JPCupertinoColors.systemGrey(context),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               'Términos y Condiciones',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             // Default static terms for now, matching previous hardcoded ones
             _buildTerminoItem(
               'Promoción válida solo durante el periodo especificado.',
@@ -579,15 +583,15 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
             ),
             _buildTerminoItem('No acumulable con otras promociones activas.'),
             _buildTerminoItem('Sujeto a disponibilidad de stock.'),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
               child: CupertinoButton.filled(
-                child: const Text('Entendido'),
+                child: Text('Entendido'),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
           ],
         ),
       ),
@@ -596,21 +600,25 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
 
   Widget _buildTerminoItem(String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.only(bottom: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 6),
-            child: Icon(Icons.circle, size: 6, color: Colors.grey),
+            child: Icon(
+              Icons.circle,
+              size: 6,
+              color: JPCupertinoColors.systemGrey(context),
+            ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Text(
               text,
               style: TextStyle(
                 fontSize: 14,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
                 height: 1.4,
               ),
             ),
@@ -636,12 +644,12 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
     final mostrarTotales = _productosIncluidos.isNotEmpty;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         boxShadow: [
           BoxShadow(
-            color: CupertinoColors.black.withValues(alpha: 0.05),
+            color: JPCupertinoColors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, -5),
           ),
@@ -660,12 +668,12 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                     children: [
                       if (ahorro > 0)
                         Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 6,
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(
+                            color: Color.fromARGB(
                               255,
                               51,
                               223,
@@ -675,37 +683,37 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                           ),
                           child: Text(
                             'Ahorras \$${ahorro.toStringAsFixed(2)}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Color.fromARGB(255, 37, 192, 235),
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                             ),
                           ),
                         ),
-                      const SizedBox(height: 2),
+                      SizedBox(height: 2),
                       Text(
                         'Total: \$${precioTotal.toStringAsFixed(2)}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w900,
-                          color: Colors.red,
+                          color: JPCupertinoColors.error(context),
                         ),
                       ),
                     ],
                   )
                 else
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       '¡Aprovecha esta oferta!',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: JPColors.textSecondary,
+                        color: JPCupertinoColors.secondaryLabel(context),
                       ),
                     ),
                   ),
 
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
 
                 Expanded(
                   child: ElevatedButton.icon(
@@ -715,11 +723,11 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: promocion.esVigente
                           ? PrimaryColors.main
-                          : Colors.grey,
-                      foregroundColor: Colors.white,
+                          : JPCupertinoColors.systemGrey(context),
+                      foregroundColor: JPCupertinoColors.white,
                       elevation: promocion.esVigente ? 4 : 0,
                       shadowColor: PrimaryColors.main.withValues(alpha: 0.4),
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         vertical: 16,
                         horizontal: 20,
                       ),
@@ -735,7 +743,7 @@ class _PantallaPromocionDetalleState extends State<PantallaPromocionDetalle> {
                     ),
                     label: Text(
                       mostrarTotales ? 'Agregar combo' : 'Explorar productos',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                         letterSpacing: 0.5,
@@ -816,7 +824,7 @@ class _ProductoPromoCard extends StatelessWidget {
     final tieneDescuento = producto.enOferta && producto.precioAnterior != null;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
           context,
@@ -824,7 +832,7 @@ class _ProductoPromoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: CupertinoColors.black.withValues(alpha: 0.06),
+            color: JPCupertinoColors.black.withValues(alpha: 0.06),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -834,7 +842,7 @@ class _ProductoPromoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.all(12),
           child: Row(
             children: [
               // Imagen del producto con badge
@@ -877,30 +885,32 @@ class _ProductoPromoCard extends StatelessWidget {
                       top: 4,
                       right: 4,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 6,
                           vertical: 3,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: JPCupertinoColors.error(context),
                           borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.2),
+                              color: JPCupertinoColors.black.withValues(
+                                alpha: 0.2,
+                              ),
                               blurRadius: 4,
                             ),
                           ],
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.local_fire_department_rounded,
-                          color: Colors.white,
+                          color: JPCupertinoColors.white,
                           size: 16,
                         ),
                       ),
                     ),
                 ],
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
 
               // Info
               Expanded(
@@ -912,13 +922,13 @@ class _ProductoPromoCard extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
-                        color: CupertinoColors.label.resolveFrom(context),
+                        color: JPCupertinoColors.label(context),
                         height: 1.2,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Text(
                       producto.descripcion,
                       style: TextStyle(
@@ -930,7 +940,7 @@ class _ProductoPromoCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -946,23 +956,25 @@ class _ProductoPromoCard extends StatelessWidget {
                               decorationThickness: 2,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                         ],
                         Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 10,
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.red.withValues(alpha: 0.1),
+                            color: JPCupertinoColors.error(
+                              context,
+                            ).withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             '\$${producto.precio.toStringAsFixed(2)}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w900,
-                              color: Colors.red,
+                              color: JPCupertinoColors.error(context),
                             ),
                           ),
                         ),
@@ -995,11 +1007,11 @@ class _CarritoCircularButton extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: CupertinoColors.systemBackground.resolveFrom(context),
+              color: JPCupertinoColors.surface(context),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: CupertinoColors.black.withValues(alpha: 0.2),
+                  color: JPCupertinoColors.black.withValues(alpha: 0.2),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -1018,9 +1030,9 @@ class _CarritoCircularButton extends StatelessWidget {
                     top: 8,
                     right: 8,
                     child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: JPCupertinoColors.error(context),
                         shape: BoxShape.circle,
                       ),
                       constraints: const BoxConstraints(
@@ -1030,8 +1042,8 @@ class _CarritoCircularButton extends StatelessWidget {
                       child: Text(
                         cantidad > 9 ? '9+' : '$cantidad',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: JPCupertinoColors.white,
                           fontSize: 10,
                           fontWeight: FontWeight.w900,
                         ),

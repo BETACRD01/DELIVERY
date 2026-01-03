@@ -171,7 +171,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
             slivers: [
               SliverToBoxAdapter(child: _buildHeader()),
               SliverPadding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 40),
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 40),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
                     if (_controller.errorPerfil != null ||
@@ -194,37 +194,35 @@ class _PantallaPerfilState extends State<PantallaPerfil>
 
   Widget _buildHeader() {
     final perfil = _controller.perfil;
-    if (perfil == null) return const SizedBox(height: 100);
+    if (perfil == null) return SizedBox(height: 100);
 
     return Container(
-      decoration: BoxDecoration(
-        color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
-      ),
+      decoration: BoxDecoration(color: JPCupertinoColors.background(context)),
       child: SafeArea(
         bottom: false,
         child: Column(
           children: [
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               'Mi Perfil',
               style: TextStyle(
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
 
             // Card del perfil compacta
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               decoration: BoxDecoration(
-                color: CupertinoColors.systemBackground.resolveFrom(context),
+                color: JPCupertinoColors.surface(context),
                 borderRadius: BorderRadius.circular(14),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.04),
+                    color: JPCupertinoColors.black.withValues(alpha: 0.04),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -234,7 +232,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                 children: [
                   // Foto de perfil
                   Container(
-                    padding: const EdgeInsets.all(2),
+                    padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(
@@ -245,7 +243,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                       ),
                     ),
                     child: Container(
-                      padding: const EdgeInsets.all(2),
+                      padding: EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         color: CupertinoColors.systemBackground.resolveFrom(
                           context,
@@ -259,7 +257,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                     ),
                   ),
 
-                  const SizedBox(width: 14),
+                  SizedBox(width: 14),
 
                   // Nombre y correo
                   Expanded(
@@ -269,7 +267,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                         Text(
                           perfil.usuarioNombre,
                           style: TextStyle(
-                            color: CupertinoColors.label.resolveFrom(context),
+                            color: JPCupertinoColors.label(context),
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                             letterSpacing: -0.3,
@@ -277,7 +275,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 2),
+                        SizedBox(height: 2),
                         Text(
                           perfil.usuarioEmail,
                           style: TextStyle(
@@ -290,31 +288,34 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                           overflow: TextOverflow.ellipsis,
                         ),
                         if (perfil.esClienteFrecuente) ...[
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
+                              gradient: LinearGradient(
+                                colors: [
+                                  JPCupertinoColors.systemYellow(context),
+                                  JPCupertinoColors.systemOrange(context),
+                                ],
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
                                   CupertinoIcons.star_fill,
                                   size: 10,
-                                  color: Colors.white,
+                                  color: JPCupertinoColors.white,
                                 ),
                                 SizedBox(width: 4),
                                 Text(
                                   'Cliente Frecuente',
                                   style: TextStyle(
-                                    color: CupertinoColors.white,
+                                    color: JPCupertinoColors.white,
                                     fontSize: 10,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -330,7 +331,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
               ),
             ),
 
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
           ],
         ),
       ),
@@ -342,11 +343,11 @@ class _PantallaPerfilState extends State<PantallaPerfil>
 
     // Si no hay estadísticas o no hay calificaciones, no mostrar nada
     if (estadisticas == null || estadisticas.totalResenas == 0) {
-      return const SizedBox.shrink();
+      return SizedBox.shrink();
     }
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: 16),
       child: CompactRatingSummaryCard(
         averageRating: estadisticas.calificacion,
         totalReviews: estadisticas.totalResenas,
@@ -362,41 +363,41 @@ class _PantallaPerfilState extends State<PantallaPerfil>
   Widget _buildSettingsSection() {
     return Column(
       children: [
-        const SizedBox(height: 16),
+        SizedBox(height: 16),
 
         // CUENTA
         _buildSectionHeader('CUENTA'),
         _buildSettingsCard([
           _buildSettingsTile(
             icon: CupertinoIcons.person_fill,
-            iconBgColor: const Color(0xFF5AC8FA),
+            iconBgColor: JPCupertinoColors.systemTeal(context),
             title: 'Información del perfil',
             onTap: _editarPerfil,
           ),
           _buildDivider(),
           _buildSettingsTile(
             icon: CupertinoIcons.location_solid,
-            iconBgColor: const Color(0xFF34C759),
+            iconBgColor: JPCupertinoColors.systemGreen(context),
             title: 'Mis direcciones',
             onTap: () => _navegarA(const PantallaListaDirecciones()),
           ),
         ]),
 
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
 
         // PREFERENCIAS
         _buildSectionHeader('PREFERENCIAS'),
         _buildSettingsCard([
           _buildSettingsTile(
             icon: CupertinoIcons.bell_fill,
-            iconBgColor: const Color(0xFFFF3B30),
+            iconBgColor: JPCupertinoColors.systemRed(context),
             title: 'Notificaciones',
             onTap: () => _navegarA(const PantallaNotificaciones()),
           ),
           _buildDivider(),
           _buildSettingsTile(
             icon: CupertinoIcons.globe,
-            iconBgColor: const Color(0xFF007AFF),
+            iconBgColor: JPCupertinoColors.systemBlue(context),
             title: 'Idioma',
             onTap: () => _navegarA(const PantallaIdioma()),
           ),
@@ -407,8 +408,8 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                   ? CupertinoIcons.moon_fill
                   : CupertinoIcons.sun_max_fill,
               iconBgColor: themeProvider.isDarkMode
-                  ? const Color(0xFF5856D6)
-                  : const Color(0xFFFFCC00),
+                  ? JPCupertinoColors.systemIndigo(context)
+                  : JPCupertinoColors.systemYellow(context),
               title: 'Modo oscuro',
               onTap: () => themeProvider.toggleTheme(!themeProvider.isDarkMode),
               trailing: CupertinoSwitch(
@@ -419,14 +420,14 @@ class _PantallaPerfilState extends State<PantallaPerfil>
           ),
         ]),
 
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
 
         // RIFAS Y PROMOCIONES
         _buildSectionHeader('RIFAS Y PROMOCIONES'),
         _buildSettingsCard([
           _buildSettingsTile(
             icon: CupertinoIcons.ticket_fill,
-            iconBgColor: const Color(0xFFFF9500),
+            iconBgColor: JPCupertinoColors.systemOrange(context),
             title: 'Rifas activas',
             onTap: () => _navegarA(const PantallaRifaActiva()),
           ),
@@ -434,54 +435,54 @@ class _PantallaPerfilState extends State<PantallaPerfil>
 
         // CAMBIAR ROL (solo si hay roles disponibles)
         if (_tieneRolesDisponibles()) ...[
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           _buildSectionHeader('CAMBIAR ROL'),
           _buildRoleCard(),
         ],
 
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
 
         // SOLICITUDES
         _buildSectionHeader('SOLICITUDES'),
         _buildSettingsCard([
           _buildSettingsTile(
             icon: CupertinoIcons.arrow_right_arrow_left,
-            iconBgColor: const Color(0xFFAF52DE),
+            iconBgColor: JPCupertinoColors.systemPurple(context),
             title: 'Solicitar cambio de rol',
             subtitle: 'Solicita ser proveedor o repartidor',
             onTap: () => _navegarA(const PantallaSolicitarRol()),
           ),
         ]),
 
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
 
         // SEGURIDAD
         _buildSectionHeader('SEGURIDAD'),
         _buildSettingsCard([
           _buildSettingsTile(
             icon: CupertinoIcons.lock_fill,
-            iconBgColor: const Color(0xFF5AC8FA),
+            iconBgColor: JPCupertinoColors.systemTeal(context),
             title: 'Cambiar contraseña',
             subtitle: 'Actualiza tu clave de acceso',
             onTap: _abrirCambiarPassword,
           ),
         ]),
 
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
 
         // SOPORTE (AL FINAL)
         _buildSectionHeader('SOPORTE'),
         _buildSettingsCard([
           _buildSettingsTile(
             icon: CupertinoIcons.question_circle_fill,
-            iconBgColor: const Color(0xFF5856D6),
+            iconBgColor: JPCupertinoColors.systemIndigo(context),
             title: 'Ayuda y soporte',
             onTap: () => _navegarA(const PantallaAyudaSoporte()),
           ),
           _buildDivider(),
           _buildSettingsTile(
             icon: CupertinoIcons.doc_text_fill,
-            iconBgColor: const Color(0xFF8E8E93),
+            iconBgColor: JPCupertinoColors.systemGrey(context),
             title: 'Términos y condiciones',
             onTap: () => _navegarA(const PantallaTerminos()),
           ),
@@ -492,7 +493,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
 
   Widget _buildSectionHeader(String title) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16, bottom: 8),
+      padding: EdgeInsets.only(left: 16, bottom: 8),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
@@ -500,7 +501,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: CupertinoColors.systemGrey.resolveFrom(context),
+            color: JPCupertinoColors.systemGrey(context),
             letterSpacing: -0.08,
           ),
         ),
@@ -511,7 +512,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
   Widget _buildSettingsCard(List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(children: children),
@@ -520,9 +521,9 @@ class _PantallaPerfilState extends State<PantallaPerfil>
 
   Widget _buildRoleCard() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemBackground.resolveFrom(context),
+        color: JPCupertinoColors.surface(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: _buildRoleSwitcher(),
@@ -541,7 +542,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
       padding: EdgeInsets.zero,
       onPressed: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
             Container(
@@ -551,9 +552,9 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                 color: iconBgColor,
                 borderRadius: BorderRadius.circular(7),
               ),
-              child: Icon(icon, color: Colors.white, size: 18),
+              child: Icon(icon, color: JPCupertinoColors.white, size: 18),
             ),
-            const SizedBox(width: 14),
+            SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -562,7 +563,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                     title,
                     style: TextStyle(
                       fontSize: 16,
-                      color: CupertinoColors.label.resolveFrom(context),
+                      color: JPCupertinoColors.label(context),
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -583,7 +584,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
                 Icon(
                   CupertinoIcons.chevron_forward,
                   size: 14,
-                  color: CupertinoColors.systemGrey3.resolveFrom(context),
+                  color: JPCupertinoColors.systemGrey3(context),
                 ),
           ],
         ),
@@ -593,10 +594,10 @@ class _PantallaPerfilState extends State<PantallaPerfil>
 
   Widget _buildDivider() {
     return Padding(
-      padding: const EdgeInsets.only(left: 60),
+      padding: EdgeInsets.only(left: 60),
       child: Container(
         height: 0.5,
-        color: CupertinoColors.separator.resolveFrom(context),
+        color: JPCupertinoColors.separator(context),
       ),
     );
   }
@@ -608,7 +609,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
 
   Widget _buildRoleSwitcher() {
     if (_rolesCargando) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
         child: Center(child: CupertinoActivityIndicator()),
       );
@@ -637,20 +638,24 @@ class _PantallaPerfilState extends State<PantallaPerfil>
 
     // Colores dinámicos para el banner de advertencia
     final bgColor = isDark
-        ? const Color(0xFF5C4D00) // Amarillo oscuro para fondo dark
-        : const Color(0xFFFFF3CD); // Amarillo claro para light
+        ? JPCupertinoColors.systemYellow(context).withValues(
+            alpha: 0.6,
+          ) // Amarillo oscuro
+        : JPCupertinoColors.systemYellow(
+            context,
+          ).withValues(alpha: 0.2); // Amarillo claro
 
-    final borderColor = isDark
-        ? const Color(0xFF7A6500)
-        : const Color(0xFFFFECB5);
+    final borderColor = isDark ? Color(0xFF7A6500) : Color(0xFFFFECB5);
 
     final textColor = isDark
-        ? const Color(0xFFFFD54F) // Amarillo texto legible en dark
-        : const Color(0xFF856404);
+        ? JPCupertinoColors.systemYellow(
+            context,
+          ) // Amarillo texto legible en dark
+        : JPCupertinoColors.label(context);
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(12),
+      margin: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(10),
@@ -663,7 +668,7 @@ class _PantallaPerfilState extends State<PantallaPerfil>
             color: textColor,
             size: 20,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Text(
               'Alguna información no se pudo cargar.',
@@ -684,44 +689,44 @@ class _PantallaPerfilState extends State<PantallaPerfil>
   Widget _buildErrorState() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: CupertinoColors.systemRed.withValues(alpha: 0.1),
+                color: JPCupertinoColors.error(context).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 CupertinoIcons.xmark_circle_fill,
                 size: 48,
-                color: CupertinoColors.systemRed,
+                color: JPCupertinoColors.error(context),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             Text(
               'Error al cargar perfil',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               _controller.error ?? 'Ocurrió un problema inesperado',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                color: JPCupertinoColors.secondaryLabel(context),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             CupertinoButton.filled(
               onPressed: _recargarDatos,
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(CupertinoIcons.refresh, size: 18),
@@ -790,11 +795,11 @@ class _PantallaPerfilState extends State<PantallaPerfil>
           await showCupertinoDialog(
             context: context,
             builder: (dialogContext) => CupertinoAlertDialog(
-              title: const Text('Rol no disponible'),
+              title: Text('Rol no disponible'),
               content: Text(mensaje),
               actions: [
                 CupertinoDialogAction(
-                  child: const Text('OK'),
+                  child: Text('OK'),
                   onPressed: () => Navigator.pop(dialogContext),
                 ),
               ],
@@ -830,11 +835,11 @@ class _PantallaPerfilState extends State<PantallaPerfil>
         await showCupertinoDialog(
           context: context,
           builder: (dialogContext) => CupertinoAlertDialog(
-            title: const Text('Error'),
+            title: Text('Error'),
             content: Text('No se pudo cambiar de rol: $e'),
             actions: [
               CupertinoDialogAction(
-                child: const Text('OK'),
+                child: Text('OK'),
                 onPressed: () => Navigator.pop(dialogContext),
               ),
             ],

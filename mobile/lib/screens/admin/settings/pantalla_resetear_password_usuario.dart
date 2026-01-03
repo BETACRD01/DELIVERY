@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import '../../../../apis/admin/usuarios_admin_api.dart';
 import 'package:mobile/services/core/api/api_exception.dart';
 import '../../../../config/network/api_config.dart';
-import '../dashboard/constants/dashboard_colors.dart';
+import '../../../../theme/jp_theme.dart';
 
 class PantallaResetearPasswordUsuario extends StatefulWidget {
   const PantallaResetearPasswordUsuario({super.key});
@@ -81,9 +81,9 @@ class _PantallaResetearPasswordUsuarioState
       );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Contraseña actualizada'),
-            backgroundColor: DashboardColors.verde,
+          SnackBar(
+            content: const Text('Contraseña actualizada'),
+            backgroundColor: JPColors.success,
           ),
         );
         Navigator.of(context).pop();
@@ -99,12 +99,24 @@ class _PantallaResetearPasswordUsuarioState
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = JPCupertinoColors.background(context);
+    final primaryColor = JPCupertinoColors.primary(context);
+
     return Scaffold(
+      backgroundColor: bgColor,
       appBar: AppBar(
         title: const Text('Resetear password de usuario'),
-        backgroundColor: Colors.white,
-        foregroundColor: DashboardColors.morado,
-        elevation: 1,
+        backgroundColor: bgColor,
+        foregroundColor: primaryColor,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          color: JPCupertinoColors.label(context),
+          fontSize: 17,
+          fontWeight: FontWeight.w600,
+        ),
+        iconTheme: IconThemeData(color: primaryColor),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
@@ -115,9 +127,11 @@ class _PantallaResetearPasswordUsuarioState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Busca por email o nombre. Se aplicará al primer resultado.',
-              style: TextStyle(color: DashboardColors.gris),
+              style: TextStyle(
+                color: JPCupertinoColors.secondaryLabel(context),
+              ),
             ),
             const SizedBox(height: 12),
             Row(
@@ -125,9 +139,23 @@ class _PantallaResetearPasswordUsuarioState
                 Expanded(
                   child: TextField(
                     controller: _searchController,
-                    decoration: const InputDecoration(
+                    style: TextStyle(color: JPCupertinoColors.label(context)),
+                    decoration: InputDecoration(
                       labelText: 'Email o nombre',
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(
+                        color: JPCupertinoColors.secondaryLabel(context),
+                      ),
+                      border: const OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: JPCupertinoColors.systemGrey4(context),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: JPCupertinoColors.primary(context),
+                        ),
+                      ),
                     ),
                     onSubmitted: (_) => _buscar(),
                   ),
@@ -144,7 +172,7 @@ class _PantallaResetearPasswordUsuarioState
                       : const Icon(Icons.search),
                   label: const Text('Buscar'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: DashboardColors.morado,
+                    backgroundColor: primaryColor,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 14,
@@ -158,7 +186,7 @@ class _PantallaResetearPasswordUsuarioState
               const SizedBox(height: 8),
               Text(
                 _errorBusqueda!,
-                style: const TextStyle(color: DashboardColors.rojo),
+                style: const TextStyle(color: JPColors.error),
               ),
             ],
             const SizedBox(height: 12),
@@ -174,14 +202,29 @@ class _PantallaResetearPasswordUsuarioState
                     TextFormField(
                       controller: _passwordController,
                       obscureText: !_mostrarPassword,
+                      style: TextStyle(color: JPCupertinoColors.label(context)),
                       decoration: InputDecoration(
                         labelText: 'Nueva contraseña',
+                        labelStyle: TextStyle(
+                          color: JPCupertinoColors.secondaryLabel(context),
+                        ),
                         border: const OutlineInputBorder(),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: JPCupertinoColors.systemGrey4(context),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: JPCupertinoColors.primary(context),
+                          ),
+                        ),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _mostrarPassword
                                 ? Icons.visibility_off
                                 : Icons.visibility,
+                            color: JPCupertinoColors.secondaryLabel(context),
                           ),
                           onPressed: () => setState(
                             () => _mostrarPassword = !_mostrarPassword,
@@ -202,7 +245,7 @@ class _PantallaResetearPasswordUsuarioState
                       const SizedBox(height: 8),
                       Text(
                         _errorReset!,
-                        style: const TextStyle(color: DashboardColors.rojo),
+                        style: const TextStyle(color: JPColors.error),
                       ),
                     ],
                     const Spacer(),
@@ -222,7 +265,7 @@ class _PantallaResetearPasswordUsuarioState
                               : 'Resetear contraseña',
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: DashboardColors.morado,
+                          backgroundColor: primaryColor,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
@@ -248,19 +291,34 @@ class _PantallaResetearPasswordUsuarioState
       width: double.infinity,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: DashboardColors.grisClaro.withValues(alpha: 0.5),
+        color: JPCupertinoColors.systemGrey6(context),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(
+            nombre,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: JPCupertinoColors.label(context),
+            ),
+          ),
           const SizedBox(height: 4),
-          Text(email),
+          Text(
+            email,
+            style: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
+          ),
           const SizedBox(height: 4),
-          Text('Rol: $rolActivo'),
+          Text(
+            'Rol: $rolActivo',
+            style: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
+          ),
           const SizedBox(height: 4),
-          Text('ID: ${user['id']}'),
+          Text(
+            'ID: ${user['id']}',
+            style: TextStyle(color: JPCupertinoColors.secondaryLabel(context)),
+          ),
         ],
       ),
     );

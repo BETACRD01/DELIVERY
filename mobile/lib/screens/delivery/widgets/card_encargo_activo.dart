@@ -4,6 +4,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../models/orders/pedido_repartidor.dart';
+import '../../../theme/jp_theme.dart';
 
 /// Card expandido para encargos (courier) en curso
 /// Muestra flujo de dos etapas: Recoger → Entregar
@@ -27,11 +28,6 @@ class CardEncargoActivo extends StatelessWidget {
     this.onVerComprobante,
   });
 
-  // Colores
-  static const Color _colorEncargo = Colors.deepOrange;
-  static const Color _accent = Color(0xFF0CB7F2);
-  static const Color _success = Color(0xFF34C759);
-
   /// Determina si el repartidor ya recogió el paquete
   bool get _yaRecogio {
     final estado = encargo.estado.toLowerCase();
@@ -52,13 +48,16 @@ class CardEncargoActivo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardBg = CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
-      context,
-    );
-    final cardBorder = CupertinoColors.separator.resolveFrom(context);
-    final textPrimary = CupertinoColors.label.resolveFrom(context);
-    final textSecondary = CupertinoColors.secondaryLabel.resolveFrom(context);
+    // Dynamic Colors
+    final cardBg = JPCupertinoColors.secondarySurface(context);
+    final cardBorder = JPCupertinoColors.separator(context);
+    final textPrimary = JPCupertinoColors.label(context);
+    final textSecondary = JPCupertinoColors.secondaryLabel(context);
     final isDark = CupertinoTheme.brightnessOf(context) == Brightness.dark;
+
+    final colorEncargo = JPCupertinoColors.systemOrange(context);
+    final accent = JPCupertinoColors.systemBlue(context);
+    final success = JPCupertinoColors.success(context);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -82,62 +81,85 @@ class CardEncargoActivo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header: Badge + Estado
-            _buildHeader(context),
+            _buildHeader(context, colorEncargo, accent, success),
 
             const SizedBox(height: 16),
 
             // Indicador de etapa visual
-            _buildEtapaIndicador(context, textSecondary),
+            _buildEtapaIndicador(
+              context,
+              textSecondary,
+              colorEncargo,
+              accent,
+              success,
+            ),
 
             const SizedBox(height: 16),
 
             // Direcciones (origen y destino)
-            _buildDirecciones(context, textPrimary, textSecondary),
+            _buildDirecciones(
+              context,
+              textPrimary,
+              textSecondary,
+              colorEncargo,
+              accent,
+            ),
 
             const SizedBox(height: 16),
 
             // Detalles del encargo (siempre mostrar - incluye receptor e instrucciones)
             const SizedBox(height: 12),
-            _buildDescripcion(context, textSecondary),
+            _buildDetallesCourier(
+              context,
+              colorEncargo,
+              textPrimary,
+              textSecondary,
+              accent,
+            ),
 
             // Comprobante de transferencia (si existe)
             if (_tieneComprobante) ...[
               const SizedBox(height: 12),
-              _buildComprobanteSection(context),
+              _buildComprobanteSection(context, success, accent),
             ],
 
             const SizedBox(height: 16),
 
             // Totales
-            _buildTotales(context),
+            _buildTotales(context, success, textPrimary, textSecondary),
 
             const SizedBox(height: 16),
 
             // Botones de acción
-            _buildBotonesAccion(context),
+            _buildBotonesAccion(context, success, accent, colorEncargo),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(
+    BuildContext context,
+    Color colorEncargo,
+    Color accent,
+    Color success,
+  ) {
     return Row(
       children: [
         Flexible(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: _colorEncargo.withValues(alpha: 0.16),
+              color: colorEncargo.withValues(alpha: 0.16),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
+                Icon(
                   CupertinoIcons.paperplane_fill,
                   size: 18,
-                  color: _colorEncargo,
+                  color: colorEncargo,
                 ),
                 const SizedBox(width: 6),
                 Flexible(
@@ -155,23 +177,23 @@ class CardEncargoActivo extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 8),
-        _buildChipEstado(),
+        _buildChipEstado(colorEncargo, accent, success),
       ],
     );
   }
 
-  Widget _buildChipEstado() {
+  Widget _buildChipEstado(Color colorEncargo, Color accent, Color success) {
     Color color;
     String texto;
 
     if (_yaEntregado) {
-      color = _success;
+      color = success;
       texto = 'Entregado';
     } else if (_yaRecogio) {
-      color = _accent;
+      color = accent;
       texto = 'En Camino';
     } else {
-      color = _colorEncargo;
+      color = colorEncargo;
       texto = 'Por Recoger';
     }
 
@@ -193,14 +215,20 @@ class CardEncargoActivo extends StatelessWidget {
     );
   }
 
-  Widget _buildEtapaIndicador(BuildContext context, Color textSecondary) {
+  Widget _buildEtapaIndicador(
+    BuildContext context,
+    Color textSecondary,
+    Color colorEncargo,
+    Color accent,
+    Color success,
+  ) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: (_yaRecogio ? _accent : _colorEncargo).withValues(alpha: 0.08),
+        color: (_yaRecogio ? accent : colorEncargo).withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: (_yaRecogio ? _accent : _colorEncargo).withValues(alpha: 0.3),
+          color: (_yaRecogio ? accent : colorEncargo).withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -213,7 +241,7 @@ class CardEncargoActivo extends StatelessWidget {
                   width: 28,
                   height: 28,
                   decoration: BoxDecoration(
-                    color: _yaRecogio ? _success : _colorEncargo,
+                    color: _yaRecogio ? success : colorEncargo,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -233,7 +261,7 @@ class CardEncargoActivo extends StatelessWidget {
                           ? FontWeight.w500
                           : FontWeight.bold,
                       fontSize: 13,
-                      color: _yaRecogio ? textSecondary : _colorEncargo,
+                      color: _yaRecogio ? textSecondary : colorEncargo,
                     ),
                   ),
                 ),
@@ -244,7 +272,7 @@ class CardEncargoActivo extends StatelessWidget {
           Container(
             width: 30,
             height: 2,
-            color: _yaRecogio ? _success : Colors.grey.shade300,
+            color: _yaRecogio ? success : Colors.grey.shade300,
           ),
           // Etapa 2: Entregar
           Expanded(
@@ -260,7 +288,7 @@ class CardEncargoActivo extends StatelessWidget {
                           : FontWeight.w500,
                       fontSize: 13,
                       color: _yaRecogio
-                          ? (_yaEntregado ? _success : _accent)
+                          ? (_yaEntregado ? success : accent)
                           : textSecondary,
                     ),
                   ),
@@ -271,8 +299,8 @@ class CardEncargoActivo extends StatelessWidget {
                   height: 28,
                   decoration: BoxDecoration(
                     color: _yaEntregado
-                        ? _success
-                        : (_yaRecogio ? _accent : Colors.grey.shade300),
+                        ? success
+                        : (_yaRecogio ? accent : Colors.grey.shade300),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -295,6 +323,8 @@ class CardEncargoActivo extends StatelessWidget {
     BuildContext context,
     Color textPrimary,
     Color textSecondary,
+    Color colorEncargo,
+    Color accent,
   ) {
     final origenActivo = !_yaRecogio;
     final destinoActivo = _yaRecogio && !_yaEntregado;
@@ -305,7 +335,7 @@ class CardEncargoActivo extends StatelessWidget {
         _buildDireccionItem(
           context,
           icono: CupertinoIcons.arrow_up_circle_fill,
-          color: origenActivo ? _colorEncargo : textSecondary,
+          color: origenActivo ? colorEncargo : textSecondary,
           titulo: 'PUNTO DE RECOGIDA',
           direccion: encargo.direccionOrigen ?? 'Origen no especificado',
           activo: origenActivo,
@@ -327,7 +357,7 @@ class CardEncargoActivo extends StatelessWidget {
         _buildDireccionItem(
           context,
           icono: CupertinoIcons.location_fill,
-          color: destinoActivo ? _accent : textSecondary,
+          color: destinoActivo ? accent : textSecondary,
           titulo: 'PUNTO DE ENTREGA',
           direccion: encargo.direccionEntrega,
           activo: destinoActivo,
@@ -353,7 +383,7 @@ class CardEncargoActivo extends StatelessWidget {
       decoration: BoxDecoration(
         color: activo
             ? color.withValues(alpha: 0.08)
-            : CupertinoColors.tertiarySystemBackground.resolveFrom(context),
+            : JPCupertinoColors.secondarySystemFill(context),
         borderRadius: BorderRadius.circular(10),
         border: activo ? Border.all(color: color.withValues(alpha: 0.4)) : null,
       ),
@@ -410,71 +440,71 @@ class CardEncargoActivo extends StatelessWidget {
 
   /// Sección de detalles del encargo con formato ordenado
   /// Separa correctamente: Cliente (solicitante) vs Receptor (quien recibe)
-  Widget _buildDescripcion(BuildContext context, Color textSecondary) {
-    final textPrimary = CupertinoColors.label.resolveFrom(context);
-
-    // Parsear la descripción para extraer tipo, contenido y datos del receptor
-    // Formato del backend: "Courier: {tipo} - {descripcion}. Receptor: {nombre} ({telefono})"
+  Widget _buildDetallesCourier(
+    BuildContext context,
+    Color colorEncargo,
+    Color textPrimary,
+    Color textSecondary,
+    Color accent,
+  ) {
+    // Parsing básico
+    final descripcionOriginal = encargo.descripcion ?? '';
     String tipoPaquete = 'Paquete';
     String descripcionContenido = '';
+    String parteReceptor = '';
+
     String receptorNombre = '';
     String receptorTelefono = '';
 
-    final descripcionOriginal = encargo.descripcion ?? '';
-
     // Extraer el tipo de paquete
     if (descripcionOriginal.contains('Courier:')) {
-      // Formato: "Courier: Tipo - Descripcion. Receptor: Nombre (Telefono)"
       final partes = descripcionOriginal.split('Receptor:');
       if (partes.isNotEmpty) {
-        // Primera parte: "Courier: Tipo - Descripcion. "
-        final partePaquete = partes[0].replaceFirst('Courier:', '').trim();
-        if (partePaquete.contains(' - ')) {
-          final tipoYDesc = partePaquete.split(' - ');
-          tipoPaquete = tipoYDesc[0].trim();
-          if (tipoYDesc.length > 1) {
-            descripcionContenido = tipoYDesc
-                .sublist(1)
-                .join(' - ')
-                .replaceAll('. ', '')
-                .trim();
+        final primeraParte = partes[0].replaceFirst('Courier:', '').trim();
+        if (primeraParte.contains('-')) {
+          final splitTipo = primeraParte.split('-');
+          tipoPaquete = splitTipo[0].trim();
+          descripcionContenido = splitTipo.length > 1
+              ? splitTipo[1].trim()
+              : '';
+          if (descripcionContenido.endsWith('.')) {
+            descripcionContenido = descripcionContenido.substring(
+              0,
+              descripcionContenido.length - 1,
+            );
           }
         } else {
-          tipoPaquete = partePaquete.replaceAll('. ', '').trim();
+          descripcionContenido = primeraParte;
+        }
+
+        if (partes.length > 1) {
+          parteReceptor = partes[1].trim();
         }
       }
 
-      // Segunda parte: "Nombre (Telefono)"
-      if (partes.length > 1) {
-        final parteReceptor = partes[1].trim();
-        // Formato: "Nombre (Telefono)"
+      if (parteReceptor.isNotEmpty) {
         final regexReceptor = RegExp(r'^(.+?)\s*\((.+?)\)$');
         final match = regexReceptor.firstMatch(parteReceptor);
         if (match != null) {
           receptorNombre = match.group(1)?.trim() ?? '';
           receptorTelefono = match.group(2)?.trim() ?? '';
         } else {
-          // Si no tiene el formato esperado, usar todo como nombre
           receptorNombre = parteReceptor;
         }
       }
     } else {
-      // Formato legacy o diferente
       descripcionContenido = descripcionOriginal;
     }
 
-    // Si no se pudo parsear el receptor, NO mostrar datos del cliente como receptor
     final tieneReceptor = receptorNombre.isNotEmpty;
-
-    // Obtener instrucciones de entrega (si existen)
     final instrucciones = encargo.instruccionesEntrega ?? '';
 
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: CupertinoColors.tertiarySystemBackground.resolveFrom(context),
+        color: JPCupertinoColors.tertiarySurface(context),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: _colorEncargo.withValues(alpha: 0.2)),
+        border: Border.all(color: colorEncargo.withValues(alpha: 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -482,18 +512,14 @@ class CardEncargoActivo extends StatelessWidget {
           // Título de sección
           Row(
             children: [
-              Icon(
-                CupertinoIcons.doc_text_fill,
-                color: _colorEncargo,
-                size: 18,
-              ),
+              Icon(CupertinoIcons.doc_text_fill, color: colorEncargo, size: 18),
               const SizedBox(width: 8),
               Text(
                 'DETALLES DEL ENCARGO',
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: _colorEncargo,
+                  color: colorEncargo,
                   letterSpacing: 0.5,
                 ),
               ),
@@ -531,7 +557,7 @@ class CardEncargoActivo extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: CupertinoColors.systemGrey6.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey6(context),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
@@ -549,55 +575,57 @@ class CardEncargoActivo extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Icon(
-                      CupertinoIcons.person_fill,
-                      color: textSecondary,
-                      size: 16,
-                    ),
-                    const SizedBox(width: 8),
                     Expanded(
-                      child: Text(
-                        encargo.cliente.nombre,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: textPrimary,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            encargo.cliente.nombre,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: textPrimary,
+                            ),
+                          ),
+                          if (encargo.cliente.telefono != null &&
+                              encargo.cliente.telefono!.isNotEmpty) ...[
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.phone_fill,
+                                  color: textSecondary,
+                                  size: 14,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  encargo.cliente.telefono!,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: textSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ],
                       ),
                     ),
                   ],
                 ),
-                if (encargo.cliente.telefono != null &&
-                    encargo.cliente.telefono!.isNotEmpty) ...[
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Icon(
-                        CupertinoIcons.phone_fill,
-                        color: textSecondary,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        encargo.cliente.telefono!,
-                        style: TextStyle(fontSize: 13, color: textSecondary),
-                      ),
-                    ],
-                  ),
-                ],
               ],
             ),
           ),
 
-          // 4. ENTREGAR A - Receptor del paquete (parseado de la descripción)
+          // 4. ENTREGAR A - Receptor del paquete
           if (tieneReceptor) ...[
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: _accent.withValues(alpha: 0.08),
+                color: accent.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: _accent.withValues(alpha: 0.3)),
+                border: Border.all(color: accent.withValues(alpha: 0.3)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -607,18 +635,14 @@ class CardEncargoActivo extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: _accent,
+                      color: accent,
                       letterSpacing: 0.3,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      Icon(
-                        CupertinoIcons.person_fill,
-                        color: _accent,
-                        size: 16,
-                      ),
+                      Icon(CupertinoIcons.person_fill, color: accent, size: 16),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
@@ -638,7 +662,7 @@ class CardEncargoActivo extends StatelessWidget {
                       children: [
                         Icon(
                           CupertinoIcons.phone_fill,
-                          color: _accent,
+                          color: accent,
                           size: 16,
                         ),
                         const SizedBox(width: 8),
@@ -654,7 +678,7 @@ class CardEncargoActivo extends StatelessWidget {
             ),
           ],
 
-          // 5. Instrucciones de Entrega (si existen)
+          // 5. Instrucciones de Entrega
           if (instrucciones.isNotEmpty) ...[
             const SizedBox(height: 12),
             Container(
@@ -773,15 +797,19 @@ class CardEncargoActivo extends StatelessWidget {
   }
 
   /// Sección para mostrar el comprobante de transferencia del encargo
-  Widget _buildComprobanteSection(BuildContext context) {
+  Widget _buildComprobanteSection(
+    BuildContext context,
+    Color success,
+    Color accent,
+  ) {
     return GestureDetector(
       onTap: onVerComprobante,
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.green.withValues(alpha: 0.08),
+          color: success.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.green.withValues(alpha: 0.3)),
+          border: Border.all(color: success.withValues(alpha: 0.3)),
         ),
         child: Row(
           children: [
@@ -789,12 +817,12 @@ class CardEncargoActivo extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: Colors.green.withValues(alpha: 0.15),
+                color: success.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(
-                CupertinoIcons.doc_checkmark_fill,
-                color: Colors.green,
+              child: Icon(
+                CupertinoIcons.checkmark_seal_fill,
+                color: success,
                 size: 22,
               ),
             ),
@@ -803,12 +831,12 @@ class CardEncargoActivo extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Comprobante de Transferencia',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
-                      color: Colors.green,
+                      color: success,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -824,79 +852,99 @@ class CardEncargoActivo extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(
-              CupertinoIcons.chevron_right,
-              color: Colors.green,
-              size: 18,
-            ),
+            Icon(CupertinoIcons.chevron_right, color: success, size: 18),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTotales(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: CupertinoColors.systemGrey6.resolveFrom(context),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Total del envío:'),
-              Text(
-                '\$${encargo.totalConRecargo.toStringAsFixed(2)}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
-          if (encargo.comisionRepartidor != null) ...[
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Tu ganancia:', style: TextStyle(color: _success)),
-                Text(
-                  '\$${encargo.gananciaTotal.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    color: _success,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ],
-      ),
+  Widget _buildTotales(
+    BuildContext context,
+    Color success,
+    Color textPrimary,
+    Color textSecondary,
+  ) {
+    return Column(
+      children: [
+        _buildMoneyRow(
+          context,
+          'Total a Cobrar:',
+          encargo.total,
+          textPrimary,
+          textSecondary,
+        ),
+        const SizedBox(height: 8),
+        _buildMoneyRow(
+          context,
+          'Tu Ganancia:',
+          encargo.comisionRepartidor,
+          textPrimary,
+          textSecondary,
+          isTotal: true,
+          color: success,
+        ),
+      ],
     );
   }
 
-  Widget _buildBotonesAccion(BuildContext context) {
+  Widget _buildMoneyRow(
+    BuildContext context,
+    String label,
+    double? amount,
+    Color textPrimary,
+    Color textSecondary, {
+    bool isTotal = false,
+    Color? color,
+  }) {
+    if (amount == null) return const SizedBox.shrink();
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: isTotal ? 16 : 14,
+            color: color ?? textSecondary,
+            fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
+          ),
+        ),
+        Text(
+          '\$${amount.toStringAsFixed(2)}',
+          style: TextStyle(
+            fontSize: isTotal ? 18 : 16,
+            fontWeight: FontWeight.bold,
+            color: color ?? textPrimary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBotonesAccion(
+    BuildContext context,
+    Color success,
+    Color accent,
+    Color colorEncargo,
+  ) {
     if (_yaEntregado) {
       return Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _success.withValues(alpha: 0.1),
+          color: success.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: _success),
+          border: Border.all(color: success),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.check_circle, color: _success, size: 20),
-            SizedBox(width: 8),
+            Icon(Icons.check_circle, color: success, size: 20),
+            const SizedBox(width: 8),
             Text(
               'Entregado',
-              style: TextStyle(color: _success, fontWeight: FontWeight.bold),
+              style: TextStyle(color: success, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -907,55 +955,61 @@ class CardEncargoActivo extends StatelessWidget {
       children: [
         // Botón Navegar
         Expanded(
-          child: CupertinoButton(
-            padding: const EdgeInsets.symmetric(vertical: 14),
-            color: CupertinoColors.systemGrey5.resolveFrom(context),
-            borderRadius: BorderRadius.circular(12),
-            onPressed: onNavegar,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.navigation, color: _accent, size: 20),
-                const SizedBox(width: 6),
-                Text(
-                  'Navegar',
-                  style: TextStyle(color: _accent, fontWeight: FontWeight.w600),
-                ),
-              ],
-            ),
+          child: _buildBotonAccion(
+            context,
+            'Navegar',
+            CupertinoIcons.location_fill,
+            accent,
+            onNavegar,
+            isSecondary: true,
           ),
         ),
         const SizedBox(width: 12),
         // Botón de acción principal
         Expanded(
-          child: CupertinoButton(
-            padding: const EdgeInsets.symmetric(vertical: 14),
-            color: _yaRecogio ? _success : _colorEncargo,
-            borderRadius: BorderRadius.circular(12),
-            onPressed: _yaRecogio ? onMarcarEntregado : onMarcarRecogido,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  _yaRecogio
-                      ? CupertinoIcons.checkmark_circle_fill
-                      : CupertinoIcons.cube_box_fill,
-                  color: Colors.white,
-                  size: 18,
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  _yaRecogio ? 'Entregado' : 'Recogido',
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
+          child: _buildBotonAccion(
+            context,
+            _yaRecogio ? 'Entregado' : 'Recogido',
+            _yaRecogio
+                ? CupertinoIcons.checkmark_seal_fill
+                : CupertinoIcons.cube_box_fill,
+            _yaRecogio ? success : colorEncargo,
+            _yaRecogio ? onMarcarEntregado : onMarcarRecogido,
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildBotonAccion(
+    BuildContext context,
+    String texto,
+    IconData icono,
+    Color color,
+    VoidCallback? onTap, {
+    bool isSecondary = false,
+  }) {
+    return CupertinoButton(
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      color: isSecondary ? color.withValues(alpha: 0.1) : color,
+      disabledColor: color.withValues(alpha: 0.5),
+      borderRadius: BorderRadius.circular(12),
+      onPressed: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icono, color: isSecondary ? color : Colors.white, size: 20),
+          const SizedBox(width: 8),
+          Text(
+            texto,
+            style: TextStyle(
+              color: isSecondary ? color : Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

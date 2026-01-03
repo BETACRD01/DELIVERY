@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/core/theme_provider.dart';
 import '../../../services/usuarios/usuarios_service.dart';
+import '../../../theme/jp_theme.dart';
 
 /// ⚙️ Pantalla de Configuración del Repartidor con lenguaje visual iOS.
 class PantallaConfiguracionRepartidor extends StatefulWidget {
@@ -17,16 +18,13 @@ class PantallaConfiguracionRepartidor extends StatefulWidget {
 
 class _PantallaConfiguracionRepartidorState
     extends State<PantallaConfiguracionRepartidor> {
-  static const Color _accent = Color(0xFF0CB7F2); // Celeste corporativo
-  static const Color _success = Color(0xFF34C759);
-  static const Color _danger = Color(0xFFFF3B30);
-
   // Dynamic Colors
-  Color get _background =>
-      CupertinoColors.systemGroupedBackground.resolveFrom(context);
-  Color get _cardSurface =>
-      CupertinoColors.secondarySystemGroupedBackground.resolveFrom(context);
-  Color get _textPrimary => CupertinoColors.label.resolveFrom(context);
+  Color get _background => JPCupertinoColors.background(context);
+  Color get _cardSurface => JPCupertinoColors.secondarySurface(context);
+  Color get _textPrimary => JPCupertinoColors.label(context);
+  Color get _accent => JPCupertinoColors.systemBlue(context);
+  Color get _success => JPCupertinoColors.success(context);
+  Color get _danger => JPCupertinoColors.error(context);
 
   final UsuarioService _usuarioService = UsuarioService();
   bool _loading = true;
@@ -213,9 +211,7 @@ class _PantallaConfiguracionRepartidorState
                               'Personaliza tu experiencia de entrega.',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: CupertinoColors.systemGrey.resolveFrom(
-                                  context,
-                                ),
+                                color: JPCupertinoColors.systemGrey(context),
                               ),
                             ),
                             const SizedBox(height: 24),
@@ -237,7 +233,7 @@ class _PantallaConfiguracionRepartidorState
                               _buildSwitchRow(
                                 title: 'Email',
                                 icon: CupertinoIcons.mail_solid,
-                                color: CupertinoColors.systemIndigo,
+                                color: JPCupertinoColors.systemIndigo(context),
                                 value: notificacionesEmail,
                                 onChanged: (v) => _actualizarPreferencia(
                                   'notificaciones_email',
@@ -248,7 +244,7 @@ class _PantallaConfiguracionRepartidorState
                               _buildSwitchRow(
                                 title: 'Promociones',
                                 icon: CupertinoIcons.tag_fill,
-                                color: CupertinoColors.systemOrange,
+                                color: JPCupertinoColors.systemOrange(context),
                                 value: notificacionesMarketing,
                                 onChanged: (v) => _actualizarPreferencia(
                                   'notificaciones_marketing',
@@ -266,8 +262,12 @@ class _PantallaConfiguracionRepartidorState
                                       title: 'Modo oscuro',
                                       icon: CupertinoIcons.moon_fill,
                                       color: themeProvider.isDarkMode
-                                          ? CupertinoColors.systemYellow
-                                          : CupertinoColors.systemIndigo,
+                                          ? JPCupertinoColors.systemYellow(
+                                              context,
+                                            )
+                                          : JPCupertinoColors.systemIndigo(
+                                              context,
+                                            ),
                                       value: themeProvider.isDarkMode,
                                       onChanged: (v) =>
                                           themeProvider.toggleTheme(v),
@@ -290,7 +290,7 @@ class _PantallaConfiguracionRepartidorState
                               _buildNavigationRow(
                                 title: 'Política de privacidad',
                                 icon: CupertinoIcons.hand_raised_fill,
-                                color: CupertinoColors.systemBlue,
+                                color: JPCupertinoColors.systemBlue(context),
                                 onTap: () => _mostrarDialogoBasico(
                                   context,
                                   'Política de Privacidad',
@@ -301,7 +301,7 @@ class _PantallaConfiguracionRepartidorState
                               _buildNavigationRow(
                                 title: 'Términos del servicio',
                                 icon: CupertinoIcons.doc_text_fill,
-                                color: CupertinoColors.systemGrey,
+                                color: JPCupertinoColors.systemGrey(context),
                                 onTap: () => _mostrarDialogoBasico(
                                   context,
                                   'Términos del Servicio',
@@ -332,7 +332,7 @@ class _PantallaConfiguracionRepartidorState
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: CupertinoColors.secondaryLabel.resolveFrom(context),
+          color: JPCupertinoColors.secondaryLabel(context),
         ),
       ),
     );
@@ -353,7 +353,7 @@ class _PantallaConfiguracionRepartidorState
       height: 1,
       thickness: 0.5,
       indent: 54,
-      color: CupertinoColors.separator.resolveFrom(context),
+      color: JPCupertinoColors.separator(context),
     );
   }
 
@@ -385,7 +385,7 @@ class _PantallaConfiguracionRepartidorState
               title,
               style: TextStyle(
                 fontSize: 17,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: JPCupertinoColors.label(context),
               ),
             ),
           ),
@@ -426,13 +426,13 @@ class _PantallaConfiguracionRepartidorState
                 title,
                 style: TextStyle(
                   fontSize: 17,
-                  color: CupertinoColors.label.resolveFrom(context),
+                  color: JPCupertinoColors.label(context),
                 ),
               ),
             ),
             Icon(
               CupertinoIcons.chevron_forward,
-              color: CupertinoColors.systemGrey3.resolveFrom(context),
+              color: JPCupertinoColors.systemGrey3(context),
               size: 20,
             ),
           ],
@@ -445,10 +445,10 @@ class _PantallaConfiguracionRepartidorState
     return SizedBox(
       width: double.infinity,
       child: CupertinoButton(
-        color: CupertinoColors.secondarySystemGroupedBackground.resolveFrom(
+        color: JPCupertinoColors.secondarySurface(context),
+        disabledColor: CupertinoColors.quaternarySystemFill.resolveFrom(
           context,
         ),
-        disabledColor: CupertinoColors.quaternarySystemFill,
         padding: const EdgeInsets.symmetric(vertical: 16),
         borderRadius: BorderRadius.circular(12),
         onPressed: () {
@@ -465,7 +465,7 @@ class _PantallaConfiguracionRepartidorState
             icono: CupertinoIcons.refresh_bold,
           );
         },
-        child: const Text(
+        child: Text(
           'Restablecer configuración',
           style: TextStyle(
             color: _danger,
@@ -488,18 +488,15 @@ class _PantallaConfiguracionRepartidorState
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       child: Row(
         children: [
-          const Icon(
-            CupertinoIcons.exclamationmark_triangle_fill,
-            color: _danger,
-          ),
+          Icon(CupertinoIcons.exclamationmark_triangle_fill, color: _danger),
           const SizedBox(width: 10),
           Expanded(
-            child: Text(_error!, style: const TextStyle(color: _danger)),
+            child: Text(_error!, style: TextStyle(color: _danger)),
           ),
           CupertinoButton(
             onPressed: _cargarPreferencias,
             padding: EdgeInsets.zero,
-            child: const Icon(CupertinoIcons.refresh, color: _danger),
+            child: Icon(CupertinoIcons.refresh, color: _danger),
           ),
         ],
       ),
@@ -524,7 +521,7 @@ class _PantallaConfiguracionRepartidorState
           CupertinoDialogAction(
             onPressed: () => Navigator.pop(context),
             isDefaultAction: true,
-            child: const Text('Cerrar', style: TextStyle(color: _accent)),
+            child: Text('Cerrar', style: TextStyle(color: _accent)),
           ),
         ],
       ),

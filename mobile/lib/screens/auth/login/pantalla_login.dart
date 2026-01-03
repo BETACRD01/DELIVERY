@@ -3,8 +3,6 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:mobile/services/core/api/api_exception.dart';
 import '../../../config/routing/rutas.dart';
 import '../../../services/auth/auth_service.dart';
@@ -190,7 +188,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.white,
+      backgroundColor: JPCupertinoColors.surface(context),
       child: DefaultTextStyle(
         style: TextStyle(
           fontSize: 17,
@@ -531,13 +529,13 @@ class _PantallaLoginState extends State<PantallaLogin> {
       child: CupertinoButton(
         onPressed: canLogin ? _login : null,
         color: canLogin
-            ? Colors.transparent
+            ? JPCupertinoColors.transparent
             : JPCupertinoColors.quaternaryLabel(context),
         borderRadius: BorderRadius.circular(14),
         padding: EdgeInsets.zero,
         child: _loading
-            ? const CupertinoActivityIndicator(
-                color: CupertinoColors.white,
+            ? CupertinoActivityIndicator(
+                color: JPCupertinoColors.white,
                 radius: 12,
               )
             : Text(
@@ -546,7 +544,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: canLogin
-                      ? CupertinoColors.white
+                      ? JPCupertinoColors.white
                       : JPCupertinoColors.tertiaryLabel(context),
                   letterSpacing: 0.2,
                 ),
@@ -593,7 +591,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
       decoration: BoxDecoration(
         color: isDisabled
             ? JPCupertinoColors.quaternaryLabel(context)
-            : CupertinoColors.white,
+            : JPCupertinoColors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: JPCupertinoColors.separator(context),
@@ -603,7 +601,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
             ? null
             : [
                 BoxShadow(
-                  color: CupertinoColors.black.withValues(alpha: 0.05),
+                  color: JPCupertinoColors.black.withValues(alpha: 0.05),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),

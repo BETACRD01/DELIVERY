@@ -71,12 +71,12 @@ class _RegistroUsuarioFormState extends State<RegistroUsuarioForm> {
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
               primary: AppColorsPrimary.main,
-              onPrimary: CupertinoColors.white,
-              onSurface: CupertinoColors.black,
-              surface: CupertinoColors.white,
+              onPrimary: JPCupertinoColors.white,
+              onSurface: JPCupertinoColors.black,
+              surface: JPCupertinoColors.white,
             ),
-            dialogTheme: const DialogThemeData(
-              backgroundColor: CupertinoColors.white,
+            dialogTheme: DialogThemeData(
+              backgroundColor: JPCupertinoColors.white,
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
@@ -88,17 +88,17 @@ class _RegistroUsuarioFormState extends State<RegistroUsuarioForm> {
               ),
             ),
             datePickerTheme: DatePickerThemeData(
-              backgroundColor: CupertinoColors.white,
+              backgroundColor: JPCupertinoColors.white,
               headerBackgroundColor: AppColorsPrimary.main,
-              headerForegroundColor: CupertinoColors.white,
-              headerHeadlineStyle: const TextStyle(
+              headerForegroundColor: JPCupertinoColors.white,
+              headerHeadlineStyle: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.white,
+                color: JPCupertinoColors.white,
               ),
-              headerHelpStyle: const TextStyle(
+              headerHelpStyle: TextStyle(
                 fontSize: 13,
-                color: CupertinoColors.white,
+                color: JPCupertinoColors.white,
               ),
               dayStyle: const TextStyle(fontSize: 13),
               weekdayStyle: TextStyle(
@@ -114,7 +114,7 @@ class _RegistroUsuarioFormState extends State<RegistroUsuarioForm> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              surfaceTintColor: Colors.transparent,
+              surfaceTintColor: JPCupertinoColors.transparent,
             ),
           ),
           child: MediaQuery(
@@ -336,7 +336,7 @@ class _RegistroUsuarioFormState extends State<RegistroUsuarioForm> {
           const SizedBox(width: 12),
           Expanded(
             child: Material(
-              color: Colors.transparent,
+              color: JPCupertinoColors.transparent,
               child: SizedBox(
                 height: 48,
                 child: Align(
@@ -886,20 +886,20 @@ class _RegistroUsuarioFormState extends State<RegistroUsuarioForm> {
         onPressed: _loading ? null : _registrar,
         color: _loading
             ? JPCupertinoColors.quaternaryLabel(context)
-            : Colors.transparent,
+            : JPCupertinoColors.transparent,
         borderRadius: BorderRadius.circular(14),
         padding: EdgeInsets.zero,
         child: _loading
-            ? const CupertinoActivityIndicator(
-                color: CupertinoColors.white,
+            ? CupertinoActivityIndicator(
+                color: JPCupertinoColors.white,
                 radius: 12,
               )
-            : const Text(
+            : Text(
                 'Crear Cuenta',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: CupertinoColors.white,
+                  color: JPCupertinoColors.white,
                   letterSpacing: 0.2,
                 ),
               ),
